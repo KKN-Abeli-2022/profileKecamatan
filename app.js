@@ -20,6 +20,20 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/login",(req,res) => {
+    res.render("login",{
+        title: "Login",
+        layout: "layouts/login-signup"
+    })
+})
+
+app.get("/signup",(req,res) => {
+    res.render("signup",{
+        title: "Signup",
+        layout: "layouts/login-signup"
+    })
+})
+
 
 const port = 3000;
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

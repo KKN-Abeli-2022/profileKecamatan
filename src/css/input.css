@@ -21,9 +21,12 @@
 }
 
 button:hover span.hamburger-line {
-  
 }
 
 .hamburger-active > span:nth-child(3) {
   @apply -rotate-45 bg-white;
+}
+
+.bayangan {
+  text-shadow: 2px 2px 2p black;
 }
