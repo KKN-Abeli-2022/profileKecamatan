@@ -1,0 +1,32 @@
+<header>
+      <div class="flex flex-row top-0 left-0 right-0 bg-cyan-500 p-3 shadow-2xl">
+        <div class="logo flex basis-9/12">
+          <img src="assets/img/logo.png" alt="logo" width="30" />
+          <div class="ml-2 flex items-center font-bold font-sansita">Kelurahan Abeli</div>
+        </div>
+
+        <div class="flex basis-3/12 items-center justify-evenly text-2xl">
+          <a href="facebook.com"> <i class="bx bxl-facebook-circle text-blue-900"></i></a>
+          <a href="#"> <i class="bx bx-envelope text-red-600"></i></a>
+          <a href="#"><i class="bx bxl-whatsapp text-green-800"></i></a>
+        </div>
+      </div>
+
+      <div class="jumbotron w-full h-64 bg-red-500 bg-[url('assets/img/logo.png')] bg-cover bg-center">
+        <!-- <img src="assets/img/jumbotron.jpg" alt="" /> -->
+      </div>
+
+      <nav class="w-full h-12 bg-cyan-400 flex justify-evenly items-center">
+        <ul class="flex basis-9/12 justify-evenly items-center bg-green-200 h-full">
+          <li class="bg-red-100 h-full p-4"><a href="#" class="hover:bg-cyan-900 h-full">text 1</a></li>
+          <li class="h-full p-4"><a href="#" class="h-full">text 2</a></li>
+          <li class="h-full p-4"><a href="#" class="h-full">text 3</a></li>
+          <li class="h-full p-4"><a href="#" class="h-full">text 4</a></li>
+        </ul>
+
+        <div class="login flex basis-3/12 justify-end items-center pr-4">
+          <i class="bx bx-log-in text-xl mr-2"></i>
+          <p>Login</p>
+        </div>
+      </nav>
+    </header>
