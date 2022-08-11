@@ -1,2 +1,41 @@
-<h1>Tes</h1>
+<div class="h-screen w-full bg-cover bg-gradient-to-b from-cyan-500 to-white flex">
+  <div class="m-auto lg:w-1/2 lg:flex-1 lg:flex-col lg:p-8">
+    <h1 class="text-4xl font-bold lg:text-6xl">Kelurahan Abeli</h1>
+    <h2 class="text-md mt-2">Abeli, Kec. Abeli, Kendari, Sulawesi Tenggara</h2>
+    <h2>Kode Pos 93234</h2>
+    <a href="#" class="inline-block my-4 py-5 px-5 bg-yellow-500 rounded-md shadow-md hover:bg-yellow-600">Kontak Kami</a>
+  </div>
 
+  <div class="w-1/2 hidden lg:flex">
+    <div class="w-40 h-40 bg-yellow-500 m-auto rotate-45 relative">
+      <div class="w-20 h-20 bg-yellow-400 absolute -top-20 -left-20"></div>
+      <div class="w-40 h-10 bg-yellow-600 absolute top-50 right-70 -rotate-45"></div>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <section class="relative">
+    <ul id="slider">
+      <li class="h-[50vh]">
+        <img src="assets/img/primary.jpg" alt="image" class="h-full w-full object-cover" />
+      </li>
+      <li class="h-[50vh] hidden">
+        <img src="assets/img/primary.jpg" alt="image" class="h-full w-full object-cover" />
+      </li>
+      <li class="h-[50vh] hidden">
+        <img src="assets/img/primary.jpg" alt="image" class="h-full w-full object-cover" />
+      </li>
+    </ul>
+    <div class="absolute px-5 h-full w-full flex top-0 left-0">
+      <div class="my-auto flex justify-between w-full">
+        <button onclick="prev()" class="bg-white w-10 h-10 rounded-full bg-opacity-80 shadow-lg flex items-center justify-center">
+          <i class="bx bx-chevron-left text-2xl font-bold"></i>
+        </button>
+        <button onclick="next()" class="bg-white w-10 h-10 rounded-full bg-opacity-80 shadow-lg flex items-center justify-center">
+          <i class="bx bx-chevron-right text-2xl font-bold"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+</main>
