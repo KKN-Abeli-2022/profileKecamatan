@@ -27,6 +27,10 @@ button:hover span.hamburger-line {
   @apply -rotate-45 bg-white;
 }
 
+.nav-display {
+  @apply scale-100 opacity-100;
+}
+
 .bayangan {
   text-shadow: 2px 2px 2p black;
 }

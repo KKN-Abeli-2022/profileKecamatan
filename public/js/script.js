@@ -14,6 +14,21 @@ const navMenu = document.querySelector('#nav-menu');
 
 hamburger.addEventListener('click', function () {
   hamburger.classList.toggle('hamburger-active');
-  navMenu.classList.toggle('hidden');
-  navMenu.classList.toggle('nav-slide');
+  navMenu.classList.toggle('nav-display');
+});
+
+const swiper = new Swiper('.swiper', {
+  speed: 400,
+  autoplay: {
+    delay: 3000,
+  },
+
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
 });
