@@ -601,10 +601,6 @@ video {
   top: 0px;
 }
 
-.bottom-0 {
-  bottom: 0px;
-}
-
 .left-0 {
   left: 0px;
 }
@@ -621,6 +617,10 @@ video {
   top: 100%;
 }
 
+.bottom-0 {
+  bottom: 0px;
+}
+
 .m-auto {
   margin: auto;
 }
@@ -628,6 +628,11 @@ video {
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.mx-8 {
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
 .mx-auto {
@@ -645,13 +650,24 @@ video {
   margin-right: 4rem;
 }
 
-.mx-8 {
-  margin-left: 2rem;
-  margin-right: 2rem;
-}
-
 .mt-2 {
   margin-top: 0.5rem;
+}
+
+.ml-0 {
+  margin-left: 0px;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
 }
 
 .mb-6 {
@@ -676,22 +692,6 @@ video {
 
 .mt-5 {
   margin-top: 1.25rem;
-}
-
-.ml-0 {
-  margin-left: 0px;
-}
-
-.ml-2 {
-  margin-left: 0.5rem;
-}
-
-.mt-6 {
-  margin-top: 1.5rem;
-}
-
-.mr-2 {
-  margin-right: 0.5rem;
 }
 
 .block {
@@ -750,16 +750,16 @@ video {
   max-width: 100%;
 }
 
+.max-w-\[250px\] {
+  max-width: 250px;
+}
+
 .max-w-sm {
   max-width: 24rem;
 }
 
 .max-w-screen-lg {
   max-width: 1024px;
-}
-
-.max-w-\[250px\] {
-  max-width: 250px;
 }
 
 .origin-top-left {
@@ -801,12 +801,12 @@ video {
   border-radius: 0.375rem;
 }
 
-.rounded {
-  border-radius: 0.25rem;
-}
-
 .rounded-lg {
   border-radius: 0.5rem;
+}
+
+.rounded {
+  border-radius: 0.25rem;
 }
 
 .border {
@@ -822,6 +822,11 @@ video {
   background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
 .bg-sky-200\/30 {
   background-color: rgb(186 230 253 / 0.3);
 }
@@ -833,11 +838,6 @@ video {
 .bg-orange-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(249 115 22 / var(--tw-bg-opacity));
-}
-
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-b {
@@ -886,12 +886,12 @@ video {
      object-position: center;
 }
 
-.p-4 {
-  padding: 1rem;
-}
-
 .p-3 {
   padding: 0.75rem;
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 .py-2 {
@@ -902,6 +902,11 @@ video {
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .py-1 {
@@ -919,17 +924,12 @@ video {
   padding-right: 1rem;
 }
 
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
+.pt-3 {
+  padding-top: 0.75rem;
 }
 
 .pb-5 {
   padding-bottom: 1.25rem;
-}
-
-.pt-3 {
-  padding-top: 0.75rem;
 }
 
 .text-center {
@@ -940,12 +940,12 @@ video {
   text-align: right;
 }
 
-.font-sansita {
-  font-family: Sansita Swashed, cursive;
-}
-
 .font-arima {
   font-family: Arima, cursive;
+}
+
+.font-sansita {
+  font-family: Sansita Swashed, cursive;
 }
 
 .text-4xl {
@@ -970,6 +970,11 @@ video {
   letter-spacing: 0.1em;
 }
 
+.text-slate-800 {
+  --tw-text-opacity: 1;
+  color: rgb(30 41 59 / var(--tw-text-opacity));
+}
+
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -978,11 +983,6 @@ video {
 .text-slate-600 {
   --tw-text-opacity: 1;
   color: rgb(71 85 105 / var(--tw-text-opacity));
-}
-
-.text-slate-800 {
-  --tw-text-opacity: 1;
-  color: rgb(30 41 59 / var(--tw-text-opacity));
 }
 
 .text-red-500 {
@@ -1204,10 +1204,6 @@ button:hover span.hamburger-line {
     margin-right: 0px;
   }
 
-  .lg\:mb-11 {
-    margin-bottom: 2.75rem;
-  }
-
   .lg\:ml-4 {
     margin-left: 1rem;
   }
@@ -1218,6 +1214,10 @@ button:hover span.hamburger-line {
 
   .lg\:mt-0 {
     margin-top: 0px;
+  }
+
+  .lg\:mb-11 {
+    margin-bottom: 2.75rem;
   }
 
   .lg\:flex {
@@ -1236,16 +1236,16 @@ button:hover span.hamburger-line {
     width: 50%;
   }
 
-  .lg\:w-full {
-    width: 100%;
-  }
-
   .lg\:w-3\/4 {
     width: 75%;
   }
 
   .lg\:w-1\/4 {
     width: 25%;
+  }
+
+  .lg\:w-full {
+    width: 100%;
   }
 
   .lg\:max-w-\[75\%\] {
@@ -1314,12 +1314,12 @@ button:hover span.hamburger-line {
     padding-right: 1rem;
   }
 
-  .lg\:pb-0 {
-    padding-bottom: 0px;
-  }
-
   .lg\:pt-0 {
     padding-top: 0px;
+  }
+
+  .lg\:pb-0 {
+    padding-bottom: 0px;
   }
 
   .lg\:text-6xl {
