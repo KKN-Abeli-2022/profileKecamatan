@@ -2,7 +2,11 @@ const express = require("express");
 const path = require("path");
 const expressLayout = require("express-ejs-layouts");
 const bodyParser = require("body-parser");
+const session = require("express-session");
 const mysql = require("mysql");
+const bcrypt = require("bcryptjs");
+const flash = require("connect-flash");
+const cookieParser = require("cookie-parser");
 const app = express()
 
 
@@ -15,6 +19,19 @@ app.use(express.static(path.join(__dirname, "public")));
 // add middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// setting up session
+app.use(
+    session({
+        secret: "secret",
+        resave: true,
+        saveUninitialized: false
+    })
+)
+
+// add flash
+app.use(cookieParser("secret"));
+app.use(flash());
 
 // database connection
 const pool = mysql.createPool({
@@ -53,6 +70,16 @@ app.get("/signup",(req,res) => {
         title: "Signup",
         layout: "layouts/login-signup"
     })
+})
+
+app.post("/signup",(req,res) => {
+    const {username, password, nama, nip, position, email} = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    pool.query(`INSERT INTO user (Username, Password, Email, Nama, Jabatan, NIP) VALUES ("${username}", "${hash}", "${email}","${nama}", "${position}", "${nip})`, (err, results) => {
+        if(err) throw err;
+        res.redirect("/login");
+    } )
 })
 
 
