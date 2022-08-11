@@ -61,28 +61,34 @@ app.get("/profile", (req, res) => {
 app.get("/login",(req,res) => {
     res.render("login",{
         title: "Login",
-        layout: "layouts/login-signup"
+        layout: "layouts/login-signup",
     })
 })
 
 app.get("/signup",(req,res) => {
     res.render("signup",{
         title: "Signup",
-        layout: "layouts/login-signup"
+        layout: "layouts/login-signup",
+        err: req.flash("error")
     })
 })
 
 app.post("/signup",(req,res) => {
-    const {username, password, nama, nip, position, email} = req.body;
+    const {username, password, nama, nip, position, email,confirmPassword} = req.body;
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
     pool.getConnection((err, connection) => {
         if(err) throw err;
-        connection.query(`INSERT INTO pegawai (username, password, nama, nip, jabatan, email) VALUES ('${username}', '${hash}', '${nama}', '${nip}', '${position}', '${email}')`, (err, result) => {
-            if(err) throw err;
-            connection.release();
-            res.redirect("/login");
-        });
+        if(password !== confirmPassword){
+            req.flash("error", "Password doesn't match");
+            res.redirect("/signup");
+        } else {
+            connection.query(`INSERT INTO pegawai (username, password, nama, nip, jabatan, email) VALUES ('${username}', '${hash}', '${nama}', '${nip}', '${position}', '${email}')`, (err, result) => {
+                if(err) throw err;
+                connection.release();
+                res.redirect("/login");
+            });
+        }
     });
 });
 

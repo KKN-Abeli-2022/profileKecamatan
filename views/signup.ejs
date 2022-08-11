@@ -12,6 +12,9 @@
       <hr class="mb-3 mx-16 lg:mb-11" />
 
       <form action="/signup" class="" method="post">
+        <% if (err.length > 0) { %>
+          <h1 class="text-red-500 mt-1 mb-2"><%= err %> </h1>
+        <% }%>
         <label for="fullName" class="sm:mb-8">
           <div class="text-slate-800 mb-2">Nama Lengkap</div>
           <input
@@ -74,7 +77,7 @@
             id="username"
             name="username"
           />
-          <p class="text-red-500 invisible peer-invalid:visible mt-1 mb-2">Email tidak valid</p>
+          <p class="text-red-500 invisible peer-invalid:visible mt-1 mb-2">Username setidaknya terdiri dari 6 karakter</p>
         </label>
 
         <label for="password" class="sm:mb-8">
@@ -83,6 +86,8 @@
           placeholder="Password" 
           id="password"
           name="password"
+          onchange="checkPassword()"
+          required
           />
           <p class="text-red-500 invisible peer-invalid:visible mt-1 mb-2">Password tidak valid</p>
         </label>
@@ -93,6 +98,8 @@
           placeholder="Password" 
           id="confirmPassword"
           name="confirmPassword"
+          onchange="checkPassword()"
+          required
           />
           <p class="text-red-500 invisible peer-invalid:visible mt-1 mb-2">Password tidak valid</p>
         </label>

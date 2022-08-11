@@ -17,3 +17,14 @@ hamburger.addEventListener('click', function () {
   navMenu.classList.toggle('hidden');
   navMenu.classList.toggle('nav-slide');
 });
+
+const checkPassword = () => {
+  const password = document.querySelector("input[name='password']");
+  const confirmPassword = document.querySelector("input[name='confirmPassword']");
+  if(password.value !== confirmPassword.value){
+    confirmPassword.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirmPassword.setCustomValidity('');
+  }
+}
+
