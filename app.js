@@ -42,6 +42,15 @@ const pool = mysql.createPool({
     database            : "profile"
 });
 
+// authentication
+const isAuth = (req, res, next) => {
+    if (req.session.isAuth){
+        next();
+    } else {
+        req.flash("error", "Please login first");
+        res.redirect("/login");
+    }
+}
 
 // routes
 app.get("/", (req, res) => {
@@ -62,6 +71,7 @@ app.get("/login",(req,res) => {
     res.render("login",{
         title: "Login",
         layout: "layouts/login-signup",
+        err: req.flash("error")
     })
 })
 
@@ -91,6 +101,30 @@ app.post("/signup",(req,res) => {
         }
     });
 });
+
+app.post("/login", async (req,res) => {
+    const {username, password} = req.body;
+    pool.getConnection((err, connection) => {
+        if(err) throw err;
+        connection.query(`SELECT * FROM pegawai WHERE username = '${username}'`, async (err, result) => {
+            if(err) throw err;
+            if(result.length > 0){
+                if(bcrypt.compare(password, result[0].password)){
+                    req.session.isAuth = true;
+                    req.session.user = result[0];
+                    res.redirect("/dashboard");
+                } else {
+                    req.flash("error", "Username and Password doesn't match");
+                    res.redirect("/login");
+                }
+            } else {
+                req.flash("error", "Username doesn't exist");
+                res.redirect("/login");
+            }
+            connection.release();
+        } );
+    } );
+})
 
 
 const port = 3000;
