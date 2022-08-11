@@ -39,7 +39,7 @@ const pool = mysql.createPool({
     host                : "localhost",
     user                : "root",
     password            : "",
-    database            : "profile_abeli"
+    database            : "profile"
 });
 
 
@@ -76,11 +76,15 @@ app.post("/signup",(req,res) => {
     const {username, password, nama, nip, position, email} = req.body;
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
-    pool.query(`INSERT INTO user (Username, Password, Email, Nama, Jabatan, NIP) VALUES ("${username}", "${hash}", "${email}","${nama}", "${position}", "${nip})`, (err, results) => {
+    pool.getConnection((err, connection) => {
         if(err) throw err;
-        res.redirect("/login");
-    } )
-})
+        connection.query(`INSERT INTO pegawai (username, password, nama, nip, jabatan, email) VALUES ('${username}', '${hash}', '${nama}', '${nip}', '${position}', '${email}')`, (err, result) => {
+            if(err) throw err;
+            connection.release();
+            res.redirect("/login");
+        });
+    });
+});
 
 
 const port = 3000;
