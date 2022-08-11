@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path");
-const {Sequelize} = require("sequelize");
 const expressLayout = require("express-ejs-layouts");
+const bodyParser = require("body-parser");
+const mysql = require("mysql");
 const app = express()
 
 
@@ -13,19 +14,17 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // add middleware
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // database connection
-const sequelize = new Sequelize("profile_abeli", "root", "", {
-    host: "localhost",
-    dialect: "mysql",
+const pool = mysql.createPool({
+    connectionLimit     : 10,
+    host                : "localhost",
+    user                : "root",
+    password            : "",
+    database            : "profile_abeli"
 });
 
-// test connection
-sequelize.authenticate().then(() => {
-    console.log("Connection has been established successfully.");
-}).catch(err => {
-    console.error("Unable to connect to the database:", err);
-});
 
 // routes
 app.get("/", (req, res) => {
