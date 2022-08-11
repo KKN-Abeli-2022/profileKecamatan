@@ -1087,7 +1087,7 @@ button:hover span.hamburger-line {
 }
 
 .bayangan {
-  text-shadow: 2px 2px 2p black;
+  text-shadow: 2px 2px 2px black;
 }
 
 .invalid\:text-red-500:invalid {
@@ -1168,16 +1168,6 @@ button:hover span.hamburger-line {
   .sm\:mt-10 {
     margin-top: 2.5rem;
   }
-
-  .sm\:scale-0 {
-    --tw-scale-x: 0;
-    --tw-scale-y: 0;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  }
-
-  .sm\:opacity-0 {
-    opacity: 0;
-  }
 }
 
 @media (min-width: 768px) {
@@ -1197,10 +1187,6 @@ button:hover span.hamburger-line {
 
   .md\:w-4\/5 {
     width: 80%;
-  }
-
-  .md\:opacity-100 {
-    opacity: 1;
   }
 }
 
