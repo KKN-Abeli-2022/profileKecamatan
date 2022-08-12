@@ -117,6 +117,27 @@ app.get("/dashboard/dataUser",isAuth,(req,res) => {
     });
 })
 
+app.get("/dashboard/berita",isAuth,(req,res) => {
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+        connection.query("SELECT * FROM pegawai", (err, result) => {
+            if (err) throw err;
+            // console.log(result);
+            res.render("uploadBerita",{
+                title: "Berita",
+                layout: "layouts/dashboard-layout",
+                username: req.session.user.username,
+            })
+            connection.release();
+        }
+        )
+    });
+})
+
+app.post("/dashboard/berita",isAuth,(req,res) => {
+    res.send(req.body);
+})
+
 app.post("/signup",(req,res) => {
     const {username, password, nama, nip, position, email,confirmPassword} = req.body;
     const salt = bcrypt.genSaltSync(10);
