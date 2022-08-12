@@ -34,3 +34,7 @@ button:hover span.hamburger-line {
 .bayangan {
   text-shadow: 2px 2px 2px black;
 }
+
+.show {
+  @apply translate-y-[50px];
+}

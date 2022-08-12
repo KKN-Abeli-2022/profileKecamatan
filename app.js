@@ -84,10 +84,18 @@ app.get("/signup",(req,res) => {
 })
 
 app.get("/dashboard", isAuth, (req, res) => {
-    res.render("dashboard",{
-        title: "Dashboard",
-        layout: "layouts/main"
-    });
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+        connection.query("SELECT * FROM pegawai", (err, result) => {
+            if (err) throw err;
+            res.render("dashboard",{
+                title: "Dashboard",
+                layout: "layouts/dashboard-layout",
+                username: result[0].username
+            });
+            connection.release();
+        });
+    })
 });
 
 app.post("/signup",(req,res) => {
@@ -140,7 +148,7 @@ app.post("/logout", (req, res) => {
         if(err) throw err;
         res.redirect("/login");
     } );
-} );
+});
 
 
 const port = 3000;
