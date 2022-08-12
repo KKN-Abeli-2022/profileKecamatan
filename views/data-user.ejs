@@ -1,0 +1,23 @@
+<!-- table -->
+<table class="my-20">
+    <thead>
+        <tr>
+            <th>nama</th>
+            <th>nip</th>
+            <th>email</th>
+            <th>username</th>
+            <th>jabatan</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for( let i = 0; i < data.length; i++ ) { %>
+            <tr>
+                <td><%= data[i].nama %></td>
+                <td><%= data[i].nip %></td>
+                <td><%= data[i].email %></td>
+                <td><%= data[i].username %></td>
+                <td><%= data[i].jabatan %></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>

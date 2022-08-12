@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Arima:wght@100;200;300;400;700&family=Fira+Code:wght@300;400;500;600;700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="icon" href="/assets/img/logo.png" type="image/icon type" />
     <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
     <title>Kelurahan Abeli | <%= title %></title>
@@ -19,8 +19,8 @@
     <body class="font-arima">
     <header>
         <nav class="fixed top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
-        <a href="#" class="flex items-center ml-0 lg:ml-4">
-            <img src="assets/img/logo.png" alt="logo" width="30" />
+        <a href="/dashboard" class="flex items-center ml-0 lg:ml-4">
+            <img src="/assets/img/logo.png" alt="logo" width="30" />
             <h2 class="font-sansita font-semibold text-lg ml-2">Kelurahan Abeli</h2>
         </a>
 
@@ -38,7 +38,7 @@
             <div class="flex w-full lg:w-3/4">
             <ul class="block w-full lg:flex lg:justify-evenly">
                 <li class="group">
-                <a href="#" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                <a href="/dashboard/dataUser" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
                     <p>Data User</p>
                 </a>
                 </li>
@@ -61,8 +61,8 @@
             </div>
 
             <!-- dropdown -->
-            <div class="flex justify-evenly mt-6 border border-b-0 pt-3 lg:border lg:border-none lg:mt-0 lg:pt-0 lg:flex lg:justify-center lg:w-1/4 items-center">
-            <button class="" onclick="showButton()">Welcome <%= username %></button>
+            <div class="flex justify-evenly mt-6 border border-b-0 pt-3 lg:border lg:border-none lg:mt-0 lg:pt-0 lg:flex lg:justify-center lg:w-1/4  items-center">
+            <button class="hover:text-blue-500 lg:hover:text-white lg:hover:bg-cyan-500 lg:rounded-lg lg:font-bold lg:flex py-2 mx-15" onclick="showButton()">Welcome <%= username %></button>
             <div class="translate-y-[-100px] left-[-120px] relative transition-all duration-200 bg-slate-200" id="dropdown">
                 <form action="/logout" method="post">
                     <button class="px-5 py-2 bg-red-500 text-white">Logout</button>
@@ -80,6 +80,6 @@
         referrerpolicy="no-referrer"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="/js/script.js"></script>
     </body>
 </html>

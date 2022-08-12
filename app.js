@@ -87,16 +87,35 @@ app.get("/dashboard", isAuth, (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) throw err;
         connection.query("SELECT * FROM pegawai", (err, result) => {
+            console.log(req.session.user.username)
             if (err) throw err;
             res.render("dashboard",{
                 title: "Dashboard",
                 layout: "layouts/dashboard-layout",
-                username: result[0].username
+                username: req.session.user.username,
             });
             connection.release();
         });
     })
 });
+
+app.get("/dashboard/dataUser",isAuth,(req,res) => {
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+        connection.query("SELECT * FROM pegawai", (err, result) => {
+            if (err) throw err;
+            // console.log(result);
+            res.render("data-user",{
+                title: "Data User",
+                layout: "layouts/dashboard-layout",
+                username: req.session.user.username,
+                data: result
+            })
+            connection.release();
+        }
+        )
+    });
+})
 
 app.post("/signup",(req,res) => {
     const {username, password, nama, nip, position, email,confirmPassword} = req.body;
