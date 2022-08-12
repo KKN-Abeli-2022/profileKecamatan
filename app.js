@@ -7,6 +7,7 @@ const mysql = require("mysql");
 const bcrypt = require("bcryptjs");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
+const moment = require("moment")
 const app = express()
 
 
@@ -66,6 +67,17 @@ app.get("/profile", (req, res) => {
         layout: "layouts/main"
     });
 });
+
+app.get("/berita",(req,res) => {
+    pool.getConnection((err,connection) => {
+        if(err) throw err;
+        connection.query("SELECT * FROM berita",(err,rows) => {
+            res.render("berita",{
+                title: "Berita",
+                layout: "layouts/main"
+            })
+    })
+})});
 
 app.get("/login",(req,res) => {
     res.render("login",{
@@ -127,6 +139,7 @@ app.get("/dashboard/berita",isAuth,(req,res) => {
                 title: "Berita",
                 layout: "layouts/dashboard-layout",
                 username: req.session.user.username,
+                msg: req.flash("success")
             })
             connection.release();
         }
@@ -135,7 +148,21 @@ app.get("/dashboard/berita",isAuth,(req,res) => {
 })
 
 app.post("/dashboard/berita",isAuth,(req,res) => {
-    res.send(req.body);
+    const { judul, isi } = req.body;
+    const tgl_update = moment().format("YYYY-MM-DD");
+    pool.getConnection((err,connection) =>{
+        if(err) throw err;
+        connection.query("INSERT INTO berita SET ?",{
+            judul: judul,
+            isi: isi,
+            tgl_update
+        } ,(err,result) => {
+            if(err) throw err;
+            req.flash("success", "Berhasil menambahkan berita");
+            res.redirect("/dashboard/berita");
+        });
+
+    })
 })
 
 app.post("/signup",(req,res) => {
