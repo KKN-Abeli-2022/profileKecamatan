@@ -43,3 +43,9 @@ const checkPassword = () => {
   }
 }
 
+const dropdown = document.querySelector('#dropdown');
+
+const showButton = () => {
+  dropdown.classList.toggle('show');
+}
+

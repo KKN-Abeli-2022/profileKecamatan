@@ -83,6 +83,61 @@ app.get("/signup",(req,res) => {
     })
 })
 
+app.get("/dashboard", isAuth, (req, res) => {
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+        connection.query("SELECT * FROM pegawai", (err, result) => {
+            console.log(req.session.user.username)
+            if (err) throw err;
+            res.render("dashboard",{
+                title: "Dashboard",
+                layout: "layouts/dashboard-layout",
+                username: req.session.user.username,
+            });
+            connection.release();
+        });
+    })
+});
+
+app.get("/dashboard/dataUser",isAuth,(req,res) => {
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+        connection.query("SELECT * FROM pegawai", (err, result) => {
+            if (err) throw err;
+            // console.log(result);
+            res.render("data-user",{
+                title: "Data User",
+                layout: "layouts/dashboard-layout",
+                username: req.session.user.username,
+                data: result
+            })
+            connection.release();
+        }
+        )
+    });
+})
+
+app.get("/dashboard/berita",isAuth,(req,res) => {
+    pool.getConnection((err, connection) => {
+        if (err) throw err;
+        connection.query("SELECT * FROM pegawai", (err, result) => {
+            if (err) throw err;
+            // console.log(result);
+            res.render("uploadBerita",{
+                title: "Berita",
+                layout: "layouts/dashboard-layout",
+                username: req.session.user.username,
+            })
+            connection.release();
+        }
+        )
+    });
+})
+
+app.post("/dashboard/berita",isAuth,(req,res) => {
+    res.send(req.body);
+})
+
 app.post("/signup",(req,res) => {
     const {username, password, nama, nip, position, email,confirmPassword} = req.body;
     const salt = bcrypt.genSaltSync(10);
@@ -109,7 +164,8 @@ app.post("/login", async (req,res) => {
         connection.query(`SELECT * FROM pegawai WHERE username = '${username}'`, async (err, result) => {
             if(err) throw err;
             if(result.length > 0){
-                if(bcrypt.compare(password, result[0].password)){
+                console.log(bcrypt.compareSync(password, result[0].password));
+                if(await bcrypt.compare(password, result[0].password)){
                     req.session.isAuth = true;
                     req.session.user = result[0];
                     res.redirect("/dashboard");
@@ -125,6 +181,14 @@ app.post("/login", async (req,res) => {
         } );
     } );
 })
+
+// logout
+app.post("/logout", (req, res) => {
+    req.session.destroy(err => {
+        if(err) throw err;
+        res.redirect("/login");
+    } );
+});
 
 
 const port = 3000;
