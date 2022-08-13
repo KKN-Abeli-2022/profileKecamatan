@@ -2,13 +2,13 @@
     <p><%= msg %></p>
 <% } %>
 
-<form action="/dashboard/berita" method="post" class="my-20">
+<form action="/dashboard/berita" method="post" class="my-20" enctype="multipart/form-data">
     <label for="judulBerita" class="font-bold">
         Judul Berita
     </label>
     <input type="text" id="judulBerita" placeholder="Judul Berita" class="block mb-5" name="judul">
-    <input id="body" type="hidden" name="isi">
+    <input id="isi" type="hidden" name="isi">
     <trix-editor input="isi"></trix-editor>
-    <!-- <input type="file" name="" id="" class="block pb-5"> -->
+    <input type="file" id="" class="block pb-5" name="imageBerita">
     <button type="submit" class="bg-sky-500 py-2 px-4 text-white hover:bg-sky-600">Submit</button>
 </form>

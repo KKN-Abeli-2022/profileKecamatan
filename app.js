@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const moment = require("moment")
+const multer = require("multer");
 const app = express()
 
 
@@ -20,6 +21,27 @@ app.use(express.static(path.join(__dirname, "public")));
 // add middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+const fileStorage = multer.diskStorage({
+    destination: (req,file,cb) => {
+        cb(null,"images");
+    },
+    filename: (req,file,cb) => {
+        cb(null,new Date().getTime() + "-" + file.originalname);
+    }
+})
+
+const fileFilter = (req,file,cb) => {
+    if(file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg"){
+        cb(null,true);
+    } else {
+        cb(null,false);
+    }
+}
+
+app.use(multer({
+    storage: fileStorage,
+    fileFilter: fileFilter
+}).single("imageBerita"));
 
 // setting up session
 app.use(
@@ -113,7 +135,7 @@ app.get("/dashboard", isAuth, (req, res) => {
 
 app.get("/dashboard/dataUser",isAuth,(req,res) => {
     pool.getConnection((err, connection) => {
-        if (err) throw err;
+        if (err) throw err
         connection.query("SELECT * FROM pegawai", (err, result) => {
             if (err) throw err;
             // console.log(result);
@@ -139,7 +161,7 @@ app.get("/dashboard/berita",isAuth,(req,res) => {
                 title: "Berita",
                 layout: "layouts/dashboard-layout",
                 username: req.session.user.username,
-                msg: req.flash("success")
+                msg: req.flash("msg")
             })
             connection.release();
         }
@@ -147,21 +169,29 @@ app.get("/dashboard/berita",isAuth,(req,res) => {
     });
 })
 
-app.post("/dashboard/berita",isAuth,(req,res) => {
+app.post("/dashboard/berita",(req,res,next) => {
     const { judul, isi } = req.body;
     const tgl_update = moment().format("YYYY-MM-DD");
     pool.getConnection((err,connection) =>{
         if(err) throw err;
-        connection.query("INSERT INTO berita SET ?",{
-            judul: judul,
-            isi: isi,
-            tgl_update
-        } ,(err,result) => {
-            if(err) throw err;
-            req.flash("success", "Berhasil menambahkan berita");
+        if(!req.file){
+            req.flash("msg","Please upload an image");
             res.redirect("/dashboard/berita");
-        });
-
+        }
+        else{
+            const image = req.file.path;
+            console.log(image);
+            connection.query("INSERT INTO berita SET ?",{
+                judul: judul,
+                isi: isi,
+                gambar: image,
+                tgl_update
+            } ,(err,result) => {
+                if(err) throw err;
+                req.flash("msg", "Berhasil menambahkan berita");
+                res.redirect("/dashboard/berita");
+            });
+        }
     })
 })
 
@@ -220,3 +250,4 @@ app.post("/logout", (req, res) => {
 
 const port = 3000;
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
