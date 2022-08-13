@@ -3,7 +3,7 @@
     <img src="assets/img/logo.png" alt="logo" width="300" class="m-auto" />
   </div>
   <div class="shadow-lg p-4 bg-slate-100/30 backdrop-blur-md w-full max-w-screen-lg rounded-md mx-auto md:w-4/5 md:my-6 lg:text-lg">
-    <a href="/" class="flex">
+    <a href="/" class="flex hover:font-medium">
       <img src="assets/img/logo.png" alt="logo" width="30" class="" />
       <h3 class="ml-3 font-sansita">Kelurahan Abeli</h3>
     </a>
@@ -13,7 +13,7 @@
 
       <form action="/signup" class="" method="post">
         <% if (err.length > 0) { %>
-          <h1 class="text-red-500 mt-1 mb-2 text-lg font-bold"><%= err %> </h1>
+        <h1 class="text-red-500 mt-1 mb-2 text-lg font-bold"><%= err %></h1>
         <% }%>
         <label for="fullName" class="sm:mb-8">
           <div class="text-slate-800 mb-2">Nama Lengkap</div>
@@ -80,24 +80,30 @@
 
         <label for="password" class="sm:mb-8">
           <div class="text-slate-800 mb-2">Password</div>
-          <input type="password" minlength="8" class="border rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full" 
-          placeholder="Password" 
-          id="password"
-          name="password"
-          onchange="checkPassword()"
-          required
+          <input
+            type="password"
+            minlength="8"
+            class="border rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full"
+            placeholder="Password"
+            id="password"
+            name="password"
+            onchange="checkPassword()"
+            required
           />
           <p class="text-red-500 invisible peer-invalid:visible mt-1 mb-2">Password tidak valid</p>
         </label>
 
         <label for="confirmPassword" class="sm:mb-8">
           <div class="text-slate-800 mb-2">Konfirmasi Password</div>
-          <input type="password" minlength="8" class="border rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full" 
-          placeholder="Password" 
-          id="confirmPassword"
-          name="confirmPassword"
-          onchange="checkPassword()"
-          required
+          <input
+            type="password"
+            minlength="8"
+            class="border rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full"
+            placeholder="Password"
+            id="confirmPassword"
+            name="confirmPassword"
+            onchange="checkPassword()"
+            required
           />
           <p class="text-red-500 invisible peer-invalid:visible mt-1 mb-2">Password tidak valid</p>
         </label>
