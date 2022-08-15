@@ -43,6 +43,10 @@ app.use(multer({
     fileFilter: fileFilter
 }).single("imageBerita"));
 
+app.use("/images", express.static(path.join(__dirname, "images")));
+// parse html
+
+
 // setting up session
 app.use(
     session({
@@ -77,10 +81,26 @@ const isAuth = (req, res, next) => {
 
 // routes
 app.get("/", (req, res) => {
-    res.render("index",{
-        title: "Home",
-        layout: "layouts/main"
-    });
+    pool.getConnection((err,connection) => {
+        if(err){
+            res.send(err);
+        }
+        connection.query("SELECT * FROM berita ORDER BY tgl_update DESC",(err,rows) => {
+            if(err){
+                res.send(err);
+            }
+            const isi = rows.map(row => {
+                return {
+                    isi: row.isi
+                }
+            })
+            res.render("index",{
+                title: "Home",
+                layout: "layouts/main",
+                data : rows,
+            });
+        })
+    })
 });
 
 app.get("/profile", (req, res) => {
@@ -185,7 +205,8 @@ app.post("/dashboard/berita",(req,res,next) => {
                 judul: judul,
                 isi: isi,
                 gambar: image,
-                tgl_update
+                tgl_update,
+                author : req.session.user.username
             } ,(err,result) => {
                 if(err) throw err;
                 req.flash("msg", "Berhasil menambahkan berita");
@@ -208,7 +229,7 @@ app.post("/signup",(req,res) => {
             connection.query(`INSERT INTO pegawai (username, password, nama, nip, jabatan, email) VALUES ('${username}', '${hash}', '${nama}', '${nip}', '${position}', '${email}')`, (err, result) => {
                 if(err) throw err;
                 connection.release();
-                res.redirect("/login");
+                res.redirect("/login")
             });
         }
     });
