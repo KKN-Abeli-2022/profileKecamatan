@@ -95,7 +95,7 @@ app.get("/", (req, res) => {
         if(err){
             res.send(err);
         }
-        connection.query("SELECT * FROM berita ORDER BY tgl_update DESC",(err,rows) => {
+        connection.query("SELECT * FROM berita ORDER BY tgl_update DESC LIMIT 6",(err,rows) => {
             if(err){
                 res.send(err);
             }
