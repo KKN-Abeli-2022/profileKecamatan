@@ -81,6 +81,16 @@ const isAuth = (req, res, next) => {
 
 // routes
 app.get("/", (req, res) => {
+    function truncateString(str, num) {
+                if (str.length > num) {
+                    return str.slice(5, num) + "...";
+                    } else {
+                    return str;
+                    }
+                }
+    const dateOnly = (date) => {
+        return moment(date).format("DD MMMM YYYY");
+    }
     pool.getConnection((err,connection) => {
         if(err){
             res.send(err);
@@ -94,10 +104,13 @@ app.get("/", (req, res) => {
                     isi: row.isi
                 }
             })
+            // console.log(isi[0]);
             res.render("index",{
                 title: "Home",
                 layout: "layouts/main",
                 data : rows,
+                convert : truncateString,
+                date : dateOnly
             });
         })
     })
@@ -120,6 +133,24 @@ app.get("/berita",(req,res) => {
             })
     })
 })});
+
+app.get("/berita/:id",(req,res) => {
+    pool.getConnection((err,connection) => {
+        if(err) throw err;
+        connection.query(`SELECT * FROM berita WHERE id = ${req.params.id}`,(err,rows) => {
+            const judul = rows.map(row => {
+                return {
+                    konten : row.judul
+                }
+            })
+            console.log(judul[0].konten)
+            res.render("detail",{
+                title: judul[0].konten,
+                layout: "layouts/main",
+                data : rows
+            })
+    })
+})})
 
 app.get("/login",(req,res) => {
     res.render("login",{
