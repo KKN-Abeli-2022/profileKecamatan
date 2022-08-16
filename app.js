@@ -43,6 +43,10 @@ app.use(multer({
     fileFilter: fileFilter
 }).single("imageBerita"));
 
+app.use("/images", express.static(path.join(__dirname, "images")));
+// parse html
+
+
 // setting up session
 app.use(
     session({
@@ -77,10 +81,39 @@ const isAuth = (req, res, next) => {
 
 // routes
 app.get("/", (req, res) => {
-    res.render("index",{
-        title: "Home",
-        layout: "layouts/main"
-    });
+    function truncateString(str, num) {
+                if (str.length > num) {
+                    return str.slice(5, num) + "...";
+                    } else {
+                    return str;
+                    }
+                }
+    const dateOnly = (date) => {
+        return moment(date).format("DD MMMM YYYY");
+    }
+    pool.getConnection((err,connection) => {
+        if(err){
+            res.send(err);
+        }
+        connection.query("SELECT * FROM berita ORDER BY tgl_update DESC LIMIT 6",(err,rows) => {
+            if(err){
+                res.send(err);
+            }
+            const isi = rows.map(row => {
+                return {
+                    isi: row.isi
+                }
+            })
+            // console.log(isi[0]);
+            res.render("index",{
+                title: "Home",
+                layout: "layouts/main",
+                data : rows,
+                convert : truncateString,
+                date : dateOnly
+            });
+        })
+    })
 });
 
 app.get("/profile", (req, res) => {
@@ -100,6 +133,24 @@ app.get("/berita",(req,res) => {
             })
     })
 })});
+
+app.get("/berita/:id",(req,res) => {
+    pool.getConnection((err,connection) => {
+        if(err) throw err;
+        connection.query(`SELECT * FROM berita WHERE id = ${req.params.id}`,(err,rows) => {
+            const judul = rows.map(row => {
+                return {
+                    konten : row.judul
+                }
+            })
+            console.log(judul[0].konten)
+            res.render("detail",{
+                title: judul[0].konten,
+                layout: "layouts/main",
+                data : rows
+            })
+    })
+})})
 
 app.get("/login",(req,res) => {
     res.render("login",{
@@ -185,7 +236,8 @@ app.post("/dashboard/berita",(req,res,next) => {
                 judul: judul,
                 isi: isi,
                 gambar: image,
-                tgl_update
+                tgl_update,
+                author : req.session.user.username
             } ,(err,result) => {
                 if(err) throw err;
                 req.flash("msg", "Berhasil menambahkan berita");
@@ -208,7 +260,7 @@ app.post("/signup",(req,res) => {
             connection.query(`INSERT INTO pegawai (username, password, nama, nip, jabatan, email) VALUES ('${username}', '${hash}', '${nama}', '${nip}', '${position}', '${email}')`, (err, result) => {
                 if(err) throw err;
                 connection.release();
-                res.redirect("/login");
+                res.redirect("/login")
             });
         }
     });

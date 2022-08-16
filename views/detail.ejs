@@ -1,0 +1,7 @@
+<section class="mt-12">
+    <% for( let i = 0; i < data.length; i++ ) { %>
+        <h1 class="text-xl"><%=data[i].judul%></h1>
+        <img src="/<%=data[i].gambar%>" alt="<%=data[i].judul%>" class="w-full">
+        <p><%- data[i].isi %></p>
+    <% } %>
+</section>
