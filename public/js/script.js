@@ -55,14 +55,14 @@ function processSearch() {
   const filter = input.value.toLowerCase();
   const listBook = document.querySelectorAll('.list-book');
 
-  for (i in listBook) {
-    const keyword = document.querySelectorAll('.keyword')[i];
-    if (keyword.innerHTML.toLowerCase().indexOf(filter) > -1) {
-      listBook[i].style.display = '';
-    } else {
-      listBook[i].style.display = 'none';
-    }
-  }
+  // for (i in listBook) {
+  //   const keyword = document.querySelectorAll('.keyword')[i];
+  //   if (keyword.innerHTML.toLowerCase().indexOf(filter) > -1) {
+  //     listBook[i].style.display = '';
+  //   } else {
+  //     listBook[i].style.display = 'none';
+  //   }
+  // }
 }
 
 const input = document.getElementById('search');

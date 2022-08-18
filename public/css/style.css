@@ -805,6 +805,10 @@ video {
   margin-top: 0.5rem;
 }
 
+.mt-20 {
+  margin-top: 5rem;
+}
+
 .block {
   display: block;
 }
@@ -1638,6 +1642,11 @@ body {
 
 .hover\:text-white\/50:hover {
   color: rgb(255 255 255 / 0.5);
+}
+
+.hover\:text-red-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(153 27 27 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
