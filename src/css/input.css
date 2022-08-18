@@ -47,3 +47,12 @@ body {
   background: rgb(2, 0, 36);
   background: linear-gradient(45deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 41%, rgba(0, 212, 255, 1) 100%);
 }
+
+.bg-gradient-ygb {
+  background: rgb(249, 255, 0);
+  background: linear-gradient(0deg, rgba(0, 255, 132, 1) 50%, rgba(0, 212, 255, 1) 100%);
+}
+
+.active {
+  @apply bg-yellow-600;
+}
