@@ -36,16 +36,15 @@ const swiper = new Swiper('.swiper', {
 const checkPassword = () => {
   const password = document.querySelector("input[name='password']");
   const confirmPassword = document.querySelector("input[name='confirmPassword']");
-  if(password.value !== confirmPassword.value){
+  if (password.value !== confirmPassword.value) {
     confirmPassword.setCustomValidity("Passwords Don't Match");
   } else {
     confirmPassword.setCustomValidity('');
   }
-}
+};
 
 const dropdown = document.querySelector('#dropdown');
 
 const showButton = () => {
   dropdown.classList.toggle('show');
-}
-
+};
