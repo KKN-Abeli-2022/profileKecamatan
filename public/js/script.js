@@ -49,6 +49,3 @@ const showButton = () => {
   dropdown.classList.toggle('show');
 }
 
-// convert string to html
-
-

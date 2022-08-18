@@ -96,17 +96,17 @@
     <div class="flex flex-wrap justify-center text-white md:justify-evenly">
       <div class="text-center pt-4 w-full md:w-[30%]" data-aos="flip-up" data-aos-delay="200" data-aos-duration="1000">
         <i class="fa fa-male text-5xl p-5"></i>
-        <p class="text-5xl font-bold">1750</p>
+        <p class="text-5xl font-bold"><%=data[0].laki_laki%></p>
         <p class="text-xl font-semibold pt-2">Laki-Laki</p>
       </div>
       <div class="text-center pt-4 w-full md:w-[30%]" data-aos="flip-up" data-aos-delay="600" data-aos-duration="1000">
         <i class="fa fa-female text-5xl p-5"></i>
-        <p class="text-5xl font-bold">1370</p>
+        <p class="text-5xl font-bold"><%=data[0].perempuan%></p>
         <p class="text-xl font-semibold pt-2">Perempuan</p>
       </div>
       <div class="text-center pt-4 w-full md:w-[30%]" data-aos="flip-up" data-aos-delay="1000" data-aos-duration="1000">
         <i class="fa fa-group text-5xl p-5"></i>
-        <p class="text-5xl font-bold">3450</p>
+        <p class="text-5xl font-bold"><%=data[0].laki_laki + data[0].perempuan%></p>
         <p class="text-xl font-semibold pt-2">Total</p>
       </div>
     </div>
