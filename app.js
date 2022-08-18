@@ -35,6 +35,10 @@ const fileStorage = multer.diskStorage({
   },
 });
 
+const dateOnly = (date) => {
+        return moment(date).format("DD MMMM YYYY");
+    }
+
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
     cb(null, true);
@@ -255,11 +259,19 @@ app.get('/dashboard/dataUser', isAuth, (req, res) => {
 });
 
 app.get("/dashboard/dataProfile",isAuth,(req,res) => {
-    res.render("data-profile",{
-        title: "Data Profile",
-        layout: "layouts/dashboard-layout",
-        username: req.session.user.username
+  pool.getConnection((err,connection) => {
+    if(err) throw err;
+    connection.query(`SELECT * FROM tbl_penduduk,agama,etnis`,(err,result) => {
+      if(err) throw err;
+      console.log(result);
+      res.render("data-profile",{
+          title: "Data Profile",
+          layout: "layouts/dashboard-layout",
+          username: req.session.user.username,
+          data : result
+      })
     })
+  })
 })
 
 app.get("/dashboard/berita",isAuth,(req,res) => {
