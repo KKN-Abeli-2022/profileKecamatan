@@ -98,56 +98,39 @@ const transporter = mailer.createTransport({
     }
 })
 
-// send verify email
-const sendVerifyEmail = async (email, token) => {
-    const mailOptions = {
-        from: process.env.email,
-        to: email,
-        subject: "Verify your email",
-        html: `
-            <h1>Verify your email</h1>
-            <p>Click this link to verify your email</p>
-            <a href="http://localhost:3000/verify/${token}">Verify</a>
-        `
-    }
-    await transporter.sendMail(mailOptions);
-}
 
 // send reset password email
 const sendResetPasswordEmail = async (email, token) => {
-    const mailOptions = {
-        from: process.env.email,
-        to: email,
+  const mailOptions = {
+    from: process.env.email,
+    to: req.body.email,
         subject: "Reset your password",
         html: `
-            <h1>Reset your password</h1>
-            <p>Click this link to reset your password</p>
-            <a href="http://localhost:3000/reset-password/${token}">Reset Password</a>
+        <h1>Reset your password</h1>
+        <p>Click this link to reset your password</p>
+        <a href="http://localhost:3000/reset-password/${token}">Reset Password</a>
         `
+      }
+      await transporter.sendMail(mailOptions);
     }
-    await transporter.sendMail(mailOptions);
-}
-
-// generate token
-const generateToken = async () => {
-    const token =  crypto.randomBytes(32).toString("hex");
-    return await token;
-}
-
-// routes
-app.get('/', (req, res) => {
-  function truncateString(str, num) {
-    if (str.length > num) {
-      return str.slice(5, num) + '...';
-    } else {
+    
+    
+    const truncateString = (str, num) => {
+      if (str.length > num) {
+        return str.slice(5, num) + '...';
+      } else {
       return str;
     }
   }
-  pool.getConnection((err,connection) => {
+
+
+// routes
+app.get('/', (req, res) => {
+    pool.getConnection((err,connection) => {
         if(err){
             res.send(err);
         }
-        connection.query("SELECT * FROM berita,tbl_penduduk ORDER BY berita.tgl_update DESC LIMIT 6",(err,rows) => {
+        connection.query("SELECT berita.id,berita.judul,berita.isi,berita.gambar,tbl_penduduk.laki_laki,tbl_penduduk.perempuan FROM berita,tbl_penduduk ORDER BY berita.tgl_update DESC LIMIT 6",(err,rows) => {
             if(err){
                 res.send(err);
             }
@@ -156,7 +139,7 @@ app.get('/', (req, res) => {
                     isi: row.isi
                 }
             })
-            // console.log(isi[0]);
+            console.log(rows);
             res.render("index",{
                 title: "Home",
                 layout: "layouts/main",
@@ -179,10 +162,14 @@ app.get('/profile', (req, res) => {
 app.get('/berita', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    connection.query('SELECT * FROM berita', (err, rows) => {
+    connection.query('SELECT * FROM berita ORDER BY tgl_update DESC', (err, rows) => {
+      if (err) throw err;
       res.render('berita', {
         title: 'Berita',
         layout: 'layouts/main',
+        data: rows,
+        date: dateOnly,
+        convert: truncateString,
       });
     });
   });
@@ -224,6 +211,7 @@ app.get('/signup', (req, res) => {
 });
 
 app.get("/dashboard", isAuth, (req, res) => {
+
     pool.getConnection((err, connection) => {
         if (err) throw err;
         connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`, (err, result) => {
@@ -234,7 +222,7 @@ app.get("/dashboard", isAuth, (req, res) => {
                 layout: "layouts/dashboard-layout",
                 username: req.session.user.username,
                 data: result,
-                generateToken
+                msg : req.flash("msg")
             });
             connection.release();
         });
@@ -322,6 +310,58 @@ app.post('/dashboard/berita', (req, res, next) => {
   });
 });
 
+// verification email
+app.get("/dashboard/verify-email",isAuth, async (req,res) => {
+    // generate token
+    const token = crypto.randomBytes(20).toString('hex');
+    // set token to database
+    pool.getConnection((err,connection) => {
+      if(err) throw err;
+      connection.query(`INSERT INTO token SET ?`,{
+        token,
+        email : req.session.user.email,
+        date: new Date()
+      })
+      connection.release();
+    })
+    const mailOptions = {
+      from: process.env.email,
+      to: req.session.user.email,
+      subject: "Verify Email",
+      html: `
+        <h1Verify Your Email</h1>
+        <p>Click this link to verify your email</p>
+        <a href="http://localhost:3000/verify-email/${token}">Verify Email</a>
+        `
+    }
+    await transporter.sendMail(mailOptions);
+    req.flash("msg","verified email has been sent to your email don't forget to check your spam folder");
+    res.redirect("/dashboard")
+})
+
+app.get("/verify-email/:token", async (req,res) => {
+  const token = req.params.token;
+  pool.getConnection((err,connection) => {
+    if(err) throw err;
+    connection.query(`SELECT * FROM token WHERE token = '${token}'`,(err,result) => {
+      if(err) throw err;
+      if(result.length > 0){
+        const email = result[0].email;
+        connection.query(`UPDATE pegawai SET verifiedEmail = 1 WHERE email = '${email}'`,(err,result) => {
+          if(err) throw err;
+          connection.query(`DELETE FROM token WHERE email = '${email}'`,(err,result) => {
+            if(err) throw err;
+            res.redirect("/dashboard");
+          })
+        })
+      }else{
+        res.redirect("/dashboard");
+      }
+    })
+  })
+})
+
+
 app.post('/signup', (req, res) => {
   const { username, password, nama, nip, position, email, confirmPassword } = req.body;
   const salt = bcrypt.genSaltSync(10);
@@ -348,7 +388,7 @@ app.post('/login', async (req, res) => {
     connection.query(`SELECT * FROM pegawai WHERE username = '${username}'`, async (err, result) => {
       if (err) throw err;
       if (result.length > 0) {
-        console.log(bcrypt.compareSync(password, result[0].password));
+        // console.log(bcrypt.compareSync(password, result[0].password));
         if (await bcrypt.compare(password, result[0].password)) {
           req.session.isAuth = true;
           req.session.user = result[0];
