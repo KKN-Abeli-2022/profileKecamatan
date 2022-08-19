@@ -1,21 +1,21 @@
-const express = require("express");
-const path = require("path");
-const expressLayout = require("express-ejs-layouts");
-const bodyParser = require("body-parser");
-const session = require("express-session");
-const mysql = require("mysql");
-const bcrypt = require("bcryptjs");
-const flash = require("connect-flash");
-const cookieParser = require("cookie-parser");
-const moment = require("moment")
-const multer = require("multer");
-const mailer = require("nodemailer")
-const crypto = require("crypto");
-const app = express()
-const dotenv = require("dotenv");
+const express = require('express');
+const path = require('path');
+const expressLayout = require('express-ejs-layouts');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const mysql = require('mysql');
+const bcrypt = require('bcryptjs');
+const flash = require('connect-flash');
+const cookieParser = require('cookie-parser');
+const moment = require('moment');
+const multer = require('multer');
+const mailer = require('nodemailer');
+const crypto = require('crypto');
+const app = express();
+const dotenv = require('dotenv');
 
 // set environment
-dotenv.config({path: "./.env"});
+dotenv.config({ path: './.env' });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,6 +34,10 @@ const fileStorage = multer.diskStorage({
     cb(null, new Date().getTime() + '-' + file.originalname);
   },
 });
+
+const dateOnly = (date) => {
+  return moment(date).format('DD MMMM YYYY');
+};
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
@@ -55,12 +59,12 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // setting up session
 app.use(
-    session({
-        secret: process.env.cookieParserSecret,
-        resave: true,
-        saveUninitialized: false
-    })
-)
+  session({
+    secret: process.env.cookieParserSecret,
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 
 // add flash
 app.use(cookieParser(process.env.cookieParserSecret));
@@ -87,83 +91,82 @@ const isAuth = (req, res, next) => {
 
 // setting up mailer
 const transporter = mailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.email,
-        pass: process.env.password
-    }
-})
+  service: 'gmail',
+  auth: {
+    user: process.env.email,
+    pass: process.env.password,
+  },
+});
 
 // send verify email
 const sendVerifyEmail = async (email, token) => {
-    const mailOptions = {
-        from: process.env.email,
-        to: email,
-        subject: "Verify your email",
-        html: `
+  const mailOptions = {
+    from: process.env.email,
+    to: email,
+    subject: 'Verify your email',
+    html: `
             <h1>Verify your email</h1>
             <p>Click this link to verify your email</p>
             <a href="http://localhost:3000/verify/${token}">Verify</a>
-        `
-    }
-    await transporter.sendMail(mailOptions);
-}
+        `,
+  };
+  await transporter.sendMail(mailOptions);
+};
 
 // send reset password email
 const sendResetPasswordEmail = async (email, token) => {
-    const mailOptions = {
-        from: process.env.email,
-        to: email,
-        subject: "Reset your password",
-        html: `
+  const mailOptions = {
+    from: process.env.email,
+    to: email,
+    subject: 'Reset your password',
+    html: `
             <h1>Reset your password</h1>
             <p>Click this link to reset your password</p>
             <a href="http://localhost:3000/reset-password/${token}">Reset Password</a>
-        `
-    }
-    await transporter.sendMail(mailOptions);
-}
+        `,
+  };
+  await transporter.sendMail(mailOptions);
+};
 
 // generate token
 const generateToken = async () => {
-    const token =  crypto.randomBytes(32).toString("hex");
-    return await token;
-}
+  const token = crypto.randomBytes(32).toString('hex');
+  return await token;
+};
 
+const truncateString = (str, num) => {
+  if (str.length > num) {
+    return str.slice(5, num) + '...';
+  } else {
+    return str;
+  }
+};
 // routes
 app.get('/', (req, res) => {
-  function truncateString(str, num) {
-    if (str.length > num) {
-      return str.slice(5, num) + '...';
-    } else {
-      return str;
+  pool.getConnection((err, connection) => {
+    if (err) {
+      res.send(err);
     }
-  }
-  pool.getConnection((err,connection) => {
-        if(err){
-            res.send(err);
-        }
-        connection.query("SELECT * FROM berita,tbl_penduduk ORDER BY berita.tgl_update DESC LIMIT 6",(err,rows) => {
-            if(err){
-                res.send(err);
-            }
-            const isi = rows.map(row => {
-                return {
-                    isi: row.isi
-                }
-            })
-            // console.log(isi[0]);
-            res.render("index",{
-                title: "Home",
-                layout: "layouts/main",
-                data : rows,
-                convert : truncateString,
-                date : dateOnly
-            });
-        })
-    })
+    connection.query('SELECT * FROM berita,tbl_penduduk ORDER BY berita.tgl_update DESC LIMIT 6', (err, rows) => {
+      if (err) {
+        res.send(err);
+      }
+      const isi = rows.map((row) => {
+        return {
+          isi: row.isi,
+        };
+      });
+      // console.log(isi[0]);
+      res.render('index', {
+        title: 'Home',
+        layout: 'layouts/main',
+        data: rows,
+        convert: truncateString,
+        date: dateOnly,
+      });
+    });
+  });
 });
-
 
 app.get('/profile', (req, res) => {
   res.render('profile', {
@@ -179,6 +182,9 @@ app.get('/berita', (req, res) => {
       res.render('berita', {
         title: 'Berita',
         layout: 'layouts/main',
+        data: rows,
+        date: dateOnly,
+        convert: truncateString,
       });
     });
   });
@@ -219,23 +225,23 @@ app.get('/signup', (req, res) => {
   });
 });
 
-app.get("/dashboard", isAuth, (req, res) => {
-    pool.getConnection((err, connection) => {
-        if (err) throw err;
-        connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`, (err, result) => {
-            console.log(req.session.user.username)
-            if (err) throw err;
-            res.render("dashboard",{
-                title: "Dashboard",
-                layout: "layouts/dashboard-layout",
-                username: req.session.user.username,
-                data: result,
-                generateToken
-            });
-            connection.release();
-        });
-    })
+app.get('/dashboard', isAuth, (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`, (err, result) => {
+      console.log(req.session.user.username);
+      if (err) throw err;
+      res.render('dashboard', {
+        title: 'Dashboard',
+        layout: 'layouts/dashboard-layout',
+        username: req.session.user.username,
+        data: result,
+        generateToken,
+      });
+      connection.release();
+    });
   });
+});
 
 app.get('/dashboard/dataUser', isAuth, (req, res) => {
   pool.getConnection((err, connection) => {
@@ -254,31 +260,30 @@ app.get('/dashboard/dataUser', isAuth, (req, res) => {
   });
 });
 
-app.get("/dashboard/dataProfile",isAuth,(req,res) => {
-    res.render("data-profile",{
-        title: "Data Profile",
-        layout: "layouts/dashboard-layout",
-        username: req.session.user.username
-    })
-})
+app.get('/dashboard/dataProfile', isAuth, (req, res) => {
+  res.render('data-profile', {
+    title: 'Data Profile',
+    layout: 'layouts/dashboard-layout',
+    username: req.session.user.username,
+  });
+});
 
-app.get("/dashboard/berita",isAuth,(req,res) => {
-    pool.getConnection((err, connection) => {
-        if (err) throw err;
-        connection.query("SELECT * FROM pegawai", (err, result) => {
-            if (err) throw err;
-            // console.log(result);
-            res.render("uploadBerita",{
-                title: "Berita",
-                layout: "layouts/dashboard-layout",
-                username: req.session.user.username,
-                msg: req.flash("msg")
-            })
-            connection.release();
-        }
-        )
+app.get('/dashboard/berita', isAuth, (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query('SELECT * FROM pegawai', (err, result) => {
+      if (err) throw err;
+      // console.log(result);
+      res.render('uploadBerita', {
+        title: 'Berita',
+        layout: 'layouts/dashboard-layout',
+        username: req.session.user.username,
+        msg: req.flash('msg'),
+      });
+      connection.release();
     });
   });
+});
 
 app.post('/dashboard/berita', (req, res, next) => {
   const { judul, isi } = req.body;
