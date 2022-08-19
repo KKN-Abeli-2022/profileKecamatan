@@ -36,8 +36,8 @@ const fileStorage = multer.diskStorage({
 });
 
 const dateOnly = (date) => {
-        return moment(date).format("DD MMMM YYYY");
-    }
+  return moment(date).format('DD MMMM YYYY');
+};
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
@@ -147,7 +147,7 @@ app.get('/', (req, res) => {
     if (err) {
       res.send(err);
     }
-    connection.query('SELECT * FROM berita,tbl_penduduk ORDER BY berita.tgl_update DESC LIMIT 6', (err, rows) => {
+    connection.query('SELECT berita.id,berita.judul,berita.isi,berita.gambar,tbl_penduduk.laki_laki,tbl_penduduk.perempuan FROM berita,tbl_penduduk ORDER BY berita.tgl_update DESC LIMIT 6', (err, rows) => {
       if (err) {
         res.send(err);
       }
@@ -268,21 +268,21 @@ app.get('/dashboard/dataProfile', isAuth, (req, res) => {
   });
 });
 
-app.get("/dashboard/dataProfile",isAuth,(req,res) => {
-  pool.getConnection((err,connection) => {
-    if(err) throw err;
-    connection.query(`SELECT * FROM tbl_penduduk,agama,etnis`,(err,result) => {
-      if(err) throw err;
+app.get('/dashboard/dataProfile', isAuth, (req, res) => {
+  pool.getConnection((err, connection) => {
+    if (err) throw err;
+    connection.query(`SELECT * FROM tbl_penduduk,agama,etnis`, (err, result) => {
+      if (err) throw err;
       console.log(result);
-      res.render("data-profile",{
-          title: "Data Profile",
-          layout: "layouts/dashboard-layout",
-          username: req.session.user.username,
-          data : result
-      })
-    })
-  })
-})
+      res.render('data-profile', {
+        title: 'Data Profile',
+        layout: 'layouts/dashboard-layout',
+        username: req.session.user.username,
+        data: result,
+      });
+    });
+  });
+});
 app.get('/dashboard/berita', isAuth, (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;

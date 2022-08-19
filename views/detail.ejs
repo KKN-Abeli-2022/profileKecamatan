@@ -1,7 +1,35 @@
-<section class="mt-12">
+<main class="container mx-auto bg-white mb-0 pt-3 px-5">
+  <section class="mt-12">
     <% for( let i = 0; i < data.length; i++ ) { %>
-        <h1 class="text-xl"><%=data[i].judul%></h1>
-        <img src="/<%=data[i].gambar%>" alt="<%=data[i].judul%>" class="w-full">
-        <p><%- data[i].isi %></p>
-    <% } %>
-</section>
+    <h1 class="text-4xl font-bold mb-7 lg:text-4xl"><%=data[i].judul%></h1>
+    <img src="/<%=data[i].gambar%>" alt="<%=data[i].judul%>" class="w-full h-[300px] object-cover object-center" />
+    <%- data[i].isi %> <% } %>
+  </section>
+
+  <section class="flex justify-between mt-9">
+    <div>
+      <p class="text-lg mb-3">Sebelumnya</p>
+      <a href="#" class="cursor-pointer text-xl font-semibold text-slate-700 hover:underline hover:text-slate-900">Judul</a>
+    </div>
+    <div class="text-right">
+      <p class="text-lg mb-3">Selanjutnya</p>
+      <a href="#" class="cursor-pointer text-xl font-semibold text-slate-700 hover:underline hover:text-slate-900">Judul</a>
+    </div>
+  </section>
+
+  <section class="mt-9 pb-5">
+    <h3 class="text-xl font-semibold">Informasi Lainnya</h3>
+    <hr class="border-t-2 border-t-black "/>
+    <div class="mt-8 md:flex md:justify-evenly">
+        <div class="group bg-slate-100 w-full h-20 mb-4 rounded-lg overflow-hidden flex transition ease-in-out duration-300 hover:bg-slate-200 md:hover:shadow-under md:hover:-translate-y-2 md:w-[30%] md:block md:h-auto md:mx-3">
+            <div class="overflow-hidden w-1/4 md:w-full">
+                <img src="/assets/img/example1.jpg" alt="image" class="h-full transition ease-in-out duration-300 group-hover:scale-150 group-hover:brightness-125">
+            </div>
+            <div class="px-5 py-3">
+                <h5 class="text-slate-800 mb-2">12 Juni 2022</h4>
+                <a href="#" class="text-xl font-semibold hover:underline hover:text-sky-600">Judul</a>
+            </div>
+        </div>
+    </div>
+  </section>
+</main>
