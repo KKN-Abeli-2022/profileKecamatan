@@ -35,6 +35,10 @@ button:hover span.hamburger-line {
   text-shadow: 2px 2px 2px black;
 }
 
+.border-text {
+  text-shadow: 0 0 5px black;
+}
+
 .show {
   @apply translate-y-[50px];
 }
@@ -51,6 +55,15 @@ body {
 .bg-gradient-ygb {
   background: rgb(249, 255, 0);
   background: linear-gradient(0deg, rgba(0, 255, 132, 1) 50%, rgba(0, 212, 255, 1) 100%);
+}
+
+.bg-gradient-wgb {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(28, 255, 147, 1) 33%, rgba(53, 199, 255, 1) 70%, rgba(0, 56, 255, 1) 100%);
+}
+
+.bg-gradient-gb {
+  background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
 }
 
 .active {

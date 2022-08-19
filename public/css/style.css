@@ -897,6 +897,10 @@ video {
   width: 3.5rem;
 }
 
+.w-\[70\%\] {
+  width: 70%;
+}
+
 .w-1\/2 {
   width: 50%;
 }
@@ -1061,6 +1065,16 @@ video {
   background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 
+.bg-red-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
+}
+
+.bg-emerald-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+}
+
 .bg-slate-600\/40 {
   background-color: rgb(71 85 105 / 0.4);
 }
@@ -1100,16 +1114,6 @@ video {
 .bg-slate-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(15 23 42 / var(--tw-bg-opacity));
-}
-
-.bg-red-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(220 38 38 / var(--tw-bg-opacity));
-}
-
-.bg-emerald-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(16 185 129 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-b {
@@ -1247,6 +1251,16 @@ video {
   padding-right: 1.5rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.py-9 {
+  padding-top: 2.25rem;
+  padding-bottom: 2.25rem;
+}
+
 .py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
@@ -1285,11 +1299,6 @@ video {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
-}
-
-.py-3 {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
 }
 
 .pt-3 {
@@ -1498,16 +1507,16 @@ video {
   transition-duration: 150ms;
 }
 
+.duration-200 {
+  transition-duration: 200ms;
+}
+
 .duration-500 {
   transition-duration: 500ms;
 }
 
 .duration-300 {
   transition-duration: 300ms;
-}
-
-.duration-200 {
-  transition-duration: 200ms;
 }
 
 .ease-in-out {
@@ -1567,6 +1576,10 @@ button:hover span.hamburger-line {
   text-shadow: 2px 2px 2px black;
 }
 
+.border-text {
+  text-shadow: 0 0 5px black;
+}
+
 .show {
   --tw-translate-y: 50px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -1584,6 +1597,15 @@ body {
 .bg-gradient-ygb {
   background: rgb(249, 255, 0);
   background: linear-gradient(0deg, rgba(0, 255, 132, 1) 50%, rgba(0, 212, 255, 1) 100%);
+}
+
+.bg-gradient-wgb {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(28, 255, 147, 1) 33%, rgba(53, 199, 255, 1) 70%, rgba(0, 56, 255, 1) 100%);
+}
+
+.bg-gradient-gb {
+  background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
 }
 
 .active {
@@ -1625,6 +1647,11 @@ body {
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
+.hover\:text-slate-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(71 85 105 / var(--tw-text-opacity));
+}
+
 .hover\:text-red-800:hover {
   --tw-text-opacity: 1;
   color: rgb(153 27 27 / var(--tw-text-opacity));
@@ -1642,11 +1669,6 @@ body {
 
 .hover\:text-white\/50:hover {
   color: rgb(255 255 255 / 0.5);
-}
-
-.hover\:text-slate-600:hover {
-  --tw-text-opacity: 1;
-  color: rgb(71 85 105 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
