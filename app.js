@@ -175,12 +175,19 @@ app.get('/profile', (req, res) => {
   });
 });
 
-app.get('/berita', (req, res) => {
+app.get('/layanan', (req, res) => {
+  res.render('layanan', {
+    title: 'Layanan',
+    layout: 'layouts/main',
+  });
+});
+
+app.get('/informasi', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query('SELECT * FROM berita', (err, rows) => {
-      res.render('berita', {
-        title: 'Berita',
+      res.render('informasi', {
+        title: 'Informasi',
         layout: 'layouts/main',
         data: rows,
         date: dateOnly,
@@ -190,7 +197,7 @@ app.get('/berita', (req, res) => {
   });
 });
 
-app.get('/berita/:id', (req, res) => {
+app.get('/informasi/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(`SELECT * FROM berita WHERE id = ${req.params.id}`, (err, rows) => {
