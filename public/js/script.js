@@ -67,12 +67,18 @@ function processSearch() {
 
 const input = document.getElementById('search');
 const searchBox = document.getElementById('search-box');
-input.addEventListener('focus', function () {
-  searchBox.classList.add('bx-burst');
-  input.placeholder = 'Cari berita berdasarkan judul';
-});
-input.addEventListener('blur', function () {
-  searchBox.classList.remove('bx-burst');
-  input.placeholder = 'Cari ...';
-});
+// input.addEventListener('focus', function () {
+//   searchBox.classList.add('bx-burst');
+//   input.placeholder = 'Cari berita berdasarkan judul';
+// });
+// input.addEventListener('blur', function () {
+//   searchBox.classList.remove('bx-burst');
+//   input.placeholder = 'Cari ...';
+// });
 
+const layanan = document.querySelector('#layanan');
+
+layanan.addEventListener('click', function (e) {
+  const target = e.target;
+  console.log(target);
+});
