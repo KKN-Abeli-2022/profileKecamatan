@@ -20,6 +20,9 @@
         <% if (err.length > 0 ) { %>
           <h1 class="text-red-500 mt-1 mb-2 text-lg font-bold"><%= err %></h1>
         <% } %>
+        <% if (msg.length > 0 ) { %>
+          <h1 class="text-emerald-500 mt-1 mb-2 text-lg font-bold"><%= msg %></h1>
+        <% } %>
         <label for="username" class="sm:mb-8">
           <div class="text-slate-800 mb-2">Username</div>
           <input
@@ -51,7 +54,7 @@
     <div id="close-btn" class="absolute top-0 right-0 text-red-600 text-4xl w-14 h-14 rounded-full cursor-pointer flex justify-center items-center hover:bg-red-600 hover:text-white md:-top-5 md:-right-5 md:bg-white md:border md:border-black"><i class="fa-solid fa-xmark"></i></div>
     <h1 class="font-bold text-4xl">Lupa Password</h1>
     <p class="pt-5">Masukkan email Anda untuk mengirimkan pengaturan ulang kata sandi.</p>
-    <form action="" class="mt-3">
+    <form action="/forgot-Password" method="post" class="mt-3">
       <label for="email">
         <div class="text-slate-800 mb-2">Email</div>
         <input

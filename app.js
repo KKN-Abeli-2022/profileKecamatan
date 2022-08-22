@@ -11,6 +11,7 @@ const moment = require("moment")
 const multer = require("multer");
 const mailer = require("nodemailer")
 const crypto = require("crypto");
+const methodOverride = require("method-override")
 const app = express()
 const dotenv = require("dotenv");
 
@@ -26,6 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // add middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(methodOverride("_method"));
+
+// setting up multer
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'images');
@@ -55,7 +59,6 @@ app.use(
 );
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
-// parse html
 
 // setting up session
 app.use(
@@ -98,21 +101,6 @@ const transporter = mailer.createTransport({
     }
 })
 
-
-// send reset password email
-const sendResetPasswordEmail = async (email, token) => {
-  const mailOptions = {
-    from: process.env.email,
-    to: req.body.email,
-        subject: "Reset your password",
-        html: `
-        <h1>Reset your password</h1>
-        <p>Click this link to reset your password</p>
-        <a href="http://localhost:3000/reset-password/${token}">Reset Password</a>
-        `
-      }
-      await transporter.sendMail(mailOptions);
-    }
     
     
     const truncateString = (str, num) => {
@@ -199,6 +187,7 @@ app.get('/login', (req, res) => {
     title: 'Login',
     layout: 'layouts/login-signup',
     err: req.flash('error'),
+    msg: req.flash("msg")
   });
 });
 
@@ -358,6 +347,95 @@ app.get("/verify-email/:token", async (req,res) => {
         res.redirect("/dashboard");
       }
     })
+  })
+})
+
+// forgot-password
+app.post("/forgot-password",(req,res) => {
+  const {email} = req.body;
+  // generate token
+  const token = crypto.randomBytes(20).toString("hex");
+  // set token database
+  pool.getConnection((err,connection) => {
+    if(err) throw err;
+    connection.query(`SELECT * FROM pegawai WHERE email = "${email}"`,(err,result) => {
+      if(err) throw err;
+      else if(result.length > 0){
+        connection.query(`INSERT INTO token SET ?`,{
+          token,
+          email,
+          date : new Date()
+        })
+        connection.release();
+        const mailOptions = {
+          from : process.env.email,
+          to : email,
+          subject : "Reset Password",
+          html : `
+            <h1> Reset Password </h1>
+            <p> Reset your password by clicking this link <a href="http://localhost:3000/forgot-password/${token}">Reset Password</a></p>
+          `
+        }
+        transporter.sendMail(mailOptions)
+        req.flash("msg","reset password link has been sent to your email");
+        res.redirect("/login")
+      } else {
+        req.flash("error","email not found");
+        res.redirect("/login")
+      }
+    })
+  })
+})
+
+app.get("/forgot-password/:token", async (req,res) => {
+const token = req.params.token;
+  pool.getConnection((err,connection) => {
+    if(err) throw err;
+    connection.query(`SELECT * FROM token WHERE token = '${token}'`,(err,result) => {
+      if(err) throw err;
+      console.log(result[0].email)
+      if(result.length > 0){
+        const email = result[0].email;
+        connection.query(`SELECT * FROM pegawai WHERE email = '${email}'`,(err,result) => {
+          if(err) throw err;
+          if(result.length > 0) {
+            res.render("forgot-password",{
+              title: "Reset Password",
+              layout: 'layouts/login-signup',
+              username: result[0].username,
+              email : result[0].email,
+              id : result[0].id,
+              err : req.flash("err")
+            })
+          }
+        })
+      }else{
+        res.redirect("/login");
+      }
+    })
+  })
+})
+
+app.put("/reset-password",(req,res) => {
+  const {id,email,password,username,confirmPassword} = req.body;
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+  pool.getConnection((err,connection) => {
+    if(err) throw err;
+    if(password !== confirmPassword){
+      req.flash("err","Password and Password Confirmation didn't match");
+      connection.query(`SELECT token FROM token WHERE email = "${email}"`,(err,result) => {
+        res.redirect(`/forgot-password/${result[0].token}`)
+      })
+    } else {
+      connection.query(`DELETE FROM token WHERE email = '${email}'`,(err,result) => {
+        connection.query(`UPDATE pegawai SET ? WHERE id = '${id}'`,{
+          password : hash
+        })
+        req.flash("msg","your password has been updated")
+        res.redirect("/login")
+      })
+    }
   })
 })
 
