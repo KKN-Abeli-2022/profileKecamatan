@@ -28,18 +28,21 @@
   <section class="mt-16 mx-auto bg-gradient-to-b from-white to-sky-200 py-9">
     <h1 class="text-3xl text-center font-bold lg:text-4xl" data-aos="fade-right">Struktur Organisasi</h1>
     <hr class="w-1/4 mb-4 mx-auto border-t-[3px] border-t-slate-700" />
-    <div class="w-full my-5 flex justify-center">
-      <img src="/assets/img/struktur.png" alt="struktur organisasi" width="90%">
+    <div class="w-full my-5">
+      <p class="indent-8 px-5 mb-5">Berikut adalah struktur organisasi di Kelurahan Abeli.</p>
+      <img src="/assets/img/struktur.png" alt="struktur organisasi" width="70%" class="mx-auto">
     </div>
   </section>
   <!-- news start -->
   <section class="mx-auto w-full bg-gradient-to-b from-sky-200 to-white">
     <h1 class="text-3xl text-center font-bold lg:text-4xl" data-aos="fade-left">Berita Terbaru</h1>
     <hr class="w-1/4 mb-4 mx-auto border-t-[3px] border-t-slate-700" />
-    <div class="container w-full mx-auto md:flex md:justify-evenly md:flex-wrap">
+    <div class="container mt-7 w-full mx-auto md:flex md:justify-evenly md:flex-wrap">
       <% for( let i = 0; i < data.length; i++ ) { %>
-        <div class="mx-auto w-[90%] rounded-lg shadow-md border-1 overflow-hidden my-6 bg-white md:w-[30%]" data-aos="flip-right">
-          <img src="<%= data[i].gambar %>" alt="image" />
+        <div class="group mx-auto mb-7 w-[90%] rounded-lg shadow-md border-1 overflow-hidden my- transition ease-in-out duration-300 bg-white hover:bg-emerald-50 md:w-[30%] md:hover:shadow-under md:hover:translate-y-2" data-aos="flip-right">
+          <div class="overflow-hidden">
+          <img src="<%= data[i].gambar %>" alt="image" width="100%" class="object-cover object-center transition ease-in-out duration-300 group-hover:brightness-125 group-hover:scale-[1.1]" />
+          </div>
           <div class="my-3 px-3">
             <h2 class="text-2xl font-bold"><%= data[i].judul %></h2>
             <h4 class="text-[0.8em]"><%= date(data[i].tgl_update) %>, ditulis oleh <span class="font-bold"><%= data[i].author %></span></h4>
