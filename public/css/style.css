@@ -886,6 +886,14 @@ video {
   height: 10rem;
 }
 
+.h-\[800px\] {
+  height: 800px;
+}
+
+.h-\[100px\] {
+  height: 100px;
+}
+
 .w-full {
   width: 100%;
 }
@@ -1004,6 +1012,10 @@ video {
 
 .justify-evenly {
   justify-content: space-evenly;
+}
+
+.overflow-auto {
+  overflow: auto;
 }
 
 .overflow-hidden {
