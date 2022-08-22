@@ -254,9 +254,9 @@ app.get('/dashboard/dataUser', isAuth, (req, res) => {
   });
 });
 
-app.get("/dashboard/dataProfile",isAuth,(req,res) => {
-    res.render("data-profile",{
-        title: "Data Profile",
+app.get("/dashboard/dataPenduduk",isAuth,(req,res) => {
+    res.render("data-penduduk",{
+        title: "Data Penduduk",
         layout: "layouts/dashboard-layout",
         username: req.session.user.username
     })
