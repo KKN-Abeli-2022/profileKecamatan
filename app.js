@@ -147,13 +147,13 @@ app.get('/profile', (req, res) => {
   });
 });
 
-app.get('/berita', (req, res) => {
+app.get('/informasi', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query('SELECT * FROM berita ORDER BY tgl_update DESC', (err, rows) => {
       if (err) throw err;
-      res.render('berita', {
-        title: 'Berita',
+      res.render('informasi', {
+        title: 'Informasi',
         layout: 'layouts/main',
         data: rows,
         date: dateOnly,
@@ -163,7 +163,7 @@ app.get('/berita', (req, res) => {
   });
 });
 
-app.get('/berita/:id', (req, res) => {
+app.get('/informasi/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(`SELECT * FROM berita WHERE id = ${req.params.id}`, (err, rows) => {
@@ -181,6 +181,13 @@ app.get('/berita/:id', (req, res) => {
     });
   });
 });
+
+app.get("/layanan",(req,res) => {
+  res.render("layanan",{
+    title : "layanan",
+    layout : "layouts/main"
+  })
+})
 
 app.get('/login', (req, res) => {
   res.render('login', {
@@ -251,14 +258,14 @@ app.get("/dashboard/dataProfile",isAuth,(req,res) => {
   })
 })
 
-app.get("/dashboard/berita",isAuth,(req,res) => {
+app.get("/dashboard/informasi",isAuth,(req,res) => {
     pool.getConnection((err, connection) => {
         if (err) throw err;
         connection.query("SELECT * FROM pegawai", (err, result) => {
             if (err) throw err;
             // console.log(result);
             res.render("uploadBerita",{
-                title: "Berita",
+                title: "Informasi",
                 layout: "layouts/dashboard-layout",
                 username: req.session.user.username,
                 msg: req.flash("msg")
@@ -276,7 +283,7 @@ app.post('/dashboard/berita', (req, res, next) => {
     if (err) throw err;
     if (!req.file) {
       req.flash('msg', 'Please upload an image');
-      res.redirect('/dashboard/berita');
+      res.redirect('/dashboard/informasi');
     } else {
       const image = req.file.path;
       console.log(image);
@@ -291,8 +298,8 @@ app.post('/dashboard/berita', (req, res, next) => {
         },
         (err, result) => {
           if (err) throw err;
-          req.flash('msg', 'Berhasil menambahkan berita');
-          res.redirect('/dashboard/berita');
+          req.flash('msg', 'Berhasil menambahkan informasi');
+          res.redirect('/dashboard/informasi');
         }
       );
     }
