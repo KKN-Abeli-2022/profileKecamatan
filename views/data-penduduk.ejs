@@ -3,38 +3,23 @@
     <div class="mt-20 ">
         <div>
             <h1 class="text-2xl mb-3 font-bold">Data Penduduk</h1>
-            <input type="search" class="text:border border border-slate-400 hover:rounded-lg input  px-2 py-2 mb-4 float-right" placeholder='search'/>
-            <a href="add-Penduduk.ejs"><i class="fa-solid fa-user-plus"></i></a>
-            
         </div>
-        
-
         <table class="table-auto border border-black border-collapse w-full ">
             <thead >
                 <tr>
-                    <th class="border border-black py-4 bg-sky-500">nama</th>
-                    <th class="border border-black py-4 bg-sky-500">nip</th>
-                    <th class="border border-black py-4 bg-sky-500" >email</th>
-                    <th class="border border-black py-4 bg-sky-500">username</th>
-                    <th class="border border-black py-4 bg-sky-500">jabatan</th>
-                    <th class="border border-black py-4 bg-sky-500">Aksi</th>
-
+                    <th class="border border-black py-4 bg-sky-500">Laki-Laki</th>
+                    <th class="border border-black py-4 bg-sky-500">Perempuan</th>
                 </tr>
             </thead>
             <tbody>
                 <% for( let i = 0; i < data.length; i++ ) { %>
                     <tr>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].nama %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].nip %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].email %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].username %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].jabatan %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].laki-laki %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].perempuan %></td>
                         <td class="border border-black p-3 bg-slate-200">
-                            <a href='update-pegawai.ejs' class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300"><i class="fa-solid fa-pencil "></i></a> |
-                            <a href='delete-pegawai.ejs' class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300"><i class="fa-solid fa-trash"></i></a>
+                            <a href='update-penduduk.ejs' class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan mengupdate data ini ?')"><i class="fa-solid fa-pencil "></i></a> |
+                            <a href='delete-penduduk.ejs' class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></a>
                         </td>
-
-
                     </tr>
                 <% } %>
             </tbody>
