@@ -122,11 +122,6 @@ app.get('/', (req, res) => {
             if(err){
                 res.send(err);
             }
-            const isi = rows.map(row => {
-                return {
-                    isi: row.isi
-                }
-            })
             res.render("index",{
                 title: "Home",
                 layout: "layouts/main",
@@ -166,17 +161,27 @@ app.get('/informasi/:id', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     connection.query(`SELECT * FROM berita WHERE id = ${req.params.id}`, (err, rows) => {
-      const judul = rows.map((row) => {
+      const konten = rows.map((row) => {
         return {
-          konten: row.judul,
+          judul: row.judul,
+          isi : row.isi,
+          gambar : row.gambar,
+          penulis : row.author,
+          id : row.id
         };
       });
-      console.log(judul[0].konten);
-      res.render('detail', {
-        title: judul[0].konten,
-        layout: 'layouts/main',
-        data: rows,
-      });
+      connection.query(`SELECT * FROM berita`,(err,rows) => {
+        res.render('detail', {
+          title: konten[0].judul,
+          layout: 'layouts/main',
+          judul : konten[0].judul,
+          isi : konten[0].isi,
+          gambar : konten[0].gambar,
+          penulis : konten[0].penulis,
+          id : konten[0].id,
+          data : rows
+        });
+      })
     });
   });
 });

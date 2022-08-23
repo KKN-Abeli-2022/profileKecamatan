@@ -17,7 +17,7 @@
     </section>
 
   <section class="container mx-auto bg-[url(/assets/img/bg-sky.jpg)] bg-cover bg-fixed object-bottom py-7">
-    <h1 class="text-3xl text-center font-bold lg:text-4xl" data-aos="fade-left">Berita Lainnya</h1>
+    <h1 class="text-3xl text-center font-bold lg:text-4xl" data-aos="fade-left">Informasi Lainnya</h1>
     <hr class="w-1/4 mb-5 mx-auto border-t-[3px] border-t-slate-700" />
 
     <div class="text-center mb-9 mt-10 container mx-auto flex items-center justify-center">
@@ -34,7 +34,7 @@
       />
     </div>
     <div class="h-screen overflow-auto md:flex md:justify-evenly md:flex-wrap lg:block">
-      <% for( let i = 0; i < data.length; i++ ) { %>
+      <% for( let i = 1; i < data.length; i++ ) { %>
       <div class="list-info mx-auto w-[90%] rounded-lg shadow-md border-1 overflow-hidden my-6 bg-white md:w-[30%] lg:w-[90%] lg:h-[195px] lg:flex" data-aos="flip-right">
         <img src="<%=data[i].gambar%>" alt="image" class="object-cover object-center lg:h-full lg:sw-1/4" />
         <div class="my-3 ml-4 px-3">
@@ -43,7 +43,7 @@
           <p class="text-[0.9em]"><i class="fa-solid fa-user pr-3 mb-3"></i><%= data[i].author %></p>
           <p class="text-justify mt-1"><%- convert(data[i].isi,140) %></p>
           <div class="flex justify-center">
-            <a href="/berita/<%= data[i].id %>" class="inline-block px-3 py-2 bg-yellow-500 hover:bg-yellow-600 rounded-md my- text-white font-semibold mx-auto">Baca Selengkapnya</a>
+            <a href="/informasi/<%= data[i].id %>" class="inline-block px-3 py-2 bg-yellow-500 hover:bg-yellow-600 rounded-md my- text-white font-semibold mx-auto">Baca Selengkapnya</a>
           </div>
         </div>
       </div>
