@@ -1,0 +1,27 @@
+<main>
+    <form action="/login" method="post">
+        <% if (err.length > 0 ) { %>
+          <h1 class="text-red-500 mt-1 mb-2 text-lg font-bold"><%= err %></h1>
+        <% } %>
+        <label for="username" class="sm:mb-8">
+          <div class="text-slate-800 mb-2">Username</div>
+          <input
+            type="text"
+            class="border rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Username"
+            id="username"
+            name="username"
+          />
+          <p class="text-red-500 invisible peer-invalid:visible mt-1 mb-2">Username tidak valid</p>
+        </label>
+        <label for="password" class="sm:mb-8">
+          <div class="text-slate-800 mb-2">Password</div>
+          <input type="password" class="border rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full" placeholder="Password" id="password" name="password" />
+        </label>
+        <div class="text-right">
+          <div class="inline-block mt-5 text-blue-700 cursor-pointer hover:text-blue-900 hover:underline" id="forgot-password">Lupa Password?</div>
+        </div>
+        <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700 sm:mt-10">Masuk</button>
+        <p class="mt-5 text-center">Belum punya akun? <a href="/signup" class="text-blue-700 hover:text-blue-900 hover:underline">Daftar Sekarang</a></p>
+      </form>
+</main>
