@@ -122,11 +122,6 @@ app.get('/', (req, res) => {
             if(err){
                 res.send(err);
             }
-            const isi = rows.map(row => {
-                return {
-                    isi: row.isi
-                }
-            })
             res.render("index",{
                 title: "Home",
                 layout: "layouts/main",
