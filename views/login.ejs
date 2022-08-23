@@ -18,10 +18,44 @@
         <hr class="mb-3 mx-16 lg:mb-11" />
       <form action="/login" method="post">
         <% if (err.length > 0 ) { %>
-          <h1 class="text-red-500 mt-1 mb-2 text-lg font-bold"><%= err %></h1>
+          <script>
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+
+            Toast.fire({
+                icon: 'error',
+                title: '<%= err %>'
+              })
+          </script>
         <% } %>
         <% if (msg.length > 0 ) { %>
-          <h1 class="text-emerald-500 mt-1 mb-2 text-lg font-bold"><%= msg %></h1>
+          <script>
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: '<%= msg %>'
+              })
+          </script>
         <% } %>
         <label for="username" class="sm:mb-8">
           <div class="text-slate-800 mb-2">Username</div>
@@ -74,21 +108,3 @@
   </div>
 </div>
 
-<script>
-  const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
-
-Toast.fire({
-  icon: 'success',
-  title: 'Pendaftaran akun telah berhasil'
-})
-</script>
