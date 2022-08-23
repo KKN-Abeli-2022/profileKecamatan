@@ -127,7 +127,6 @@ app.get('/', (req, res) => {
                     isi: row.isi
                 }
             })
-            console.log(rows);
             res.render("index",{
                 title: "Home",
                 layout: "layouts/main",
@@ -460,6 +459,7 @@ app.post('/signup', (req, res) => {
       connection.query(`INSERT INTO pegawai (username, password, nama, nip, jabatan, email) VALUES ('${username}', '${hash}', '${nama}', '${nip}', '${position}', '${email}')`, (err, result) => {
         if (err) throw err;
         connection.release();
+        req.flash('msg', 'Your account has been created');
         res.redirect('/login');
       });
     }

@@ -34,7 +34,7 @@
       />
     </div>
     <div class="h-screen overflow-auto md:flex md:justify-evenly md:flex-wrap lg:block">
-      <% for( let i = 0; i < 3; i++ ) { %>
+      <% for( let i = 0; i < data.length; i++ ) { %>
       <div class="list-info mx-auto w-[90%] rounded-lg shadow-md border-1 overflow-hidden my-6 bg-white md:w-[30%] lg:w-[90%] lg:h-[195px] lg:flex" data-aos="flip-right">
         <img src="<%=data[i].gambar%>" alt="image" class="object-cover object-center lg:h-full lg:sw-1/4" />
         <div class="my-3 ml-4 px-3">
