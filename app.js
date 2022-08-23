@@ -154,6 +154,7 @@ app.get('/informasi', (req, res) => {
         convert: truncateString,
       });
     });
+    connection.release()
   });
 });
 
@@ -167,7 +168,7 @@ app.get('/informasi/:id', (req, res) => {
           isi : row.isi,
           gambar : row.gambar,
           penulis : row.author,
-          id : row.id
+          id : row.id,
         };
       });
       connection.query(`SELECT * FROM berita`,(err,rows) => {
@@ -179,10 +180,12 @@ app.get('/informasi/:id', (req, res) => {
           gambar : konten[0].gambar,
           penulis : konten[0].penulis,
           id : konten[0].id,
-          data : rows
+          data : rows,
+          date : dateOnly
         });
       })
     });
+    connection.release()
   });
 });
 
@@ -258,6 +261,7 @@ app.get("/dashboard/dataProfile",isAuth,(req,res) => {
           username: req.session.user.username,
           data : result
       })
+      connection.release()
     })
   })
 })
@@ -351,10 +355,12 @@ app.get("/verify-email/:token", async (req,res) => {
           if(err) throw err;
           connection.query(`DELETE FROM token WHERE email = '${email}'`,(err,result) => {
             if(err) throw err;
+            connection.release()
             res.redirect("/dashboard");
           })
         })
       }else{
+        connection.release()
         res.redirect("/dashboard");
       }
     })
