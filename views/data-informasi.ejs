@@ -18,28 +18,26 @@
         <table class="table-auto border border-black border-collapse w-full ">
             <thead >
                 <tr>
-                    <th class="border border-black py-4 bg-sky-500">nama</th>
-                    <th class="border border-black py-4 bg-sky-500">nip</th>
-                    <th class="border border-black py-4 bg-sky-500" >email</th>
-                    <th class="border border-black py-4 bg-sky-500">username</th>
-                    <th class="border border-black py-4 bg-sky-500">jabatan</th>
+                    <th class="border border-black py-4 bg-sky-500">Judul</th>
+                    <th class="border border-black py-4 bg-sky-500">Tanggal Update</th>
+                    <th class="border border-black py-4 bg-sky-500" >Gambar</th>
+                    <th class="border border-black py-4 bg-sky-500">Isi</th>
+                    <th class="border border-black py-4 bg-sky-500">Author</th>
                     <th class="border border-black py-4 bg-sky-500">Aksi</th>
-
                 </tr>
             </thead>
             <tbody>
                 <% for( let i = 0; i < data.length; i++ ) { %>
                     <tr>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].nama %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].nip %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].email %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].username %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].jabatan %></td>
-                        <td class="border border-black p-3 bg-slate-200">
-                            <a href='delete-pegawai.ejs' class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></a>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].judul %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].tgl_update %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].gambar %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].isi %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].author %></td>
+                        <td class="border border-black p-3 bg-slate-200"></td>
+                            <a href='update-informasi.ejs' class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" ><i class="fa-solid fa-trash"></i></a>
+                            <a href='delete-informasi.ejs' class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></a>
                         </td>
-
-
                     </tr>
                 <% } %>
             </tbody>
