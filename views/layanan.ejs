@@ -1,15 +1,15 @@
 <main class="container mx-auto bg-white mb-0 pt-3">
   <section class="mt-10 pb-10 container mx-auto px-4">
     <h2 class="text-2xl mb-6 font-bold">Sebelum ke kantor, pastikan berkas Anda telah lengkap.</h2>
-    <div id="layanan" class="border-2 border-sky-800 bg-sky-800 rounded-lg max-w-[800px] mx-auto overflow-hidden" data-aos="zoom-in">
+    <div class="border-2 border-sky-800 bg-sky-800 rounded-lg max-w-[800px] mx-auto overflow-hidden" data-aos="zoom-in">
       <% for (i = 0; i< 2 ; i++) { %>
-      <div class="">
+      <div class="list-layanan">
         <div class="flex justify-between border-b-2 border-sky-800 bg-sky-900">
           <h3 class="py-2 pl-2 text-white text-lg">Judul</h3>
-          <button id="show-btn" class="bg-sky-600 hover:bg-sky-500 text-white px-3 text-xl flex items-center mr-2 my-1 rounded-md"><i class="fa-solid fa-plus"></i></button>
-          <div class="p-5 bg-white hidden" id="description<%=i%>">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, mollitia.</p>
-          </div>
+          <button class="bg-sky-600 hover:bg-sky-500 active:bg-sky-700 text-white px-3 text-xl flex items-center mr-2 my-1 rounded-md"><i class="fa-solid fa-plus"></i></button>
+        </div>
+        <div class="p-5 bg-white hidden origin-top scale-y-0 transition duration-300">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, mollitia.</p>
         </div>
       </div>
       <% } %>
