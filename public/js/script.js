@@ -75,3 +75,7 @@ input.addEventListener('blur', function () {
   searchBox.classList.remove('bx-burst');
   input.placeholder = 'Cari ...';
 });
+
+// dropdown
+const layanan = document.querySelector('#layanan');
+layanan.addEventListener
