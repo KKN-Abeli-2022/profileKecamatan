@@ -49,29 +49,20 @@ const showButton = () => {
   dropdown.classList.toggle('show');
 };
 
-// search box
-function processSearch() {
-  const input = document.querySelector('#search');
-  const filter = input.value.toLowerCase();
-  const listInfo = document.querySelectorAll('.list-info');
+// list layanan
+const listLayanan = document.querySelectorAll('.list-layanan');
+for (const item of listLayanan) {
+  item.addEventListener('click', function () {
+    box = this.querySelector('div:last-child');
+    button = this.querySelector('div > button > i');
 
-  for (i in listInfo) {
-    const keyword = document.querySelectorAll('.keyword')[i];
-    if (keyword.innerHTML.toLowerCase().indexOf(filter) > -1) {
-      listInfo[i].style.display = '';
-    } else {
-      listInfo[i].style.display = 'none';
-    }
-  }
+    box.classList.toggle('scale-y-0');
+    box.classList.toggle('scale-y-100');
+    button.classList.toggle('fa-plus');
+    button.classList.toggle('fa-minus');
+      box.classList.toggle('hidden');
+
+    // setTimeout(() => {
+    // }, 300);
+  });
 }
-
-const input = document.querySelector('#search');
-const searchBox = document.querySelector('#search-box');
-input.addEventListener('focus', function () {
-  searchBox.classList.add('bx-burst');
-  input.placeholder = 'Cari berita berdasarkan judul';
-});
-input.addEventListener('blur', function () {
-  searchBox.classList.remove('bx-burst');
-  input.placeholder = 'Cari ...';
-});

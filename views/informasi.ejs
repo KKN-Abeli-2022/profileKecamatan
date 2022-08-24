@@ -1,20 +1,18 @@
 <main class="container mx-auto bg-white mb-0 pt-3">
   <section class="mt-10 pb-10 container mx-auto">
     <div class="w-[90%] bg-white rounded-lg shadow-lg overflow-hidden border mx-auto">
-        <img src="<%= data[0].gambar %>" alt="example" class="w-full" />
-        <div class="mt-5">
+      <img src="<%= data[0].gambar %>" alt="example" class="w-full" />
+      <div class="mt-5">
         <h1 class="text-4xl font-bold mx-3"><%= data[0].judul %></h1>
         <p class="text-[0.9em] mx-3"><i class="fa-solid fa-calendar pr-3"></i><%= date(data[0].tgl_update) %></p>
         <p class="text-[0.9em] mx-3"><i class="fa-solid fa-user pr-3 mb-3"></i><%= data[0].author %></p>
-        <p class="mt-5 mx-3 text-justify">
-            <%- convert(data[0].isi,140) %>
-        </p>
+        <p class="mt-5 mx-3 text-justify"><%- convert(data[0].isi,140) %></p>
         <div class="flex justify-center my-5">
-            <a href="/informasi/<%= data[0].id %>" class="inline-block bg-yellow-500 rounded-lg shadow-lg p-2 hover:bg-yellow-600">Baca Selengkapnya</a>
+          <a href="/informasi/<%= data[0].id %>" class="inline-block bg-yellow-500 rounded-lg shadow-lg p-2 hover:bg-yellow-600">Baca Selengkapnya</a>
         </div>
-        </div>
+      </div>
     </div>
-    </section>
+  </section>
 
   <section class="container mx-auto bg-[url(/assets/img/bg-sky.jpg)] bg-cover bg-fixed object-bottom py-7">
     <h1 class="text-3xl text-center font-bold lg:text-4xl" data-aos="fade-left">Informasi Lainnya</h1>
@@ -51,3 +49,5 @@
     </div>
   </section>
 </main>
+
+<script src="/js/search-box.js"></script>
