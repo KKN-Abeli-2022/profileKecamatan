@@ -1,26 +1,68 @@
 <!-- table  data pegawai-->
-<div class="mt-20">
-    <h1 class="text-2xl mb-3 font-bold">Data Pegawai</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>nama</th>
-                <th>nip</th>
-                <th>email</th>
-                <th>username</th>
-                <th>jabatan</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for( let i = 0; i < data.length; i++ ) { %>
+<main class="container mx-auto bg-white mb-0 p-5">
+    <div class="mt-20 ">
+        <div>
+            <h1 class="text-2xl mb-3 font-bold">Data Pegawai</h>
+        </div>
+
+        <div>
+            <input
+            type="search"
+            class="border rounded py-1 px-2 mb-4 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none hover:rounded-lg input  float-right"
+            placeholder="search"/>
+            <!-- s<a href="add-pegawai" class="float-right mr-5"><i class="fa-solid fa-user-plus"></i></a> -->
+            
+        </div>
+        
+
+        <table class="table-auto border border-black border-collapse w-full ">
+            <thead >
                 <tr>
-                    <td><%= data[i].nama %></td>
-                    <td><%= data[i].nip %></td>
-                    <td><%= data[i].email %></td>
-                    <td><%= data[i].username %></td>
-                    <td><%= data[i].jabatan %></td>
+                    <th class="border border-black py-4 bg-sky-500">nama</th>
+                    <th class="border border-black py-4 bg-sky-500">nip</th>
+                    <th class="border border-black py-4 bg-sky-500" >email</th>
+                    <th class="border border-black py-4 bg-sky-500">username</th>
+                    <th class="border border-black py-4 bg-sky-500">jabatan</th>
+                    <th class="border border-black py-4 bg-sky-500">Aksi</th>
+
                 </tr>
-            <% } %>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                <% for( let i = 0; i < data.length; i++ ) { %>
+                    <tr>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].nama %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].nip %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].email %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].username %></td>
+                        <td class="border border-black p-3 bg-slate-200"><%= data[i].jabatan %></td>
+                        <td class="border border-black p-3 bg-slate-200">
+                            <a href='delete-pegawai.ejs' class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+
+
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
+  <div class="mt-4 order-2 text-center md:order-1 md:mt-0">
+    <p class="m-auto text-[0.8em] md:font-semibold">&copy; KKN Tematik UHO 2022 | Kelurahan Abeli</p>
+  </div>
+  <div class="order-1 w-full md:order-2 md:w-1/4 md:flex md:justify-between">
+    <a href="#" target="_blank" class="hover:text-white/50">
+      <i class="bi bi-facebook"></i>
+    </a>
+    <a href="#" target="_blank" class="hover:text-white/50">
+      <i class="bi bi-whatsapp pl-4 md:pl-0"></i>
+    </a>
+    <a href="#" target="_blank" class="hover:text-white/50">
+      <i class="bi bi-tiktok pl-4 md:pl-0"></i>
+    </a>
+    <a href="#" target="_blank" class="hover:text-white/50">
+      <i class="bi bi-envelope pl-4 md:pl-0"></i>
+    </a>
+  </div>
+</footer>

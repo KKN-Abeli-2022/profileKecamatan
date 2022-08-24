@@ -1,14 +1,44 @@
+<main class="container mx-auto bg-white mb-0 p-5">
+    <div class="mt-20 ">
+        <h1 class="text-2xl mb-3 font-bold">Apload Informasi</h1>
+    </div>
+    
+
 <% if (msg.length > 0) { %>
     <p><%= msg %></p>
 <% } %>
 
-<form action="/dashboard/berita" method="post" class="my-20" enctype="multipart/form-data">
+<form action="/dashboard/berita" method="post" class="p-2 my-20 bg-silver-100 shadow-md rounded" enctype="multipart/form-data">
     <label for="judulBerita" class="font-bold">
         Judul Berita
     </label>
-    <input type="text" id="judulBerita" placeholder="Judul Berita" class="block mb-5" name="judul">
+    <input type="text" id="judulBerita" placeholder="Judul Berita" class="block py-2 px-3 mt-3 mb-5 border w-full" name="judul">
     <input id="isi" type="hidden" name="isi">
     <trix-editor input="isi"></trix-editor>
-    <input type="file" id="" class="block pb-5" name="imageBerita">
-    <button type="submit" class="bg-sky-500 py-2 px-4 text-white hover:bg-sky-600">Submit</button>
+    <input type="file" id="" class="mt-4 block pb-5" name="imageBerita">
+    <center>
+        <button type="submit" class="text-center mt-3 bg-sky-500 py-2 px-4 text-white hover:bg-sky-600">Submit</button>
+    </center>
 </form>
+
+</main>
+
+<footer class="w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
+    <div class="mt-4 order-2 text-center md:order-1 md:mt-0">
+      <p class="m-auto text-[0.8em] md:font-semibold">&copy; KKN Tematik UHO 2022 | Kelurahan Abeli</p>
+    </div>
+    <div class="order-1 w-full md:order-2 md:w-1/4 md:flex md:justify-between">
+      <a href="#" target="_blank" class="hover:text-white/50">
+        <i class="bi bi-facebook"></i>
+      </a>
+      <a href="#" target="_blank" class="hover:text-white/50">
+        <i class="bi bi-whatsapp pl-4 md:pl-0"></i>
+      </a>
+      <a href="#" target="_blank" class="hover:text-white/50">
+        <i class="bi bi-tiktok pl-4 md:pl-0"></i>
+      </a>
+      <a href="#" target="_blank" class="hover:text-white/50">
+        <i class="bi bi-envelope pl-4 md:pl-0"></i>
+      </a>
+    </div>
+  </footer>
