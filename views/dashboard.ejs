@@ -1,1 +1,15 @@
-
+<div class="mt-16">
+    <% for( let i = 0; i < data.length; i++ ) { %>
+                    <%  if(data[i].verifiedEmail === 0) { %>
+                        <div class="bg-red-600 px-6 py-3 mt-3 text-white">
+		                    <strong>ATTENTION !</strong> Please verify your account to continue using our services don't forget to check the spam if there isn't any email in your inbox.
+		                        <a href="/dashboard/verify-email" class="underline hover:text-slate-600 transition duration-200">Re-send Verification Email</a>
+		                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	                    </div>
+                    <%} }%>
+    <% if (msg.length>0) { %>
+        <div class="bg-emerald-500 px-6 py-3 mt-3 text-white">
+            <%= msg %>
+        </div>
+    <% }%>
+</div>

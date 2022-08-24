@@ -36,19 +36,33 @@ const swiper = new Swiper('.swiper', {
 const checkPassword = () => {
   const password = document.querySelector("input[name='password']");
   const confirmPassword = document.querySelector("input[name='confirmPassword']");
-  if(password.value !== confirmPassword.value){
+  if (password.value !== confirmPassword.value) {
     confirmPassword.setCustomValidity("Passwords Don't Match");
   } else {
     confirmPassword.setCustomValidity('');
   }
-}
+};
 
 const dropdown = document.querySelector('#dropdown');
 
 const showButton = () => {
   dropdown.classList.toggle('show');
+};
+
+// list layanan
+const listLayanan = document.querySelectorAll('.list-layanan');
+for (const item of listLayanan) {
+  item.addEventListener('click', function () {
+    box = this.querySelector('div:last-child');
+    button = this.querySelector('div > button > i');
+
+    box.classList.toggle('scale-y-0');
+    box.classList.toggle('scale-y-100');
+    button.classList.toggle('fa-plus');
+    button.classList.toggle('fa-minus');
+      box.classList.toggle('hidden');
+
+    // setTimeout(() => {
+    // }, 300);
+  });
 }
-
-// convert string to html
-
-

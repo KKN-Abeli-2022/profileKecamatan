@@ -20,7 +20,7 @@
 
   <body class="font-arima bg-gradient-to-b from-sky-500 to-slate-700">
     <header>
-      <nav class="fixed top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
+      <nav class="fixed z-50 top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
         <a href="/" class="flex items-center ml-0 lg:ml-4">
           <img src="/assets/img/logo.png" alt="logo" width="30" />
           <h2 class="font-sansita font-semibold text-lg ml-2">Kelurahan Abeli</h2>
@@ -35,55 +35,53 @@
         </div>
         <div
           id="nav-menu"
-          class="absolute py-5 bg-white shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full origin-top transition duration-300 opacity-0 scale-0 lg:opacity-100 lg:scale-100 lg:flex lg:justify-between lg:items-center lg:static lg:bg-transparent lg:max-w-[75%] lg:shadow-none lg:rounded-none lg:py-0 lg:mr-4"
+          class="absolute py-5 bg-white shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full origin-top-right transition duration-300 opacity-0 scale-0 lg:opacity-100 lg:scale-100 lg:flex lg:justify-end lg:items-center lg:static lg:bg-transparent lg:max-w-[75%] lg:shadow-none lg:rounded-none lg:py-0 lg:mr-4"
         >
           <div class="flex w-full lg:w-3/4">
             <ul class="block w-full lg:flex lg:justify-evenly">
               <li class="group">
-                <a href="/" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                <a
+                  href="/"
+                  class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 active:bg-yellow-600 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0"
+                >
                   <p>Beranda</p>
                 </a>
               </li>
               <li class="group">
-                <a href="#" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                <a href="/profile" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
                   <p>Profil</p>
                 </a>
               </li>
               <li class="group">
-                <a href="#" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                <a href="/layanan" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
                   <p>Layanan</p>
                 </a>
               </li>
               <li class="group">
-                <a href="#" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
-                  <p>Galeri</p>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="flex justify-evenly mt-6 border border-b-0 pt-3 lg:border lg:border-none lg:mt-0 lg:pt-0 lg:flex lg:justify-center lg:w-1/4">
-            <ul class="flex justify-evenly lg:justify-center">
-              <li class="group inline-block">
-                <a href="/login" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
-                  <i class="bi bi-box-arrow-in-right mr-2"></i>
-                  <p>Masuk</p>
-                </a>
-              </li>
-              <li class="group inline-block">
-                <a href="/signup" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
-                  <i class="bi bi-plus-circle mr-2"></i>
-                  <p>Daftar</p>
+                <a href="/informasi" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                  <p>Informasi</p>
                 </a>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+
+      <div class="container mx-auto h-screen w-full bg-cover bg-gradient-to-b from-cyan-500 to-white flex">
+        <div class="m-auto px-5 md:px-0 lg:w-1/2 lg:flex-1 lg:flex-col lg:p-8">
+          <h1 class="text-4xl font-bold lg:text-6xl" data-aos="fade-right">Kelurahan Abeli</h1>
+          <h2 class="text-md mt-2" data-aos="fade-left" data-aos-delay="400" data-aos-duration="2000">Abeli, Kec. Abeli, Kendari, Sulawesi Tenggara</h2>
+          <h2 data-aos="fade-right" data-aos-delay="400" data-aos-duration="2000">Kode Pos 93234</h2>
+          <a href="#" class="inline-block my-4 py-2 px-5 bg-yellow-500 rounded-md shadow-md hover:bg-yellow-600" data-aos="zoom-in" data-aos-delay="1200" data-aos-duration="2000">Kontak Kami</a>
+        </div>
+        <div class="w-1/2 hidden lg:flex">
+          <div class="w-40 h-40 bg-yellow-500 m-auto rotate-45"></div>
+        </div>
+      </div>
     </header>
     <%- body %>
 
-    <footer class="w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
+    <footer class="container mx-auto w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
       <div class="mt-4 order-2 text-center md:order-1 md:mt-0">
         <p class="m-auto text-[0.8em] md:font-semibold">&copy; KKN Tematik UHO 2022 | Kelurahan Abeli</p>
       </div>
@@ -102,6 +100,7 @@
         </a>
       </div>
     </footer>
+
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
       integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
