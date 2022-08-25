@@ -4,7 +4,26 @@
         <div>
             <h1 class="text-2xl mb-3 font-bold">Data Pegawai</h>
         </div>
+        <% if (msg.length > 0) { %>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
 
+            Toast.fire({
+                icon: 'success',
+                title: '<%= msg %>'
+                })
+        </script>
+        <% } %>
         <div>
             <input
             type="search"
@@ -35,11 +54,12 @@
                         <td class="border border-black p-3 bg-slate-200"><%= data[i].email %></td>
                         <td class="border border-black p-3 bg-slate-200"><%= data[i].username %></td>
                         <td class="border border-black p-3 bg-slate-200"><%= data[i].jabatan %></td>
-                        <td class="border border-black p-3 bg-slate-200">
-                            <a href='delete-pegawai.ejs' class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></a>
+                        <td class="border border-black p-3 bg-slate-200 text-center">
+                            <form action="/delete-user?_method=DELETE" method="post">
+                                <input type="hidden" value="<%=data[i].id %>" name="id" >
+                                <button type="submit" class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></button>
+                            </form>
                         </td>
-
-
                     </tr>
                 <% } %>
             </tbody>

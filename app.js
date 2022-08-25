@@ -214,11 +214,9 @@ app.get('/signup', (req, res) => {
 });
 
 app.get("/dashboard", isAuth, (req, res) => {
-
     pool.getConnection((err, connection) => {
         if (err) throw err;
         connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`, (err, result) => {
-            console.log(req.session.user.username)
             if (err) throw err;
             res.render("dashboard",{
                 title: "Dashboard",
@@ -235,7 +233,7 @@ app.get("/dashboard", isAuth, (req, res) => {
 app.get('/dashboard/dataUser', isAuth, (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    connection.query('SELECT * FROM pegawai', (err, result) => {
+    connection.query(`SELECT * FROM pegawai WHERE verifiedEmail = '1'`, (err, result) => {
       if (err) throw err;
       // console.log(result);
       res.render('data-user', {
@@ -243,11 +241,25 @@ app.get('/dashboard/dataUser', isAuth, (req, res) => {
         layout: 'layouts/dashboard-layout',
         username: req.session.user.username,
         data: result,
+        msg: req.flash("msg")
       });
       connection.release();
     });
   });
 });
+
+app.delete("/delete-user",(req,res) => {
+  const {id} = req.body;
+  pool.getConnection((err,connection) => {
+    if (err) throw err;
+    connection.query(`DELETE FROM pegawai WHERE id = '${id}'`,(err,result) => {
+      if (err) throw err;
+      req.flash("msg","the data has been successfully deleted");
+      connection.release();
+      res.redirect("/dashboard/dataUser")
+    })
+  })
+})
 
 app.get("/dashboard/dataProfile",isAuth,(req,res) => {
   pool.getConnection((err,connection) => {
