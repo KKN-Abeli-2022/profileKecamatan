@@ -1,25 +1,29 @@
-<main class="container mx-auto bg-white mb-0 p-5">
-    <div class="mt-20 ">
-        <h1 class="text-2xl mb-3 font-bold">Apload Informasi</h1>
+<main class="container mx-auto bg-white mb-0 mt-20">
+  <section class=" mx-auto my-3 w-full bg-gradient-to-b from-sky-200 to-white pb-10">
+    <div>
+        <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10" data-aos="fade-left">Apload Informasi</h1>
+        <hr class="w-full mb-2 mx-auto border-t-[3px] border-t-slate-700" />
     </div>
     
 
 <% if (msg.length > 0) { %>
     <p><%= msg %></p>
 <% } %>
-
-<form action="/dashboard/berita" method="post" class="p-2 my-20 bg-silver-100 shadow-md rounded" enctype="multipart/form-data">
-    <label for="judulBerita" class="font-bold">
-        Judul Berita
-    </label>
-    <input type="text" id="judulBerita" placeholder="Judul Berita" class="block py-2 px-3 mt-3 mb-5 border w-full" name="judul">
-    <input id="isi" type="hidden" name="isi">
-    <trix-editor input="isi"></trix-editor>
-    <input type="file" id="" class="mt-4 block pb-5" name="imageBerita">
-    <center>
-        <button type="submit" class="text-center mt-3 bg-sky-500 py-2 px-4 text-white hover:bg-sky-600">Submit</button>
-    </center>
-</form>
+  <div class=" my-10 mx-5 px-5 py-4 bg-white shadow-md rounded">
+    <form action="/dashboard/berita" method="post"  enctype="multipart/form-data">
+        <label for="judulBerita" class="font-bold">
+            Judul Berita
+        </label>
+        <input type="text" id="judulBerita" placeholder="Judul Berita" class="block py-2 px-3 mt-3 mb-5 border w-full" name="judul">
+        <input id="isi" type="hidden" name="isi">
+        <trix-editor input="isi"></trix-editor>
+        <input type="file" id="" class="mt-4 block pb-5" name="imageBerita">
+        <center>
+            <button type="submit" class="text-center mt-3 bg-sky-500 py-2 px-4 text-white hover:bg-sky-600">Submit</button>
+        </center>
+    </form>
+  </div>
+</section>
 
 </main>
 

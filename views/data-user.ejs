@@ -1,21 +1,28 @@
 <!-- table  data pegawai-->
-<main class="container mx-auto bg-white mb-0 p-5">
-    <div class="mt-20 ">
+<main class="container mx-auto bg-white mb-0  mt-20">
+    <section class=" mx-auto my-3 w-full bg-gradient-to-b from-sky-200 to-white pb-10">
         <div>
-            <h1 class="text-2xl mb-3 font-bold">Data Pegawai</h>
+          <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10" data-aos="fade-left">Data Pegawai</h>
+          <hr class="w-full mb-2 mx-auto border-t-[3px] border-t-slate-700" />
+
         </div>
 
-        <div>
-            <input
-            type="search"
-            class="border rounded py-1 px-2 mb-4 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none hover:rounded-lg input  float-right"
-            placeholder="search"/>
-            <!-- s<a href="add-pegawai" class="float-right mr-5"><i class="fa-solid fa-user-plus"></i></a> -->
-            
+        <div class="text-center mb-9 mt-10 container mx-auto flex items-center justify-center">
+          <span class="w-10 h-10 p-2 bg-cyan-500 dark:bg-slate-700 rounded-md mr-2 flex items-center justify-center font-black">
+            <i id="search-box" class="bx bx-search-alt-2"></i>
+          </span>
+          <input
+            type="text"
+            name="search"
+            id="search"
+            onkeyup="processSearch()"
+            placeholder="Cari ..."
+            class="p-1 border-2 border-sky-300 w-9/12 shadow rounded focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-slate-800 dark:border-slate-900 dark:focus:ring-cyan-400 dark:focus:border-cyan-400"
+          />
         </div>
         
-
-        <table class="table-auto border border-black border-collapse w-full ">
+        <div class="px-5">
+        <table class="table-auto border border-black border-collapse w-full px-5">
             <thead >
                 <tr>
                     <th class="border border-black py-4 bg-sky-500">nama</th>
@@ -44,5 +51,6 @@
                 <% } %>
             </tbody>
         </table>
-    </div>
+      </div>
+      </section>
 </main>
