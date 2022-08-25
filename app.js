@@ -233,7 +233,7 @@ app.get("/dashboard", isAuth, (req, res) => {
 app.get('/dashboard/dataUser', isAuth, (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    connection.query(`SELECT * FROM pegawai WHERE verifiedEmail = '1'`, (err, result) => {
+    connection.query(`SELECT * FROM pegawai`, (err, result) => {
       if (err) throw err;
       // console.log(result);
       res.render('data-user', {
