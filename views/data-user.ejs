@@ -6,6 +6,26 @@
           <hr class="w-full mb-2 mx-auto border-t-[3px] border-t-slate-700" />
 
         </div>
+        <% if (msg.length > 0) { %>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'success',
+                title: '<%= msg %>'
+                })
+        </script>
+        <% } %>
 
         <div class="text-center mb-9 mt-10 container mx-auto flex items-center justify-center">
           <span class="w-10 h-10 p-2 bg-cyan-500 dark:bg-slate-700 rounded-md mr-2 flex items-center justify-center font-black">
@@ -20,7 +40,7 @@
             class="p-1 border-2 border-sky-300 w-9/12 shadow rounded focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-slate-800 dark:border-slate-900 dark:focus:ring-cyan-400 dark:focus:border-cyan-400"
           />
         </div>
-        
+
         <div class="px-5">
         <table class="table-auto border border-black border-collapse w-full px-5">
             <thead >
@@ -42,11 +62,12 @@
                         <td class="border border-black p-3 bg-slate-200"><%= data[i].email %></td>
                         <td class="border border-black p-3 bg-slate-200"><%= data[i].username %></td>
                         <td class="border border-black p-3 bg-slate-200"><%= data[i].jabatan %></td>
-                        <td class="border border-black p-3 bg-slate-200">
-                            <a href='delete-pegawai.ejs' class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></a>
+                        <td class="border border-black p-3 bg-slate-200 text-center">
+                            <form action="/delete-user?_method=DELETE" method="post">
+                                <input type="hidden" value="<%=data[i].id %>" name="id" >
+                                <button type="submit" class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></button>
+                            </form>
                         </td>
-
-
                     </tr>
                 <% } %>
             </tbody>

@@ -17,7 +17,7 @@
         <h3 class="text-center font-semibold text-slate-600 mb-3"><i class="bx bxs-user text-lg"></i> Masuk</h3>
         <hr class="mb-3 mx-16 lg:mb-11" />
       <form action="/login" method="post">
-        <% if (err.length > 0 ) { %>
+        <% if (err.length > 0 || msg.length > 0) { %>
           <script>
             const Toast = Swal.mixin({
               toast: true,
@@ -30,31 +30,19 @@
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
             })
-
+            <% if (err.length > 0){ %>
             Toast.fire({
                 icon: 'error',
                 title: '<%= err %>'
               })
-          </script>
-        <% } %>
-        <% if (msg.length > 0 ) { %>
-          <script>
-            const Toast = Swal.mixin({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-            })
+              <% } %>
 
+            <% if (msg.length > 0){ %>
             Toast.fire({
                 icon: 'success',
                 title: '<%= msg %>'
               })
+              <% } %>
           </script>
         <% } %>
         <label for="username" class="sm:mb-8">
