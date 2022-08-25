@@ -942,6 +942,10 @@ video {
   width: 10rem;
 }
 
+.w-\[30\%\] {
+  width: 30%;
+}
+
 .max-w-screen-lg {
   max-width: 1024px;
 }
@@ -1563,6 +1567,10 @@ video {
 
 .pt-10 {
   padding-top: 2.5rem;
+}
+
+.pb-3 {
+  padding-bottom: 0.75rem;
 }
 
 .text-center {
