@@ -218,14 +218,26 @@ app.get("/dashboard", isAuth, (req, res) => {
         if (err) throw err;
         connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`, (err, result) => {
             if (err) throw err;
-            const isVerified = result[0].verifiedEmail;
-            res.render("dashboard",{
-                title: "Dashboard",
-                layout: "layouts/dashboard-layout",
-                username: req.session.user.username,
-                data: result,
-                msg : req.flash("msg"),
-                isVerified
+            connection.query(`SELECT * FROM pegawai`,(err,dataPegawai) => {
+              const Pegawai = dataPegawai.length;
+              connection.query(`SELECT * FROM tbl_penduduk`,(err,jumlahPenduduk) => {
+                const Penduduk = jumlahPenduduk[0].laki_laki + jumlahPenduduk[0].perempuan;
+                connection.query(`SELECT * FROM berita`,(err,jumlahInformasi) => {
+                  const Informasi = jumlahInformasi.length;
+                  const isVerified = result[0].verifiedEmail;
+                  res.render("dashboard",{
+                      title: "Dashboard",
+                      layout: "layouts/dashboard-layout",
+                      username: req.session.user.username,
+                      data: result,
+                      msg : req.flash("msg"),
+                      isVerified,
+                      Pegawai,
+                      Penduduk,
+                      Informasi
+                  });
+                })
+              })
             });
             connection.release();
         });
