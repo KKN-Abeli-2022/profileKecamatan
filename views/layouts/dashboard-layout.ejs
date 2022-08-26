@@ -13,8 +13,13 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <link rel="stylesheet" type="text/css" href="/css/trix.css">
     <script type="text/javascript" src="/js/trix.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/2d9c139c31.js" crossorigin="anonymous"></script>
     <title>Kelurahan Abeli | <%= title %></title>
     <style>
@@ -26,59 +31,89 @@
         }
     </style>
     </head>
-
-    <body class="font-arima bg-gray-200">
+    <% if (isVerified === 1 ) { %>
+    <body class="font-arima bg-gradient-to-b from-sky-500 to-slate-700">
+        <% }  else %>
+    <body>
     <header>
-        <nav class="fixed top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
-        <a href="/dashboard" class="flex items-center ml-0 lg:ml-4">
-            <img src="/assets/img/logo.png" alt="logo" width="30" />
-            <h2 class="font-sansita font-semibold text-lg ml-2">Kelurahan Abeli</h2>
-        </a>
-
-        <div class="flex items-center">
-            <button id="hamburger" class="block absolute right-4 lg:hidden">
-            <span class="hamburger-line origin-top-left transition duration-300 ease-in-out"></span>
-            <span class="hamburger-line transition duration-300 ease-in-out"></span>
-            <span class="hamburger-line origin-bottom-left transition duration-300 ease-in-out"></span>
-            </button>
+        <% if (isVerified === 1) { %>
+            <nav class="fixed z-50 top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
+            <a href="/dashboard" class="flex items-center ml-0 lg:ml-4">
+                <img src="/assets/img/logo.png" alt="logo" width="30" />
+                <h2 class="font-sansita font-semibold text-lg ml-2">Kelurahan Abeli</h2>
+            </a>
+    
+            <div class="flex items-center">
+                <button id="hamburger" class="block absolute right-4 lg:hidden">
+                <span class="hamburger-line origin-top-left transition duration-300 ease-in-out"></span>
+                <span class="hamburger-line transition duration-300 ease-in-out"></span>
+                <span class="hamburger-line origin-bottom-left transition duration-300 ease-in-out"></span>
+                </button>
+            </div>
+            <div
+                id="nav-menu"
+                class="absolute py-5 bg-white shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full origin-top transition duration-300 opacity-0 scale-0 lg:opacity-100 lg:scale-100 lg:flex lg:justify-between lg:items-center lg:static lg:bg-transparent lg:max-w-[75%] lg:shadow-none lg:rounded-none lg:py-0 lg:mr-4 "
+            >
+                <div class="flex w-full lg:w-3/4">
+                <ul class="block w-full lg:flex lg:justify-evenly">
+                    <li class="group">
+                        <a href="/dashboard" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                            <p>Dashboard</p>
+                        </a>
+                        </li>
+                    <li class="group">
+                    <a href="/dashboard/dataUser" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                        <p>Data User</p>
+                    </a>
+                    </li>
+                    <li class="group">
+                    <a href="/dashboard/dataProfile" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                        <p>Data Penduduk</p>
+                    </a>
+                    </li>
+                    <li class="group">
+                    <a href="/dashboard/informasi" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                        <p>Upload Informasi</p>
+                    </a>
+                    </li>
+                </ul>
+                </div>
+    
+                <!-- dropdown -->
+                <div class="flex justify-evenly mt-6 border border-b-0 pt-3 lg:border lg:border-none lg:mt-0 lg:pt-0 lg:flex lg:justify-center lg:w-1/4  items-center">
+                    <button class="hover:text-blue-500 lg:hover:text-white lg:hover:bg-cyan-500 lg:rounded-lg lg:font-bold lg:flex py-2 mx-15 lg:px-4 " onclick="showButton()"><i class="fa-solid fa-user"></i></button>
+                <div class="translate-y-[-100px] left-[-120px] relative transition-all duration-200 bg-slate-200" id="dropdown">
+                    <form action="/logout" method="post">
+                        <button class="px-5 py-2 bg-red-500 text-white">Logout</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div
-            id="nav-menu"
-            class="absolute py-5 bg-white shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full origin-top transition duration-300 opacity-0 scale-0 lg:opacity-100 lg:scale-100 lg:flex lg:justify-between lg:items-center lg:static lg:bg-transparent lg:max-w-[75%] lg:shadow-none lg:rounded-none lg:py-0 lg:mr-4 "
-        >
-            <div class="flex w-full lg:w-3/4">
-            <ul class="block w-full lg:flex lg:justify-evenly">
-                <li class="group">
-                <a href="/dashboard/dataUser" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
-                    <p>Data User</p>
-                </a>
-                </li>
-                <li class="group">
-                <a href="/dashboard/dataProfile" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
-                    <p>Data Penduduk</p>
-                </a>
-                </li>
-                <li class="group">
-                <a href="/dashboard/informasi" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
-                    <p>Upload Informasi</p>
-                </a>
-                </li>
-            </ul>
-            </div>
-
-            <!-- dropdown -->
-            <div class="flex justify-evenly mt-6 border border-b-0 pt-3 lg:border lg:border-none lg:mt-0 lg:pt-0 lg:flex lg:justify-center lg:w-1/4  items-center">
-                <button class="hover:text-blue-500 lg:hover:text-white lg:hover:bg-cyan-500 lg:rounded-lg lg:font-bold lg:flex py-2 mx-15" onclick="showButton()">Welcome <%= username %></button>
-            <div class="translate-y-[-100px] left-[-120px] relative transition-all duration-200 bg-slate-200" id="dropdown">
-                <form action="/logout" method="post">
-                    <button class="px-5 py-2 bg-red-500 text-white">Logout</button>
-                </form>
-            </div>
-            </div>
+    </nav>
+    <% } %>
+        </header>
+        <%- body %>
+        <% if (isVerified === 1 ) { %>
+    <footer class="container mx-auto w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
+        <div class="mt-4 order-2 text-center md:order-1 md:mt-0">
+            <p class="m-auto text-[0.8em] md:font-semibold">&copy; KKN Tematik UHO 2022 | Kelurahan Abeli</p>
         </div>
-        </nav>
-    </header>
-    <%- body %>
+        <div class="order-1 w-full md:order-2 md:w-1/4 md:flex md:justify-between">
+          <a href="#" target="_blank" class="hover:text-white/50">
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a href="#" target="_blank" class="hover:text-white/50">
+            <i class="bi bi-whatsapp pl-4 md:pl-0"></i>
+          </a>
+          <a href="#" target="_blank" class="hover:text-white/50">
+            <i class="bi bi-tiktok pl-4 md:pl-0"></i>
+          </a>
+          <a href="#" target="_blank" class="hover:text-white/50">
+            <i class="bi bi-envelope pl-4 md:pl-0"></i>
+          </a>
+        </div>
+      </footer>
+      <% } %>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
@@ -87,5 +122,8 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/updatePenduduk.js"></script>
     </body>
 </html>
+
+

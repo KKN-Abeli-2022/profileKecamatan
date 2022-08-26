@@ -27,8 +27,8 @@
                 <img src="/<%= data[i].gambar %>" alt="image" class="h-full transition ease-in-out duration-300 group-hover:scale-150 group-hover:brightness-125">
             </div>
             <div class="px-5 py-3">
-                <h5 class="text-slate-800 mb-2">12 Juni 2022</h4>
-                <a href="#" class="text-xl font-semibold hover:underline hover:text-sky-600">Judul</a>
+                <h5 class="text-slate-800 mb-2"><%= date(data[i].tgl_update) %></h4>
+                <a href="/informasi/<%=data[i].id %>" class="text-xl font-semibold hover:underline hover:text-sky-600"><%= data[i].judul %></a>
             </div>
         </div>
       <% } %>
