@@ -239,7 +239,6 @@ app.get('/dashboard/dataUser', isAuth, (req, res) => {
       const isVerified = result[0].verifiedEmail;
       connection.query(`SELECT * FROM pegawai`, (err, result) => {
         if (err) throw err;
-        // console.log(result);
         res.render('data-user', {
           title: 'Data User',
           layout: 'layouts/dashboard-layout',
@@ -295,7 +294,6 @@ app.get("/dashboard/informasi",isAuth,(req,res) => {
           const isVerified = result[0].verifiedEmail;
           connection.query("SELECT * FROM pegawai", (err, result) => {
               if (err) throw err;
-              // console.log(result);
               res.render("uploadBerita",{
                   title: "Informasi",
                   layout: "layouts/dashboard-layout",
@@ -320,7 +318,6 @@ app.post('/dashboard/berita', (req, res, next) => {
       res.redirect('/dashboard/informasi');
     } else {
       const image = req.file.path;
-      console.log(image);
       connection.query(
         'INSERT INTO berita SET ?',
         {
@@ -436,7 +433,6 @@ const token = req.params.token;
     if(err) throw err;
     connection.query(`SELECT * FROM token WHERE token = '${token}'`,(err,result) => {
       if(err) throw err;
-      console.log(result[0].email)
       if(result.length > 0){
         const email = result[0].email;
         connection.query(`SELECT * FROM pegawai WHERE email = '${email}'`,(err,result) => {
@@ -510,7 +506,6 @@ app.post('/login', async (req, res) => {
     connection.query(`SELECT * FROM pegawai WHERE username = '${username}'`, async (err, result) => {
       if (err) throw err;
       if (result.length > 0) {
-        // console.log(bcrypt.compareSync(password, result[0].password));
         if (await bcrypt.compare(password, result[0].password)) {
           req.session.isAuth = true;
           req.session.user = result[0];
