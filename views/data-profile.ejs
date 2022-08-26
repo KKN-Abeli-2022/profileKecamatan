@@ -1,5 +1,5 @@
 <main class="container mx-auto bg-white mb-0  mt-20">
-    <section class=" mx-auto my-3 w-full bg-gradient-to-b from-sky-200 to-white pb-10 ">
+    <section class=" mx-auto w-full bg-gradient-to-b from-sky-200 to-white pb-10 ">
         <div>
             <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10" data-aos="fade-left">Data Penduduk</h>
             <hr class="w-full mb-2 mx-auto border-t-[3px] border-t-slate-700" />
@@ -66,7 +66,7 @@
                     <%= data[0].budha %>
                 </td>
                 <td class="border border-black p-3 bg-slate-200 text-center">
-                    <a href="" class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" ><i class="fa-solid fa-pencil "></i></a> |
+                    <button  class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-agama" ><i class="fa-solid fa-pencil "></i></button> |
                     <a href="" class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
@@ -134,7 +134,7 @@
                     <%= data[0].toraja %>
                 </td>
                 <td class="border border-black p-3 bg-slate-200 text-center">
-                    <a href="" class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" ><i class="fa-solid fa-pencil "></i></a> |
+                    <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-etnis"><i class="fa-solid fa-pencil "></i></button> |
                     <a href="" class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
@@ -146,8 +146,8 @@
 
 <div id="popup" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
     <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp">
-      <div id="close-btn" class="absolute top-0 right-0 text-red-600 text-4xl w-14 h-14 rounded-full cursor-pointer flex justify-center items-center hover:bg-red-600 hover:text-white md:-top-5 md:-right-5 md:bg-white md:border md:border-black"><i class="fa-solid fa-xmark"></i></div>
-      <h1 class="font-bold text-4xl">Update Penduduk</h1>
+      <div id="close-btn" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-8 h-8 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
+<h1 class="font-bold text-4xl">Update Penduduk</h1>
       <form action="/forgot-Password" method="post" class="mt-3">
         <label for="laki">
           <div class="text-slate-800 mb-2">Laki - laki</div>
@@ -180,7 +180,194 @@
         <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700">Update</button>
   
       </form>
-  
-      
     </div>
+</div>
+
+
+<div id="popup-agama" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
+    <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp">
+      <div id="close-btnag" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-8 h-8 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
+      <h1 class="font-bold text-4xl">Update Agama</h1>
+      <form action="/forgot-Password" method="post" class="mt-3">
+        <label for="islam">
+          <div class="text-slate-800 mb-2">Islam</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Islam"
+            id="islam"
+            name="islam"
+          />
+        <label for="perempuan">
+          <div class="text-slate-800 mb-2 mt-2">Kristen</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Kristen"
+            id="kristen"
+            name="kristen"
+          />
+        <label for="katolik">
+          <div class="text-slate-800 mb-2 mt-2">Katolik</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Katolik"
+            id="katolik"
+            name="katolik"
+          />
+        </label>
+        <label for="hindu">
+          <div class="text-slate-800 mb-2 mt-2">Hindu</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Hindu"
+            id="hindu"
+            name="hindu"
+          />
+        </label>
+        <label for="budha">
+          <div class="text-slate-800 mb-2 mt-2">Budha</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Budha"
+            id="budha"
+            name="budha"
+          />
+        </label>
+        <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700">Update</button>
+      </form>
+    </div>
+</div>
+
+<div id="popup-etnis" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
+  <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp h-[80%]  overflow-hidden">
+    <div id="close-btnet" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-10 h-10 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
+    <h1 class="font-bold text-4xl">Update Agama</h1>
+    <form action="/forgot-Password" method="post" class="mt-3 overflow-y-auto h-[90%] px-5">
+      <label for="islam">
+        <div class="text-slate-800 mb-2">Sunda</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Islam"
+          id="islam"
+          name="islam"
+        />
+      <label for="perempuan">
+        <div class="text-slate-800 mb-2 mt-2">Jawa</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Kristen"
+          id="kristen"
+          name="kristen"
+        />
+      <label for="katolik">
+        <div class="text-slate-800 mb-2 mt-2">Bali</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Katolik"
+          id="katolik"
+          name="katolik"
+        />
+      </label>
+      <label for="hindu">
+        <div class="text-slate-800 mb-2 mt-2">Bugis</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Hindu"
+          id="hindu"
+          name="hindu"
+        />
+      </label>
+      <label for="budha">
+        <div class="text-slate-800 mb-2 mt-2">Makassar</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Budha"
+          id="budha"
+          name="budha"
+        />
+      </label>
+
+      <label for="budha">
+        <div class="text-slate-800 mb-2 mt-2">Mandar</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Budha"
+          id="budha"
+          name="budha"
+        />
+      </label>
+
+      <label for="budha">
+        <div class="text-slate-800 mb-2 mt-2">Tolaki</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Budha"
+          id="budha"
+          name="budha"
+        />
+      </label>
+      <label for="budha">
+        <div class="text-slate-800 mb-2 mt-2">Buton</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Budha"
+          id="budha"
+          name="budha"
+        />
+      </label>
+      <label for="budha">
+        <div class="text-slate-800 mb-2 mt-2">Muna</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Budha"
+          id="budha"
+          name="budha"
+        />
+      </label>
+      <label for="budha">
+        <div class="text-slate-800 mb-2 mt-2">Bajo</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Budha"
+          id="budha"
+          name="budha"
+        />
+      </label>
+      <label for="budha">
+        <div class="text-slate-800 mb-2 mt-2">Bungku / Mornene</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Budha"
+          id="budha"
+          name="budha"
+        />
+      </label>
+      <label for="budha">
+        <div class="text-slate-800 mb-2 mt-2">Toraja</div>
+        <input
+          type="number"
+          class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+          placeholder="Budha"
+          id="budha"
+          name="budha"
+        />
+      </label>
+      <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700">Update</button>
+    </form>
   </div>
+</div>
