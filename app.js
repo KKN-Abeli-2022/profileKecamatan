@@ -87,7 +87,7 @@ const isAuth = (req, res, next) => {
   if (req.session.isAuth) {
     next();
   } else {
-    req.flash('error', 'Please login first');
+    req.flash('error', 'Harap login terlebih dahulu');
     res.redirect('/login');
   }
 };
@@ -218,12 +218,14 @@ app.get("/dashboard", isAuth, (req, res) => {
         if (err) throw err;
         connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`, (err, result) => {
             if (err) throw err;
+            const isVerified = result[0].verifiedEmail;
             res.render("dashboard",{
                 title: "Dashboard",
                 layout: "layouts/dashboard-layout",
                 username: req.session.user.username,
                 data: result,
-                msg : req.flash("msg")
+                msg : req.flash("msg"),
+                isVerified
             });
             connection.release();
         });
@@ -233,16 +235,19 @@ app.get("/dashboard", isAuth, (req, res) => {
 app.get('/dashboard/dataUser', isAuth, (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    connection.query(`SELECT * FROM pegawai`, (err, result) => {
-      if (err) throw err;
-      // console.log(result);
-      res.render('data-user', {
-        title: 'Data User',
-        layout: 'layouts/dashboard-layout',
-        username: req.session.user.username,
-        data: result,
-        msg: req.flash("msg")
-      });
+    connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`,(err,result) => {
+      const isVerified = result[0].verifiedEmail;
+      connection.query(`SELECT * FROM pegawai`, (err, result) => {
+        if (err) throw err;
+        res.render('data-user', {
+          title: 'Data User',
+          layout: 'layouts/dashboard-layout',
+          username: req.session.user.username,
+          data: result,
+          msg: req.flash("msg"),
+          isVerified
+        });
+    })
       connection.release();
     });
   });
@@ -254,7 +259,7 @@ app.delete("/delete-user",(req,res) => {
     if (err) throw err;
     connection.query(`DELETE FROM pegawai WHERE id = '${id}'`,(err,result) => {
       if (err) throw err;
-      req.flash("msg","the data has been successfully deleted");
+      req.flash("msg","Data telah berhasil dihapus");
       connection.release();
       res.redirect("/dashboard/dataUser")
     })
@@ -264,14 +269,18 @@ app.delete("/delete-user",(req,res) => {
 app.get("/dashboard/dataProfile",isAuth,(req,res) => {
   pool.getConnection((err,connection) => {
     if(err) throw err;
-    connection.query(`SELECT * FROM tbl_penduduk,agama,etnis`,(err,result) => {
+    connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`,(err,result) => {
       if(err) throw err;
-      console.log(result);
-      res.render("data-profile",{
-          title: "Data Profile",
-          layout: "layouts/dashboard-layout",
-          username: req.session.user.username,
-          data : result
+      const isVerified = result[0].verifiedEmail;
+      connection.query(`SELECT * FROM tbl_penduduk,agama,etnis`,(err,result) => {
+        if(err) throw err;
+        res.render("data-profile",{
+            title: "Data Profile",
+            layout: "layouts/dashboard-layout",
+            username: req.session.user.username,
+            data : result,
+            isVerified
+        })
       })
       connection.release()
     })
@@ -281,18 +290,21 @@ app.get("/dashboard/dataProfile",isAuth,(req,res) => {
 app.get("/dashboard/informasi",isAuth,(req,res) => {
     pool.getConnection((err, connection) => {
         if (err) throw err;
-        connection.query("SELECT * FROM pegawai", (err, result) => {
-            if (err) throw err;
-            // console.log(result);
-            res.render("uploadBerita",{
-                title: "Informasi",
-                layout: "layouts/dashboard-layout",
-                username: req.session.user.username,
-                msg: req.flash("msg")
-            })
+        connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`,(err,result) => {
+          const isVerified = result[0].verifiedEmail;
+          connection.query("SELECT * FROM pegawai", (err, result) => {
+              if (err) throw err;
+              res.render("uploadBerita",{
+                  title: "Informasi",
+                  layout: "layouts/dashboard-layout",
+                  username: req.session.user.username,
+                  msg: req.flash("msg"),
+                  isVerified
+              })
+            }
+            )
             connection.release();
-        }
-        )
+        })
     });
   });
 
@@ -302,11 +314,10 @@ app.post('/dashboard/berita', (req, res, next) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     if (!req.file) {
-      req.flash('msg', 'Please upload an image');
+      req.flash('msg', 'Harap masukkan gambar');
       res.redirect('/dashboard/informasi');
     } else {
       const image = req.file.path;
-      console.log(image);
       connection.query(
         'INSERT INTO berita SET ?',
         {
@@ -351,7 +362,7 @@ app.get("/dashboard/verify-email",isAuth, async (req,res) => {
         `
     }
     await transporter.sendMail(mailOptions);
-    req.flash("msg","verified email has been sent to your email don't forget to check your spam folder");
+    req.flash("msg","Link email verifikasi telah berhasil dikirim jika tidak ada di inbox harap cek folder spam");
     res.redirect("/dashboard")
 })
 
@@ -406,10 +417,10 @@ app.post("/forgot-password",(req,res) => {
           `
         }
         transporter.sendMail(mailOptions)
-        req.flash("msg","reset password link has been sent to your email");
+        req.flash("msg","Link untuk reset password telah dikirim ke email jika tidak menerima pesan harap cek folder spam");
         res.redirect("/login")
       } else {
-        req.flash("error","email not found");
+        req.flash("error","Email tidak terdaftar");
         res.redirect("/login")
       }
     })
@@ -422,7 +433,6 @@ const token = req.params.token;
     if(err) throw err;
     connection.query(`SELECT * FROM token WHERE token = '${token}'`,(err,result) => {
       if(err) throw err;
-      console.log(result[0].email)
       if(result.length > 0){
         const email = result[0].email;
         connection.query(`SELECT * FROM pegawai WHERE email = '${email}'`,(err,result) => {
@@ -452,7 +462,7 @@ app.put("/reset-password",(req,res) => {
   pool.getConnection((err,connection) => {
     if(err) throw err;
     if(password !== confirmPassword){
-      req.flash("err","Password and Password Confirmation didn't match");
+      req.flash("err","Password dan Konfirmasi Password tidak sesuai");
       connection.query(`SELECT token FROM token WHERE email = "${email}"`,(err,result) => {
         res.redirect(`/forgot-password/${result[0].token}`)
       })
@@ -461,7 +471,7 @@ app.put("/reset-password",(req,res) => {
         connection.query(`UPDATE pegawai SET ? WHERE id = '${id}'`,{
           password : hash
         })
-        req.flash("msg","your password has been updated")
+        req.flash("msg","Password telah berhasil di update")
         res.redirect("/login")
       })
     }
@@ -476,13 +486,13 @@ app.post('/signup', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
     if (password !== confirmPassword) {
-      req.flash('error', "Password doesn't match");
+      req.flash('error', "Password dan Konfirmasi Password tidak sesuai");
       res.redirect('/signup');
     } else {
       connection.query(`INSERT INTO pegawai (username, password, nama, nip, jabatan, email) VALUES ('${username}', '${hash}', '${nama}', '${nip}', '${position}', '${email}')`, (err, result) => {
         if (err) throw err;
         connection.release();
-        req.flash('msg', 'Your account has been created');
+        req.flash('msg', 'Akun telah berhasil dibuat');
         res.redirect('/login');
       });
     }
@@ -496,17 +506,16 @@ app.post('/login', async (req, res) => {
     connection.query(`SELECT * FROM pegawai WHERE username = '${username}'`, async (err, result) => {
       if (err) throw err;
       if (result.length > 0) {
-        // console.log(bcrypt.compareSync(password, result[0].password));
         if (await bcrypt.compare(password, result[0].password)) {
           req.session.isAuth = true;
           req.session.user = result[0];
           res.redirect('/dashboard');
         } else {
-          req.flash('error', "Username and Password doesn't match");
+          req.flash('error', "Username atau password yang anda masukkan salah");
           res.redirect('/login');
         }
       } else {
-        req.flash('error', "Username doesn't exist");
+        req.flash('error', "Username tidak ditemukan");
         res.redirect('/login');
       }
       connection.release();

@@ -16,81 +16,75 @@
             <div class="bg-emerald-500 px-6 py-3 mt-3 text-white">
                 <%= msg %>
             </div>
-        <% }%>
-        
+        <% }%> 
     </div>
-
-    <main class="container mx-auto bg-white mb-0  mt-20">
-      <section class=" mx-auto w-full bg-gradient-to-b from-sky-200 to-white pb-10">
-          <div>
-            <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10" data-aos="fade-left">Dashboard</h>
-            <hr class="w-full mb-2 mx-auto  border-t-[3px] border-t-slate-700" />
+    <% if (isVerified === 1 ) { %>
+      
+    <main class="container mx-auto bg-white md:h-screen">
+      <section class=" mx-auto w-full bg-gradient-to-b from-sky-200 to-white">
+        <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10" data-aos="fade-left">Dashboard</h1>
+        <hr class="w-full mb-2 mx-auto border-t-[3px] border-t-slate-700" />
+        <div class="p-5">
+          <marquee direction="right" class="bg-sky-500 font-semibold text-2xl text-white shadow-md">Selamat Datang <%= username %></marquee>
+        </div>
+        <div class=" container mt-10 pb-3 mx-auto px-3 md:px-0 md:flex md:justify-evenly md:flex-wrap">
+            <div class="group mx-auto mb-7 rounded-lg shadow-md border-1 overflow-hidden my- transition ease-in-out duration-300 bg-white hover:bg-emerald-50 md:w-[30%] md:hover:shadow-under md:hover:translate-y-2" data-aos="flip-right">
+              <div class="overflow-hidden bg-green-300">
+                <i class="fa-solid fa-user text-5xl p-5"></i>
+                <p class="pl-5 px-5 text-xl font-semibold  float-right">2</p>
+                <h2 class=" pl-8 py-10 text-xl font-semibold  float-right">Pegawai</h2>
+              </div>
+              <div>
+                <hr class="w-full mb-4 mx-auto border-t-[2px] border-t-gray-400" />
+              </div>
+              <div class="my-1 px-5">
+                <div class="flex">
+                  <p>View Details</p>
+                  <a href="/dashboard/dataUser" class="inline-block mr-2 mx-auto"> <i class="fa-solid fa-circle-right"></i></a>
+                </div>
+              </div>
+            </div>
+        
+              <div class="group mx-auto mb-7 rounded-lg shadow-md border-1 overflow-hidden my- transition ease-in-out duration-300 bg-white hover:bg-emerald-50 md:w-[30%] md:hover:shadow-under md:hover:translate-y-2" data-aos="flip-right">
+                <div class="overflow-hidden bg-red-300">
+                  <i class="fa fa-group text-5xl p-5"></i>
+                  <p class="pl-5 px-5 text-xl font-semibold  float-right">20</p>
+                  <h2 class=" pl-8 py-10 text-xl font-semibold  float-right">Penduduk</h2>
+                </div>
+                <div>
+                  <hr class="w-full mb-4 mx-auto border-t-[2px] border-t-gray-400" />
+                </div>
+                <div class="my-1 px-5">
+                  <div class="flex">
+                    <p>View Details</p>
+                    <a href="/dashboard/dataProfile" class="inline-block mr-2 mx-auto"> <i class="fa-solid fa-circle-right"></i></a>
+                  </div>
+                </div>
+              </div>
   
-          </div>
-      <div class="p-5">
-        <marquee direction="right" class="bg-sky-500 font-semibold text-2xl text-white shadow-md">Selamat Datang <%= username %></marquee>
-      </div>
-      <div class=" container mt-10 pb-3 mx-auto px-3 md:px-0 md:flex md:justify-evenly md:flex-wrap">
-          <div class="group mx-auto mb-7 rounded-lg shadow-md border-1 overflow-hidden my- transition ease-in-out duration-300 bg-white hover:bg-emerald-50 md:w-[30%] md:hover:shadow-under md:hover:translate-y-2" data-aos="flip-right">
-            <div class="overflow-hidden bg-green-300">
-              <i class="fa-solid fa-user text-5xl p-5"></i>
-              <p class="pl-5 px-5 text-xl font-semibold  float-right">2</p>
-              <h2 class=" pl-8 py-10 text-xl font-semibold  float-right">Pegawai</h2>
-            </div>
-            <div>
-              <hr class="w-full mb-4 mx-auto border-t-[2px] border-t-gray-400" />
-            </div>
-            <div class="my-1 px-5">
-              <div class="flex">
-                <p>View Details</p>
-                <a href="/dashboard/dataUser" class="inline-block mr-2 mx-auto"> <i class="fa-solid fa-circle-right"></i></a>
-              </div>
-            </div>
-          </div>
-       
-            <div class="group mx-auto mb-7 rounded-lg shadow-md border-1 overflow-hidden my- transition ease-in-out duration-300 bg-white hover:bg-emerald-50 md:w-[30%] md:hover:shadow-under md:hover:translate-y-2" data-aos="flip-right">
-              <div class="overflow-hidden bg-red-300">
-                <i class="fa fa-group text-5xl p-5"></i>
-                <p class="pl-5 px-5 text-xl font-semibold  float-right">20</p>
-                <h2 class=" pl-8 py-10 text-xl font-semibold  float-right">Penduduk</h2>
-              </div>
-              <div>
-                <hr class="w-full mb-4 mx-auto border-t-[2px] border-t-gray-400" />
-              </div>
-              <div class="my-1 px-5">
-                <div class="flex">
-                  <p>View Details</p>
-                  <a href="/dashboard/dataProfile" class="inline-block mr-2 mx-auto"> <i class="fa-solid fa-circle-right"></i></a>
+              <div class="group mx-auto mb-7 rounded-lg shadow-md border-1 overflow-hidden my- transition ease-in-out duration-300 bg-white hover:bg-emerald-50 md:w-[30%] md:hover:shadow-under md:hover:translate-y-2" data-aos="flip-right">
+                <div class="overflow-hidden  bg-blue-400">
+                  <i class="fa fa-group text-5xl p-5"></i>
+                  <p class="pl-5 px-5 text-xl font-semibold  float-right">20</p>
+                  <h2 class=" pl-8 py-10 text-xl font-semibold  float-right">Informasi</h2>
+                </div>
+                <div>
+                  <hr class="w-full mb-4 mx-auto border-t-[2px] border-t-gray-400" />
+                </div>
+                <div class="my-1 px-5">
+                  <div class="flex">
+                    <p>View Details</p>
+                    <a href="/dashboard/informasi" class="inline-block mr-2 mx-auto"> <i class="fa-solid fa-circle-right"></i></a>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div class="group mx-auto mb-7 rounded-lg shadow-md border-1 overflow-hidden my- transition ease-in-out duration-300 bg-white hover:bg-emerald-50 md:w-[30%] md:hover:shadow-under md:hover:translate-y-2" data-aos="flip-right">
-              <div class="overflow-hidden  bg-blue-400">
-                <i class="fa fa-group text-5xl p-5"></i>
-                <p class="pl-5 px-5 text-xl font-semibold  float-right">20</p>
-                <h2 class=" pl-8 py-10 text-xl font-semibold  float-right">Informasi</h2>
-              </div>
-              <div>
-                <hr class="w-full mb-4 mx-auto border-t-[2px] border-t-gray-400" />
-              </div>
-              <div class="my-1 px-5">
-                <div class="flex">
-                  <p>View Details</p>
-                  <a href="/dashboard/informasi" class="inline-block mr-2 mx-auto"> <i class="fa-solid fa-circle-right"></i></a>
-                </div>
-              </div>
-            </div>
-      </div> 
-
-      <div>
-        <canvas id="myCanvas"></canvas>
-      </div>
-    </section>
-
-
-
-    
-</main>
+        </div> 
+  
+        <div>
+          <canvas id="myCanvas"></canvas>
+        </div>
+      </section>
+  </main>
+  <% } %> 
 
 
