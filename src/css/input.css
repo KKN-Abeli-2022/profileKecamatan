@@ -69,3 +69,47 @@ body {
 .active {
   @apply bg-yellow-600;
 }
+
+.post ol{
+  counter-reset: li;
+  list-style: none;
+  *list-style: decimal;
+  padding: 0;
+  margin-bottom: 4em;
+  font: 13px ; /* font size of each element */
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  }
+  .post ol li{
+  position: relative;
+  display: block;
+  padding: .4em .4em .4em .8em;
+  *padding: .4em;
+  margin: .5em 0 .5em 4.5em;
+  text-decoration: none;
+  }
+  .post ol li:before{
+  content: counter(li);
+  counter-increment: li;
+  position: absolute;   
+  left: -40px;
+  top: 50%;
+  margin-top: -1em;
+  background: #00f0f8; /* background color of the numbers */
+  height: 2em;
+  width: 2em;
+  line-height: 2em;
+  text-align: center;
+  font-weight: bold;
+  }
+  .post ol li:after{
+  position: absolute;
+  content: '';
+  left: -9px;
+  margin-top: -.7em;   
+  top: 50%;
+  width: 0; 
+  height: 0; 
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent; 
+  border-left:8px solid #00f0f8; /* background color of the right arrow*/
+  } 
