@@ -234,7 +234,8 @@ app.get("/dashboard", isAuth, (req, res) => {
                       isVerified,
                       Pegawai,
                       Penduduk,
-                      Informasi
+                      Informasi,
+                      jabatan : req.session.user.jabatan
                   });
                 })
               })
@@ -257,7 +258,8 @@ app.get('/dashboard/dataUser', isAuth, (req, res) => {
           username: req.session.user.username,
           data: result,
           msg: req.flash("msg"),
-          isVerified
+          isVerified,
+          jabatan : req.session.user.jabatan
         });
     })
       connection.release();
@@ -291,7 +293,8 @@ app.get("/dashboard/dataProfile",isAuth,(req,res) => {
             layout: "layouts/dashboard-layout",
             username: req.session.user.username,
             data : result,
-            isVerified
+            isVerified,
+            jabatan: req.session.user.jabatan
         })
       })
       connection.release()
@@ -311,7 +314,8 @@ app.get("/dashboard/informasi",isAuth,(req,res) => {
                   layout: "layouts/dashboard-layout",
                   username: req.session.user.username,
                   msg: req.flash("msg"),
-                  isVerified
+                  isVerified,
+                  jabatan : req.session.user.jabatan
               })
             }
             )
