@@ -17,6 +17,7 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="/css/trix.css">
     <script type="text/javascript" src="/js/trix.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -37,7 +38,7 @@
     <body>
     <header>
         <% if (isVerified === 1) { %>
-            <nav class="fixed z-50 top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
+            <nav class="fixed bg-emerald-500 bg-opacity-50 backdrop-blur-lg z-50 top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
             <a href="/dashboard" class="flex items-center ml-0 lg:ml-4">
                 <img src="/assets/img/logo.png" alt="logo" width="30" />
                 <h2 class="font-sansita font-semibold text-lg ml-2">Kelurahan Abeli</h2>
@@ -101,7 +102,7 @@
         </header>
         <%- body %>
         <% if (isVerified === 1 ) { %>
-    <footer class="container mx-auto w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
+    <footer class="max-w-screen-2xl mx-auto w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
         <div class="mt-4 order-2 text-center md:order-1 md:mt-0">
             <p class="m-auto text-[0.8em] md:font-semibold">&copy; KKN Tematik UHO 2022 | Kelurahan Abeli</p>
         </div>
@@ -128,6 +129,10 @@
         referrerpolicy="no-referrer"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
     <script src="/js/script.js"></script>
     <script src="/js/updatePenduduk.js"></script>
     </body>
