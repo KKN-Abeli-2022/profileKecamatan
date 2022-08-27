@@ -633,6 +633,10 @@ video {
   top: 100%;
 }
 
+.left-\[-120px\] {
+  left: -120px;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -1017,6 +1021,11 @@ video {
   transform-origin: top right;
 }
 
+.translate-y-\[-100px\] {
+  --tw-translate-y: -100px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .rotate-45 {
   --tw-rotate: 45deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -1068,6 +1077,10 @@ video {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .overflow-auto {
