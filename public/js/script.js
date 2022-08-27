@@ -60,9 +60,6 @@ for (const item of listLayanan) {
     box.classList.toggle('scale-y-100');
     button.classList.toggle('fa-plus');
     button.classList.toggle('fa-minus');
-      box.classList.toggle('hidden');
-
-    // setTimeout(() => {
-    // }, 300);
+    box.classList.toggle('hidden');
   });
 }
