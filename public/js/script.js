@@ -46,7 +46,7 @@ const checkPassword = () => {
 const dropdown = document.querySelector('#dropdown');
 
 const showButton = () => {
-  dropdown.classList.toggle('show');
+  dropdown.classList.toggle('nav-display');
 };
 
 // list layanan
