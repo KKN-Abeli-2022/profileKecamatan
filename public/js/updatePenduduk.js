@@ -67,3 +67,25 @@ closeButtonEtnis.addEventListener('click', function () {
 });
 
 
+// popup edit profil 
+
+const bgPopUpProfil = document.querySelector('#popup-profil');
+const popupProfil = document.querySelector('#popup-profil div');
+const updatedProfil = document.querySelector('#edit-profil');
+const closeButtonprofil = document.querySelector('#close-btnprofil');
+
+updatedProfil.addEventListener('click', function () {
+  bgPopUpProfil.classList.remove('animate__fadeOut', 'hidden');
+  popupProfil.classList.remove('animate__flipOutY');
+  bgPopUpProfil.classList.add('flex');
+});
+
+closeButtonprofil.addEventListener('click', function () {
+  bgPopUpProfil.classList.add('animate__fadeOut', 'animate__slow');
+  popupProfil.classList.add('animate__flipOutY');
+
+  setTimeout(() => {
+    bgPopUpProfil.classList.add('hidden');
+    bgPopUpProfil.classList.remove('flex');
+  }, 700);
+});

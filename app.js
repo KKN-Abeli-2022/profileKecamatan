@@ -234,7 +234,8 @@ app.get("/dashboard", isAuth, (req, res) => {
                       isVerified,
                       Pegawai,
                       Penduduk,
-                      Informasi
+                      Informasi,
+                      jabatan : req.session.user.jabatan
                   });
                 })
               })
@@ -257,7 +258,8 @@ app.get('/dashboard/dataUser', isAuth, (req, res) => {
           username: req.session.user.username,
           data: result,
           msg: req.flash("msg"),
-          isVerified
+          isVerified,
+          jabatan : req.session.user.jabatan
         });
     })
       connection.release();
@@ -291,12 +293,46 @@ app.get("/dashboard/dataProfile",isAuth,(req,res) => {
             layout: "layouts/dashboard-layout",
             username: req.session.user.username,
             data : result,
-            isVerified
+            isVerified,
+            jabatan: req.session.user.jabatan,
+            msg : req.flash("msg")
         })
       })
       connection.release()
     })
   })
+})
+app.put("/update-penduduk",(req,res) => {
+  const {laki_laki,Perempuan} = req.body;
+  pool.getConnection((err,connection) => {
+    connection.query(`UPDATE tbl_penduduk SET ? WHERE id = '1'`,{
+      laki_laki,perempuan : Perempuan
+    })
+  })
+  req.flash("msg","Data telah berhasil di update")
+  res.redirect("/dashboard/dataProfile")
+})
+
+app.put("/update-agama",(req,res) => {
+  const {islam,kristen,katolik,hindu,budha} = req.body;
+  pool.getConnection((err,connection) => {
+    connection.query(`UPDATE agama SET ? WHERE id = '1'`,{
+      islam,kristen,katolik,hindu,budha
+    })
+  })
+  req.flash("msg","Data telah berhasil di update")
+  res.redirect("/dashboard/dataProfile")
+})
+
+app.put("/update-etnis",(req,res) => {
+  const {sunda,jawa,bali,bugis,makasar,mandar,tolaki,buton,muna,bajo,mornene,toraja} = req.body;
+  pool.getConnection((err,connection) => {
+    connection.query(`UPDATE etnis SET ? WHERE id = '1'`,{
+      sunda,jawa,bali,bugis,makasar,mandar,tolaki,buton,muna,bajo,mornene,toraja
+    })
+  })
+  req.flash("msg","Data telah berhasil di update")
+  res.redirect("/dashboard/dataProfile")
 })
 
 app.get("/dashboard/informasi",isAuth,(req,res) => {
@@ -311,7 +347,8 @@ app.get("/dashboard/informasi",isAuth,(req,res) => {
                   layout: "layouts/dashboard-layout",
                   username: req.session.user.username,
                   msg: req.flash("msg"),
-                  isVerified
+                  isVerified,
+                  jabatan : req.session.user.jabatan
               })
             }
             )

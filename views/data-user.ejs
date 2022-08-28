@@ -1,77 +1,75 @@
 <!-- table  data pegawai-->
-<main class="container mx-auto bg-white mb-0  mt-20">
-    <section class=" mx-auto w-full bg-gradient-to-b from-sky-200 to-white pb-10">
-        <div>
-          <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10" data-aos="fade-left">Data Pegawai</h>
-          <hr class="w-full mb-2 mx-auto  border-t-[3px] border-t-slate-700" />
+<main class="max-w-screen-2xl mx-auto">
+  <section class="mx-auto w-full bg-gradient-to-b from-sky-200 to-white py-9 lg:h-screen">
+    <div>
+      <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10 animate__animated animate__fadeInRightBig animate__slow">Data Pegawai</h1>
+      <hr class="w-full mb-2 mx-auto border-t-[3px] border-t-slate-700" />
+    </div>
+    <% if (msg.length > 0) { %>
+    <script>
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        },
+      });
 
-        </div>
-        <% if (msg.length > 0) { %>
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
+      Toast.fire({
+        icon: 'success',
+        title: '<%= msg %>',
+      });
+    </script>
+    <% } %>
 
-            Toast.fire({
-                icon: 'success',
-                title: '<%= msg %>'
-                })
-        </script>
-        <% } %>
+    <div class="text-center mb-9 mt-10 max-w-screen-2xl mx-auto flex items-center justify-center">
+      <span class="w-10 h-10 p-2 bg-cyan-500 dark:bg-slate-700 rounded-md mr-2 flex items-center justify-center font-black">
+        <i id="search-box" class="bx bx-search-alt-2"></i>
+      </span>
+      <input
+        type="text"
+        name="search"
+        id="search"
+        onkeyup="processSearch()"
+        placeholder="Cari ..."
+        class="p-1 border-2 border-sky-300 w-9/12 shadow rounded focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-slate-800 dark:border-slate-900 dark:focus:ring-cyan-400 dark:focus:border-cyan-400"
+      />
+    </div>
 
-        <div class="text-center mb-9 mt-10 container mx-auto flex items-center justify-center">
-          <span class="w-10 h-10 p-2 bg-cyan-500 dark:bg-slate-700 rounded-md mr-2 flex items-center justify-center font-black">
-            <i id="search-box" class="bx bx-search-alt-2"></i>
-          </span>
-          <input
-            type="text"
-            name="search"
-            id="search"
-            onkeyup="processSearch()"
-            placeholder="Cari ..."
-            class="p-1 border-2 border-sky-300 w-9/12 shadow rounded focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-slate-800 dark:border-slate-900 dark:focus:ring-cyan-400 dark:focus:border-cyan-400"
-          />
-        </div>
-
-        <div class="px-5">
-        <table class="table-auto border border-black border-collapse w-full px-5">
-            <thead >
-                <tr>
-                    <th class="border border-black py-4 bg-sky-500">nama</th>
-                    <th class="border border-black py-4 bg-sky-500">nip</th>
-                    <th class="border border-black py-4 bg-sky-500" >email</th>
-                    <th class="border border-black py-4 bg-sky-500">username</th>
-                    <th class="border border-black py-4 bg-sky-500">jabatan</th>
-                    <th class="border border-black py-4 bg-sky-500">Aksi</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <% for( let i = 0; i < data.length; i++ ) { %>
-                    <tr>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].nama %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].nip %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].email %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].username %></td>
-                        <td class="border border-black p-3 bg-slate-200"><%= data[i].jabatan %></td>
-                        <td class="border border-black p-3 bg-slate-200 text-center">
-                            <form action="/delete-user?_method=DELETE" method="post">
-                                <input type="hidden" value="<%=data[i].id %>" name="id" >
-                                <button type="submit" class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                <% } %>
-            </tbody>
-        </table>
-      </div>
-      </section>
+    <div class="px-5">
+      <table class="table-auto border border-black border-collapse w-full px-5">
+        <thead>
+          <tr>
+            <th class="border border-black py-4 bg-sky-500">nama</th>
+            <th class="border border-black py-4 bg-sky-500">nip</th>
+            <th class="border border-black py-4 bg-sky-500">email</th>
+            <th class="border border-black py-4 bg-sky-500">username</th>
+            <th class="border border-black py-4 bg-sky-500">jabatan</th>
+            <th class="border border-black py-4 bg-sky-500">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for( let i = 0; i < data.length; i++ ) { %>
+          <tr>
+            <td class="border border-black p-3 bg-slate-200"><%= data[i].nama %></td>
+            <td class="border border-black p-3 bg-slate-200"><%= data[i].nip %></td>
+            <td class="border border-black p-3 bg-slate-200"><%= data[i].email %></td>
+            <td class="border border-black p-3 bg-slate-200"><%= data[i].username %></td>
+            <td class="border border-black p-3 bg-slate-200"><%= data[i].jabatan %></td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <form action="/delete-user?_method=DELETE" method="post">
+                <input type="hidden" value="<%=data[i].id %>" name="id" />
+                <button type="submit" class="bg-red-400 px-2 py-1 rounded-lg hover:bg-red-500 cursor-pointer hover:text-gray-300" onclick="return confirm('anda yakin akan menghapus data ini ?')"><i class="fa-solid fa-trash"></i></button>
+              </form>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </main>

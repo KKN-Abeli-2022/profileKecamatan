@@ -17,6 +17,7 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="/css/trix.css">
     <script type="text/javascript" src="/js/trix.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -37,7 +38,7 @@
     <body>
     <header>
         <% if (isVerified === 1) { %>
-            <nav class="fixed z-50 top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
+            <nav class="fixed bg-emerald-500 bg-opacity-50 backdrop-blur-lg z-50 top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
             <a href="/dashboard" class="flex items-center ml-0 lg:ml-4">
                 <img src="/assets/img/logo.png" alt="logo" width="30" />
                 <h2 class="font-sansita font-semibold text-lg ml-2">Kelurahan Abeli</h2>
@@ -52,7 +53,7 @@
             </div>
             <div
                 id="nav-menu"
-                class="absolute py-5 bg-white shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full origin-top transition duration-300 opacity-0 scale-0 lg:opacity-100 lg:scale-100 lg:flex lg:justify-between lg:items-center lg:static lg:bg-transparent lg:max-w-[75%] lg:shadow-none lg:rounded-none lg:py-0 lg:mr-4 "
+                class="absolute py-5 bg-white shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full origin-top transition duration-300 opacity-0 scale-y-0 lg:bg-transparent lg:opacity-100 lg:scale-100 lg:flex lg:justify-between lg:items-center lg:static lg:max-w-[75%] lg:shadow-none lg:rounded-none lg:py-0 lg:mr-4 "
             >
                 <div class="flex w-full lg:w-3/4">
                 <ul class="block w-full lg:flex lg:justify-evenly">
@@ -61,11 +62,13 @@
                             <p>Dashboard</p>
                         </a>
                         </li>
-                    <li class="group">
-                    <a href="/dashboard/dataUser" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
-                        <p>Data User</p>
-                    </a>
-                    </li>
+                        <% if (jabatan !== 'staf') { %>
+                            <li class="group">
+                            <a href="/dashboard/dataUser" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
+                                <p>Data User</p>
+                            </a>
+                            </li>
+                        <% } %>
                     <li class="group">
                     <a href="/dashboard/dataProfile" class="text-slate-800 py-2 mx-8 flex items-center group-hover:text-blue-500 lg:group-hover:text-white lg:group-hover:bg-cyan-500 lg:px-4 lg:rounded-lg lg:font-bold lg:flex lg:justify-center lg:mx-0">
                         <p>Data Penduduk</p>
@@ -78,23 +81,28 @@
                     </li>
                 </ul>
                 </div>
-    
-                <!-- dropdown -->
-                <div class="flex justify-evenly mt-6 border border-b-0 pt-3 lg:border lg:border-none lg:mt-0 lg:pt-0 lg:flex lg:justify-center lg:w-1/4  items-center">
-                    <button class="hover:text-blue-500 lg:hover:text-white lg:hover:bg-cyan-500 lg:rounded-lg lg:font-bold lg:flex py-2 mx-15 lg:px-4 " onclick="showButton()"><i class="fa-solid fa-user"></i></button>
-                <div class="translate-y-[-100px] left-[-120px] relative transition-all duration-200 bg-slate-200" id="dropdown">
-                    <form action="/logout" method="post">
-                        <button class="px-5 py-2 bg-red-500 text-white">Logout</button>
+
+                <div class="flex justify-between px-2 relative mt-6 border border-b-0 pt-3 lg:border lg:border-none lg:mt-0 lg:pt-0 lg:px-0 lg:flex lg:w-1/4 lg:justify-end items-center">
+                    <a href="#" class="text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700 lg:hidden"><i class="fa-solid fa-user-pen mr-1"></i> Edit Profil</a>
+                    <form action="/logout" method="post" class="lg:hidden">
+                        <button class="block w-full px-1 text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Keluar</button>
                     </form>
+
+                    <button id="btn-user" class="hidden hover:text-blue-500 lg:flex lg:hover:text-white lg:hover:bg-cyan-500 lg:rounded-lg lg:font-bold lg:items-center py-2 mx-15 lg:px-4 " onclick="showButton()"><i class="fa-solid fa-user mr-4"></i> <%= username %></button>
+                    <div class="absolute scale-y-0 opacity-0 transition-all duration-200 bg-white rounded-lg py-2 overflow-hidden max-w-[250px] w-full top-full origin-top" id="dropdown">
+                        <a href="#" class="block w-full px-1 text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700 mx-8"><i class="fa-solid fa-user-pen mr-3"></i>Edit Profil</a>
+                        <form action="/logout" method="post">
+                            <button class="block w-full px-1 text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700 mx-8"><i class="fa-solid fa-arrow-right-from-bracket mr-4"></i>Keluar</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
         </div>
     </nav>
     <% } %>
         </header>
         <%- body %>
         <% if (isVerified === 1 ) { %>
-    <footer class="container mx-auto w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
+    <footer class="max-w-screen-2xl mx-auto w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
         <div class="mt-4 order-2 text-center md:order-1 md:mt-0">
             <p class="m-auto text-[0.8em] md:font-semibold">&copy; KKN Tematik UHO 2022 | Kelurahan Abeli</p>
         </div>
@@ -121,9 +129,63 @@
         referrerpolicy="no-referrer"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
     <script src="/js/script.js"></script>
     <script src="/js/updatePenduduk.js"></script>
     </body>
 </html>
+
+
+<div id="popup-profil" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
+    <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp">
+      <div id="close-btnprofil" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-8 h-8 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
+<h1 class="font-bold text-4xl">Edit Profile</h1>
+      <form action="/forgot-Password" method="post" class="mt-3">
+        <label for="nama">
+          <div class="text-slate-800 mb-2">Nama Lengkap</div>
+          <input
+            type="text"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Nama Lengkap"
+            id="nama"
+            name="nama"
+          />
+        <label for="username">
+          <div class="text-slate-800 mb-2 mt-2">Username</div>
+          <input
+            type="text"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Username"
+            id="username"
+            name="username"
+          />
+        <label for="password">
+          <div class="text-slate-800 mb-2 mt-2">Password</div>
+          <input
+            type="password"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Jumlah"
+            id="password"
+            name="password"
+          />
+        </label>
+        <label for="konfirmasi">
+          <div class="text-slate-800 mb-2 mt-2">Konfirmasi Password</div>
+          <input
+            type="password"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Konfirmasi"
+            id="konfirmasi"
+            name="konfirmasi"
+          />
+        </label>
+        <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700">Update</button>
+  
+      </form>
+    </div>
+</div>
 
 
