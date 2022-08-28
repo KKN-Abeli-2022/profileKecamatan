@@ -83,14 +83,14 @@
                 </div>
 
                 <div class="flex justify-between px-2 relative mt-6 border border-b-0 pt-3 lg:border lg:border-none lg:mt-0 lg:pt-0 lg:px-0 lg:flex lg:w-1/4 lg:justify-end items-center">
-                    <a href="#" class="text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700 lg:hidden"><i class="fa-solid fa-user-pen mr-1"></i> Edit Profil</a>
+                    <a href="/dashboard/edit-profile" class="text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700 lg:hidden"><i class="fa-solid fa-user-pen mr-1"></i> Edit Profil</a>
                     <form action="/logout" method="post" class="lg:hidden">
                         <button class="block w-full px-1 text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700"><i class="fa-solid fa-arrow-right-from-bracket mr-1"></i>Keluar</button>
                     </form>
 
                     <button id="btn-user" class="hidden hover:text-blue-500 lg:flex lg:hover:text-white lg:hover:bg-cyan-500 lg:rounded-lg lg:font-bold lg:items-center py-2 mx-15 lg:px-4 " onclick="showButton()"><i class="fa-solid fa-user mr-4"></i> <%= username %></button>
                     <div class="absolute scale-y-0 opacity-0 transition-all duration-200 bg-white rounded-lg py-2 overflow-hidden max-w-[250px] w-full top-full origin-top" id="dropdown">
-                        <a href="#" class="block w-full px-1 text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700 mx-8"><i class="fa-solid fa-user-pen mr-3"></i>Edit Profil</a>
+                        <a href="/dashboard/edit-profile" class="block w-full px-1 text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700 mx-8"><i class="fa-solid fa-user-pen mr-3"></i>Edit Profil</a>
                         <form action="/logout" method="post">
                             <button class="block w-full px-1 text-left pl-2 py-2 hover:text-blue-500 active:text-cyan-700 mx-8"><i class="fa-solid fa-arrow-right-from-bracket mr-4"></i>Keluar</button>
                         </form>

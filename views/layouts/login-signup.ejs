@@ -17,6 +17,34 @@
     <title>Kelurahan Abeli | <%= title %></title>
   </head>
   <body class="font-arima bg-gradient-to-r from-sky-500 to-gray-400">
+    <% if (err.length > 0 || msg.length > 0) { %>
+          <script>
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+            <% if (err.length > 0){ %>
+            Toast.fire({
+                icon: 'error',
+                title: '<%= err %>'
+              })
+              <% } %>
+
+            <% if (msg.length > 0){ %>
+            Toast.fire({
+                icon: 'success',
+                title: '<%= msg %>'
+              })
+              <% } %>
+          </script>
+        <% } %>
     <%- body %>
     <script src="/js/login.js"></script>
   </body>
