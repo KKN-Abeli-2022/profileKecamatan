@@ -229,6 +229,8 @@ app.get("/dashboard", isAuth, (req, res) => {
               const Pegawai = dataPegawai.length;
               connection.query(`SELECT * FROM tbl_penduduk`,(err,jumlahPenduduk) => {
                 const Penduduk = jumlahPenduduk[0].laki_laki + jumlahPenduduk[0].perempuan;
+                const laki = jumlahPenduduk[0].laki_laki;
+                const perempuan = jumlahPenduduk[0].perempuan;
                 connection.query(`SELECT * FROM berita`,(err,jumlahInformasi) => {
                   const Informasi = jumlahInformasi.length;
                   const isVerified = result[0].verifiedEmail;
@@ -243,7 +245,9 @@ app.get("/dashboard", isAuth, (req, res) => {
                       Penduduk,
                       Informasi,
                       jabatan : data[0].jabatan,
-                      err : req.flash("err")
+                      err : req.flash("err"),
+                      laki,
+                      perempuan
                   });
                 })
               })
