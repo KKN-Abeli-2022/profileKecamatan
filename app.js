@@ -210,32 +210,44 @@ app.get('/signup', (req, res) => {
     title: 'Signup',
     layout: 'layouts/login-signup',
     err: req.flash('error'),
+    msg: req.flash("msg")
   });
 });
 
 app.get("/dashboard", isAuth, (req, res) => {
     pool.getConnection((err, connection) => {
         if (err) throw err;
-        connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`, (err, result) => {
+        connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`, (err, result) => {
             if (err) throw err;
+            const data = result.map(row => {
+              return {
+                username : row.username,
+                jabatan : row.jabatan
+              }
+            })
             connection.query(`SELECT * FROM pegawai`,(err,dataPegawai) => {
               const Pegawai = dataPegawai.length;
               connection.query(`SELECT * FROM tbl_penduduk`,(err,jumlahPenduduk) => {
                 const Penduduk = jumlahPenduduk[0].laki_laki + jumlahPenduduk[0].perempuan;
+                const laki = jumlahPenduduk[0].laki_laki;
+                const perempuan = jumlahPenduduk[0].perempuan;
                 connection.query(`SELECT * FROM berita`,(err,jumlahInformasi) => {
                   const Informasi = jumlahInformasi.length;
                   const isVerified = result[0].verifiedEmail;
                   res.render("dashboard",{
                       title: "Dashboard",
                       layout: "layouts/dashboard-layout",
-                      username: req.session.user.username,
                       data: result,
                       msg : req.flash("msg"),
+                      username : data[0].username,
                       isVerified,
                       Pegawai,
                       Penduduk,
                       Informasi,
-                      jabatan : req.session.user.jabatan
+                      jabatan : data[0].jabatan,
+                      err : req.flash("err"),
+                      laki,
+                      perempuan
                   });
                 })
               })
@@ -248,18 +260,20 @@ app.get("/dashboard", isAuth, (req, res) => {
 app.get('/dashboard/dataUser', isAuth, (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`,(err,result) => {
+    connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`,(err,result) => {
       const isVerified = result[0].verifiedEmail;
+      const username = result[0].username;
+      const jabatan = result[0].jabatan;
       connection.query(`SELECT * FROM pegawai`, (err, result) => {
         if (err) throw err;
         res.render('data-user', {
           title: 'Data User',
           layout: 'layouts/dashboard-layout',
-          username: req.session.user.username,
+          username,
           data: result,
           msg: req.flash("msg"),
           isVerified,
-          jabatan : req.session.user.jabatan
+          jabatan
         });
     })
       connection.release();
@@ -283,7 +297,9 @@ app.delete("/delete-user",(req,res) => {
 app.get("/dashboard/dataProfile",isAuth,(req,res) => {
   pool.getConnection((err,connection) => {
     if(err) throw err;
-    connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`,(err,result) => {
+    connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`,(err,result) => {
+      const username = result[0].username;
+      const jabatan = result[0].jabatan;
       if(err) throw err;
       const isVerified = result[0].verifiedEmail;
       connection.query(`SELECT * FROM tbl_penduduk,agama,etnis`,(err,result) => {
@@ -291,10 +307,10 @@ app.get("/dashboard/dataProfile",isAuth,(req,res) => {
         res.render("data-profile",{
             title: "Data Profile",
             layout: "layouts/dashboard-layout",
-            username: req.session.user.username,
+            username,
             data : result,
             isVerified,
-            jabatan: req.session.user.jabatan,
+            jabatan,
             msg : req.flash("msg")
         })
       })
@@ -338,17 +354,19 @@ app.put("/update-etnis",(req,res) => {
 app.get("/dashboard/informasi",isAuth,(req,res) => {
     pool.getConnection((err, connection) => {
         if (err) throw err;
-        connection.query(`SELECT * FROM pegawai WHERE username = '${req.session.user.username}'`,(err,result) => {
+        connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`,(err,result) => {
           const isVerified = result[0].verifiedEmail;
+          const username = result[0].username;
+          const jabatan = result[0].jabatan;
           connection.query("SELECT * FROM pegawai", (err, result) => {
               if (err) throw err;
               res.render("uploadBerita",{
                   title: "Informasi",
                   layout: "layouts/dashboard-layout",
-                  username: req.session.user.username,
+                  username,
                   msg: req.flash("msg"),
                   isVerified,
-                  jabatan : req.session.user.jabatan
+                  jabatan
               })
             }
             )
@@ -385,6 +403,60 @@ app.post('/dashboard/berita', (req, res, next) => {
     }
   });
 });
+
+// edit profile
+app.get("/dashboard/edit-profile",isAuth,(req,res) => {
+  pool.getConnection((err,connection) => {
+    connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`,(err,rows) => {
+      const data = rows.map(row => {
+        return {
+          id : row.id,
+          nama : row.nama,
+          jabatan : row.jabatan,
+          nip : row.nip,
+          email : row.email,
+          username : row.username
+        }
+      })
+      res.render("editProfile",{
+        title : "Edit Profile",
+        layout : "layouts/login-signup",
+        id : data[0].id,
+        nama : data[0].nama,
+        jabatan : data[0].jabatan,
+        nip : data[0].nip,
+        email : data[0].email,
+        username : data[0].username,
+        msg : req.flash("msg"),
+        err : req.flash("err")
+    })
+    })
+  })
+})
+
+app.put("/dashboard/edit-profile",(req,res) => {
+  const {id,nama,jabatan,nip,username,password,confirmPassword} = req.body;
+  const hash = bcrypt.hashSync(password,10);
+  pool.getConnection((err,connection) => {
+    if(password === confirmPassword) {
+      if(password === '') {
+        connection.query(`UPDATE pegawai SET ? WHERE id = ${id}`,{
+          nama,jabatan,nip,username
+        })
+
+      } else {
+        connection.query(`UPDATE pegawai SET ? WHERE id = ${id}`,{
+          nama,jabatan,nip,username,password : hash
+        })
+      }
+      req.flash("msg","Your profile has been successfully updated")
+      res.redirect("/dashboard")
+    } else if (password !== confirmPassword) {
+      req.flash("err","Password dan Konfirmasi Password tidak match")
+      res.redirect("/dashboard/edit-profile")
+    }
+  })
+})
 
 // verification email
 app.get("/dashboard/verify-email",isAuth, async (req,res) => {
@@ -493,7 +565,8 @@ const token = req.params.token;
               username: result[0].username,
               email : result[0].email,
               id : result[0].id,
-              err : req.flash("err")
+              err : req.flash("err"),
+              msg : req.flash("msg")
             })
           }
         })

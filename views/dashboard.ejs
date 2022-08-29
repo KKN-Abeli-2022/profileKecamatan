@@ -8,8 +8,34 @@
       confirmButtonText: '<a href="/dashboard/verify-email">Kirim link verifikasi email</a>',
     });
   </script>
-  <%} }%> <% if (msg.length>0) { %>
-  <div class="bg-emerald-500 px-6 py-3 mt-3 text-white"><%= msg %></div>
+  <%} }%> <% if (msg.length>0 || err.length > 0) { %>
+<script>
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+            <% if (msg.length > 0) { %>
+            Toast.fire({
+                icon: 'success',
+                title: '<%= msg %>'
+              })
+            <% } %>
+
+            <% if (err.length > 0) { %>
+            Toast.fire({
+                icon: 'error',
+                title: '<%= err %>'
+              })
+            <% } %>
+              
+          </script>
   <% }%>
 </div>
 <% if (isVerified === 1 ) { %>
