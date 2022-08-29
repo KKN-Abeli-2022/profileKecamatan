@@ -1,12 +1,11 @@
-<main class="max-w-screen-2xl mx-auto bg-white mb-0  mt-20">
-    <section class=" mx-auto w-full bg-gradient-to-b from-sky-200 to-white pb-10">
+<main class="max-w-screen-2xl mx-auto bg-white h-screen">
+    <section class=" mx-auto w-full bg-gradient-to-b from-sky-200 to-white py-9">
         <div>
           <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10" data-aos="fade-left">Upload Informasi</h>
           <hr class="w-full mb-2 mx-auto  border-t-[3px] border-t-slate-700" />
 
         </div>
     
-
 <% if (msg.length > 0) { %>
     <p><%= msg %></p>
 <% } %>
@@ -21,10 +20,9 @@
         <trix-editor input="isi"></trix-editor>
         <input type="file" id="" class="mt-4 block pb-5" name="imageBerita">
         <center>
-            <button type="submit" class="text-center mt-3 bg-sky-500 py-2 px-4 text-white hover:bg-sky-600">Submit</button>
+            <button type="submit" class="text-center mt-3 bg-sky-500 py-2 px-4 text-white hover:bg-sky-600 active:bg-sky-700 rounded-lg">Submit</button>
         </center>
     </form>
   </div>
 </section>
-
 </main>
