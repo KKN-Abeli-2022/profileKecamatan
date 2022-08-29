@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx tailwindcss -i ./src/css/input.css -o ./public/css/style.css --watch",
     "startApp": "nodemon app.js",
-    "start" : "node app.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
