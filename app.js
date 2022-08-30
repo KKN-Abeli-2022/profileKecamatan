@@ -76,10 +76,10 @@ app.use(flash());
 // database connection
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'profile',
+  host: process.env.host,
+  user: process.env.user,
+  password: process.env.passwordDB || '',
+  database: process.env.db,
 });
 
 // authentication
