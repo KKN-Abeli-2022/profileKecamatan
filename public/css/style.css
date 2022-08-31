@@ -1806,11 +1806,6 @@ body {
   background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
 }
 
-.active {
-  --tw-bg-opacity: 1;
-  background-color: rgb(202 138 4 / var(--tw-bg-opacity));
-}
-
 .post ol {
   counter-reset: li;
   list-style: none;
@@ -1859,6 +1854,30 @@ body {
   border-bottom: 8px solid transparent;
   border-left: 8px solid #00f0f8;
   /* background color of the right arrow*/
+}
+
+/* width */
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #CA8A04;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(220,170,8);
 }
 
 .invalid\:text-red-500:invalid {

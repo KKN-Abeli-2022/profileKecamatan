@@ -49,8 +49,7 @@
       <% } %>
     </div>
   </section>
-  <% } %> 
-</main>
+  <% } else {%> 
 <script>
     Swal.fire({
       icon: 'info',
@@ -59,4 +58,6 @@
       confirmButtonText: '<a href="/">Home</a>',
     });
   </script>
+  <% } %> 
+</main>
 <script src="/js/search-box.js"></script>

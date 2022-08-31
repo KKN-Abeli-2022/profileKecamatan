@@ -1,4 +1,4 @@
-<main class="max-w-screen-2xl mx-auto bg-white h-screen">
+<main class="max-w-screen-2xl mx-auto bg-white">
     <section class=" mx-auto w-full bg-gradient-to-b from-sky-200 to-white py-9">
         <div>
           <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10" data-aos="fade-left">Upload Informasi</h>
@@ -7,7 +7,23 @@
         </div>
     
 <% if (msg.length > 0) { %>
-    <p><%= msg %></p>
+    <script>
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+            Toast.fire({
+                icon: 'success',
+                title: '<%= msg %>'
+              })
+          </script>
 <% } %>
   <div class=" my-10 mx-5 px-5 py-4
   bg-white shadow-md rounded">
