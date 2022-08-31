@@ -41,6 +41,7 @@
     </div>
   </section>
   <!-- news start -->
+  <% if (data.length > 0) { %>
   <section class="mx-auto w-full bg-gradient-to-b from-sky-200 to-white">
     <h1 class="text-3xl text-center font-bold lg:text-4xl" data-aos="fade-left">Informasi Terbaru</h1>
     <hr class="w-1/4 mb-4 mx-auto border-t-[3px] border-t-slate-700" />
@@ -61,7 +62,7 @@
         </div>
       <% } %>
   </section>
-
+  <% } %>
   <section class="mx-auto mt-10 w-full bg-[url(/assets/img/bg-sea.jpg)] bg-fixed bg-cover bg-no-repeat py-10">
     <h1 class="text-3xl text-center text-white font-bold lg:text-4xl" data-aos="fade-right">Peta Wilayah</h1>
     <hr class="w-1/4 mb-10 mx-auto border-t-[3px] border-t-sky-50" />
@@ -91,25 +92,20 @@
     <div class="flex flex-wrap justify-center text-white md:justify-evenly">
       <div class="text-center pt-4 w-full md:w-[30%]" data-aos="flip-up" data-aos-delay="200" data-aos-duration="1000">
         <i class="fa fa-male text-5xl p-5"></i>
-        <% if (data.length > 0) { %>
           <p class="text-5xl font-bold"><%=laki_laki%></p>
-        <% } %>
 
         <p class="text-xl font-semibold pt-2">Laki-Laki</p>
       </div>
       <div class="text-center pt-4 w-full md:w-[30%]" data-aos="flip-up" data-aos-delay="600" data-aos-duration="1000">
         <i class="fa fa-female text-5xl p-5"></i>
-        <% if (data.length > 0) { %>
           <p class="text-5xl font-bold"><%=perempuan%></p>
-        <% } %>
 
         <p class="text-xl font-semibold pt-2">Perempuan</p>
       </div>
       <div class="text-center pt-4 w-full md:w-[30%]" data-aos="flip-up" data-aos-delay="1000" data-aos-duration="1000">
         <i class="fa fa-group text-5xl p-5"></i>
-        <% if (data.length > 0) { %>
           <p class="text-5xl font-bold"><%=laki_laki + perempuan%></p>
-        <% } %>
+        
 
         <p class="text-xl font-semibold pt-2">Total</p>
       </div>

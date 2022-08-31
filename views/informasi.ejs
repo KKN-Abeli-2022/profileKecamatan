@@ -1,4 +1,5 @@
 <main class="max-w-screen-2xl mx-auto  bg-white">
+  <% if (data.length > 0) { %> 
   <section class="max-w-screen-2xl mx-auto">
     <div class="w-[90%] bg-white rounded-lg shadow-lg overflow-hidden border mx-auto">
       <img src="<%= data[0].gambar %>" alt="example" class="w-full" />
@@ -48,6 +49,14 @@
       <% } %>
     </div>
   </section>
+  <% } %> 
 </main>
-
+<script>
+    Swal.fire({
+      icon: 'info',
+      title: 'Informasi Tidak Tersedia',
+      text: 'Kembali ke halaman utama!',
+      confirmButtonText: '<a href="/">Home</a>',
+    });
+  </script>
 <script src="/js/search-box.js"></script>

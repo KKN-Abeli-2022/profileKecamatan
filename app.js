@@ -124,7 +124,7 @@ app.get('/', (req, res) => {
             }
             const laki_laki = rows[0].laki_laki;
             const perempuan = rows[0].perempuan; 
-            connection.query(`SELECT * FROM berita DESC LIMIT 6`,(err,rows) => {
+            connection.query(`SELECT * FROM berita ORDER BY tgl_update DESC LIMIT 6`,(err,rows) => {
               if (err) throw err;
               res.render("index",{
                   title: "Home",
