@@ -382,7 +382,7 @@ app.get("/dashboard/informasi",isAuth,(req,res) => {
     });
   });
 
-app.post('/dashboard/berita', (req, res, next) => {
+app.post('/dashboard/informasi', (req, res, next) => {
   const { judul, isi } = req.body;
   const tgl_update = moment().format('YYYY-MM-DD');
   pool.getConnection((err, connection) => {
