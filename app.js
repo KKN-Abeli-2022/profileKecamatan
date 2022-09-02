@@ -486,7 +486,7 @@ app.get("/dashboard/verify-email",isAuth, async (req,res) => {
       html: `
         <h1Verify Your Email</h1>
         <p>Click this link to verify your email</p>
-        <a href="http://localhost:3000/verify-email/${token}">Verify Email</a>
+        <a href="https://kelurahan-abeli.com/verify-email/${token}">Verify Email</a>
         `
     }
     await transporter.sendMail(mailOptions);
@@ -541,7 +541,7 @@ app.post("/forgot-password",(req,res) => {
           subject : "Reset Password",
           html : `
             <h1> Reset Password </h1>
-            <p> Reset your password by clicking this link <a href="http://localhost:3000/forgot-password/${token}">Reset Password</a></p>
+            <p> Reset your password by clicking this link <a href="http://kelurahan-abeli.com/forgot-password/${token}">Reset Password</a></p>
           `
         }
         transporter.sendMail(mailOptions)
@@ -660,5 +660,5 @@ app.post('/logout', (req, res) => {
   });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 app.listen(port, () => console.log(`Example app listening on port ${port}`));
