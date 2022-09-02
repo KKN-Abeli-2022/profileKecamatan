@@ -1,5 +1,6 @@
-<main class="max-w-screen-2xl mx-auto bg-white mb-0 pt-3">
-  <section class="mt-10 pb-10 max-w-screen-2xl mx-auto">
+<main class="max-w-screen-2xl mx-auto  bg-white">
+  <% if (data.length > 0) { %> 
+  <section class="max-w-screen-2xl mx-auto">
     <div class="w-[90%] bg-white rounded-lg shadow-lg overflow-hidden border mx-auto">
       <img src="<%= data[0].gambar %>" alt="example" class="w-full" />
       <div class="mt-5">
@@ -48,6 +49,15 @@
       <% } %>
     </div>
   </section>
+  <% } else {%> 
+<script>
+    Swal.fire({
+      icon: 'info',
+      title: 'Informasi Tidak Tersedia',
+      text: 'Kembali ke halaman utama!',
+      confirmButtonText: '<a href="/">Home</a>',
+    });
+  </script>
+  <% } %> 
 </main>
-
 <script src="/js/search-box.js"></script>

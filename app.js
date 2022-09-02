@@ -75,11 +75,11 @@ app.use(flash());
 
 // database connection
 const pool = mysql.createPool({
-  connectionLimit: 10,
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'profile',
+  connectionLimit : 10,
+  host: process.env.host,
+  user: process.env.user,
+  password: process.env.passwordDB || '',
+  database: process.env.db,
 });
 
 // authentication
@@ -118,17 +118,24 @@ app.get('/', (req, res) => {
         if(err){
             res.send(err);
         }
-        connection.query("SELECT berita.id,berita.judul,berita.isi,berita.gambar,tbl_penduduk.laki_laki,tbl_penduduk.perempuan FROM berita,tbl_penduduk ORDER BY berita.tgl_update DESC LIMIT 6",(err,rows) => {
+        connection.query("SELECT * FROM tbl_penduduk",(err,rows) => {
             if(err){
                 res.send(err);
             }
-            res.render("index",{
-                title: "Home",
-                layout: "layouts/main",
-                data : rows,
-                convert : truncateString,
-                date : dateOnly
-            });
+            const laki_laki = rows[0].laki_laki;
+            const perempuan = rows[0].perempuan; 
+            connection.query(`SELECT * FROM berita ORDER BY tgl_update DESC LIMIT 6`,(err,rows) => {
+              if (err) throw err;
+              res.render("index",{
+                  title: "Home",
+                  layout: "layouts/main",
+                  data : rows,
+                  laki_laki,
+                  perempuan,
+                  convert : truncateString,
+                  date : dateOnly
+              });
+            })
         })
     })
 });

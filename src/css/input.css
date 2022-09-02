@@ -66,9 +66,6 @@ body {
   background: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
 }
 
-.active {
-  @apply bg-yellow-600;
-}
 
 .post ol {
   counter-reset: li;
@@ -112,4 +109,24 @@ body {
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
   border-left: 8px solid #00f0f8; /* background color of the right arrow*/
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #CA8A04;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(220,170,8);
 }

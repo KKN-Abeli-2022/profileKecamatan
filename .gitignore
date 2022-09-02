@@ -130,3 +130,5 @@ dist
 .pnp.*
 
 /images
+# Local Netlify folder
+.netlify

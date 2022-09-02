@@ -1,5 +1,5 @@
-<main class="max-w-screen-2xl mx-auto bg-white mb-0">
-    <section class=" mx-auto w-full bg-gradient-to-b from-sky-200 to-white pt-9 lg:h-screen">
+<main class="max-w-screen-2xl mx-auto bg-white overflow-auto pb-9 md:h-screen">
+    <section class=" mx-auto w-full bg-gradient-to-b from-sky-200 to-white py-9">
         <div>
             <h1 class="text-3xl p-2 font-bold lg:text-4xl pt-10" data-aos="fade-left">Data Penduduk</h>
             <hr class="w-full mb-2 mx-auto border-t-[3px] border-t-slate-700" />
@@ -72,71 +72,72 @@
     </table>
 </div>
 
-<div class="mt-10 px-5">
-
-    <table class="table-auto border border-black border-collapse w-full ">
-        <caption class="text-black font-semibold lg:text-xl">Etnis</caption>
-        <thead >
-            <tr>
-                <th class="border border-black py-4 bg-sky-500 text-center">Sunda</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Jawa</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Bali</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Bugis</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Makasar</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Mandar</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Tolaki</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Buton</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Muna</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Bajo</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Bungku / Mornene</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Toraja</th>
-                <th class="border border-black py-4 bg-sky-500 text-center">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].sunda %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].jawa %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].bali %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].bugis %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].makasar %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].mandar %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].tolaki %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].buton %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].muna %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].bajo %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].mornene %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].toraja %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-etnis"><i class="fa-solid fa-pencil "></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="mt-10 px-5 w-[100%] ">
+  <p class="text-black text-center font-semibold lg:text-xl">Etnis</p>
+<div class="mx-auto w-full overflow-auto">
+  <table class="table-auto border border-black w-full ">
+      <thead >
+          <tr>
+              <th class="border border-black py-4 bg-sky-500 text-center">Sunda</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Jawa</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Bali</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Bugis</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Makasar</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Mandar</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Tolaki</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Buton</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Muna</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Bajo</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Bungku / Mornene</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Toraja</th>
+              <th class="border border-black py-4 bg-sky-500 text-center">Aksi</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].sunda %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].jawa %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].bali %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].bugis %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].makasar %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].mandar %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].tolaki %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].buton %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].muna %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].bajo %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].mornene %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <%= data[0].toraja %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                  <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-etnis"><i class="fa-solid fa-pencil "></i></button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
 </div>
 </section>
 </main>
@@ -144,7 +145,7 @@
 <div id="popup" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
     <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp">
       <div id="close-btn" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-8 h-8 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
-<h1 class="font-bold text-4xl">Update Penduduk</h1>
+      <h1 class="font-bold text-4xl">Update Penduduk</h1>
       <form action="/update-penduduk?_method=PUT" method="post" class="mt-3">
         <label for="laki">
           <div class="text-slate-800 mb-2">Laki - laki</div>
