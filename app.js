@@ -661,4 +661,4 @@ app.post('/logout', (req, res) => {
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Example app listening on port ${port}! access with http://localhost:${port}`));
+app.listen(port, () => console.log(`Example app listening on port ${port}`));
