@@ -151,7 +151,7 @@ app.get('/profile', (req, res) => {
 app.get('/informasi', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    connection.query('SELECT * FROM berita ORDER BY tgl_update DESC', (err, rows) => {
+    connection.query('SELECT * FROM berita ORDER BY id DESC', (err, rows) => {
       if (err) throw err;
       res.render('informasi', {
         title: 'Informasi',
