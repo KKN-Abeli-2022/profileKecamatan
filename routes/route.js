@@ -3,48 +3,57 @@ const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const {isAuth,truncateString,dateOnly} = require("../controller/middleware/index")
 const crypto = require("crypto");
-const mysql = require("mysql");
+const informasi = require('../models/informasi');
+const data_penduduk = require('../models/penduduk');
+const {connectDB} = require('../config/db')
 const dotenv = require("dotenv")
 
 dotenv.config({path:require('find-config')('.env')})
 
 
 // database connection
-const pool = mysql.createPool({
-  connectionLimit : 10,
-  host: process.env.host,
-  user: process.env.user,
-  password: process.env.passwordDB || '',
-  database: process.env.db,
-});
+connectDB(process.env.db_uri)
 
 
-router.get('/', (req, res) => {
-    pool.getConnection((err,connection) => {
-        if(err){
-            res.send(err);
+router.get('/', async (req, res) => {
+    const dataInformasi = informasi.find();
+    const dataPenduduk = await data_penduduk.find()
+    const {laki_laki,perempuan} = dataPenduduk
+    console.log(dataPenduduk)
+    const data = await dataPenduduk.map(data => {
+        return {
+            laki_laki: data.laki_laki,
+            perempuan: data.perempuan
         }
-        connection.query("SELECT * FROM tbl_penduduk",(err,rows) => {
-            if(err){
-                res.send(err);
-            }
-            const laki_laki = rows[0].laki_laki;
-            const perempuan = rows[0].perempuan; 
-            connection.query(`SELECT * FROM berita ORDER BY tgl_update DESC LIMIT 6`,(err,rows) => {
-              if (err) throw err;
-              res.render("index",{
-                  title: "Home",
-                  layout: "layouts/main",
-                  data : rows,
-                  laki_laki,
-                  perempuan,
-                  convert : truncateString,
-                  date : dateOnly
-              });
-            })
-        })
     })
+    console.log(data)
+    res.render("index",{
+        title: "Home",
+        layout: "layouts/main",
+        convert : truncateString,
+        date : dateOnly,
+        laki_laki: data[0].laki_laki,
+        perempuan: data[0].perempuan
+        });
 });
+
+router.post('/add-penduduk',async (req,res) => {
+    const {laki_laki,perempuan} = req.body;
+    console.log(laki_laki,perempuan)
+    const dataPenduduk = new data_penduduk({
+        laki_laki,perempuan
+    });
+    dataPenduduk.save((err,msg)=> {
+        if(!err)
+            res.send({
+                message: "The data has been added successfully"
+            })
+        else
+            res.send({
+                message: "The data has not been added" + err
+            })
+    })
+})
 
 
 router.get('/profile', (req, res) => {

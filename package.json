@@ -19,6 +19,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^3.1.1",
     "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.1",
@@ -29,8 +30,8 @@
     "find-config": "^1.0.0",
     "method-override": "^3.0.0",
     "moment": "^2.29.4",
+    "mongoose": "^6.6.1",
     "multer": "^1.4.5-lts.1",
-    "mysql": "^2.18.1",
     "nodemailer": "^6.7.8"
   }
 }
