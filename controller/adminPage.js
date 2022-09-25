@@ -33,6 +33,7 @@ const createUser = async (req, res) => {
     } else {
         if(password !== confirmPassword){
             req.flash("error","Password dan Konfirmasi Password tidak sesuai");
+            res.redirect("/signup")
         } else {
             const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(password, salt);
