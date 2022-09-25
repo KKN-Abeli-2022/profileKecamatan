@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/user")
+const {isAuth} = require("./middleware/index")
 
 
 const getLoginPage = (req, res) => {
@@ -53,6 +54,21 @@ const createUser = async (req, res) => {
     }
 }
 
+const login = async (req, res) => {
+    const { username, password } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    const user = await userModel.findOne({username});
+    if(!user){
+        req.flash("error","Username tidak terdaftar");
+        res.redirect("/login")
+    } else {
+        await bcrypt.compare(hash,user.password);
+        req.session.isAuth = true;
+        res.redirect("/dashboard")
+    }
+}
+
 const logout = (req, res) => {
     req.session.destroy((err) => {
     if (err) throw err;
@@ -60,4 +76,4 @@ const logout = (req, res) => {
     });
 }
 
-module.exports = {getLoginPage,getSignupPage,createUser,logout}
+module.exports = {getLoginPage,getSignupPage,createUser,logout,login}

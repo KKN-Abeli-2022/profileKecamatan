@@ -13,7 +13,8 @@ const {
         getLoginPage,
         getSignupPage,
         createUser,
-        logout
+        logout,
+        login
       } = require('../controller/adminPage')
 const dotenv = require("dotenv")
 dotenv.config({path:require('find-config')('.env')})
@@ -473,29 +474,7 @@ router.put("/reset-password",(req,res) => {
 
 router.post('/signup', createUser);
 
-router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(`SELECT * FROM pegawai WHERE username = '${username}'`, async (err, result) => {
-      if (err) throw err;
-      if (result.length > 0) {
-        if (await bcrypt.compare(password, result[0].password)) {
-          req.session.isAuth = true;
-          req.session.user = result[0];
-          res.redirect('/dashboard');
-        } else {
-          req.flash('error', "Username atau password yang anda masukkan salah");
-          res.redirect('/login');
-        }
-      } else {
-        req.flash('error', "Username tidak ditemukan");
-        res.redirect('/login');
-      }
-      connection.release();
-    });
-  });
-});
+router.post('/login', login);
 
 // logout
 router.post('/logout', logout);

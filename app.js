@@ -11,6 +11,7 @@ const multer = require("multer");
 const dotenv = require("dotenv");
 const {router} = require("./routes/route")
 const findConfig = require('find-config');
+const mongoDbSession = require('connect-mongodb-session')(session);
 const app = express()
 
 // set environment
