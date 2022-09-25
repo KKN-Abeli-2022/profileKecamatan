@@ -1,13 +1,21 @@
 const router = require('express').Router();
-const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const {isAuth,truncateString,dateOnly} = require("../controller/middleware/index")
 const crypto = require("crypto");
-const informasi = require('../models/informasi');
-const data_penduduk = require('../models/penduduk');
-const {connectDB} = require('../config/db')
+const {connectDB} = require('../config/db');
+const {
+        getIndexPage,
+        initialAddDataPenduduk,
+        getProfilePage,
+        getLayananPage
+      } = require('../controller/clientPage')
+const {
+        getLoginPage,
+        getSignupPage,
+        createUser,
+        logout
+      } = require('../controller/adminPage')
 const dotenv = require("dotenv")
-
 dotenv.config({path:require('find-config')('.env')})
 
 
@@ -15,53 +23,12 @@ dotenv.config({path:require('find-config')('.env')})
 connectDB(process.env.db_uri)
 
 
-router.get('/', async (req, res) => {
-    const dataInformasi = informasi.find();
-    const dataPenduduk = await data_penduduk.find()
-    const {laki_laki,perempuan} = dataPenduduk
-    console.log(dataPenduduk)
-    const data = await dataPenduduk.map(data => {
-        return {
-            laki_laki: data.laki_laki,
-            perempuan: data.perempuan
-        }
-    })
-    console.log(data)
-    res.render("index",{
-        title: "Home",
-        layout: "layouts/main",
-        convert : truncateString,
-        date : dateOnly,
-        laki_laki: data[0].laki_laki,
-        perempuan: data[0].perempuan
-        });
-});
+router.get('/', getIndexPage);
 
-router.post('/add-penduduk',async (req,res) => {
-    const {laki_laki,perempuan} = req.body;
-    console.log(laki_laki,perempuan)
-    const dataPenduduk = new data_penduduk({
-        laki_laki,perempuan
-    });
-    dataPenduduk.save((err,msg)=> {
-        if(!err)
-            res.send({
-                message: "The data has been added successfully"
-            })
-        else
-            res.send({
-                message: "The data has not been added" + err
-            })
-    })
-})
+router.post('/add-penduduk',initialAddDataPenduduk)
 
 
-router.get('/profile', (req, res) => {
-  res.render('profile', {
-    title: 'Profile',
-    layout: 'layouts/main',
-  });
-});
+router.get('/profile', getProfilePage);
 
 router.get('/informasi', (req, res) => {
   pool.getConnection((err, connection) => {
@@ -111,30 +78,11 @@ router.get('/informasi/:id', (req, res) => {
   });
 });
 
-router.get("/layanan",(req,res) => {
-  res.render("layanan",{
-    title : "layanan",
-    layout : "layouts/main"
-  })
-})
+router.get("/layanan", getLayananPage)
 
-router.get('/login', (req, res) => {
-  res.render('login', {
-    title: 'Login',
-    layout: 'layouts/login-signup',
-    err: req.flash('error'),
-    msg: req.flash("msg")
-  });
-});
+router.get('/login', getLoginPage);
 
-router.get('/signup', (req, res) => {
-  res.render('signup', {
-    title: 'Signup',
-    layout: 'layouts/login-signup',
-    err: req.flash('error'),
-    msg: req.flash("msg")
-  });
-});
+router.get('/signup', getSignupPage);
 
 router.get("/dashboard", isAuth, (req, res) => {
     pool.getConnection((err, connection) => {
@@ -523,25 +471,7 @@ router.put("/reset-password",(req,res) => {
 })
 
 
-router.post('/signup', (req, res) => {
-  const { username, password, nama, nip, position, email, confirmPassword } = req.body;
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(password, salt);
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    if (password !== confirmPassword) {
-      req.flash('error', "Password dan Konfirmasi Password tidak sesuai");
-      res.redirect('/signup');
-    } else {
-      connection.query(`INSERT INTO pegawai (username, password, nama, nip, jabatan, email) VALUES ('${username}', '${hash}', '${nama}', '${nip}', '${position}', '${email}')`, (err, result) => {
-        if (err) throw err;
-        connection.release();
-        req.flash('msg', 'Akun telah berhasil dibuat');
-        res.redirect('/login');
-      });
-    }
-  });
-});
+router.post('/signup', createUser);
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
@@ -568,12 +498,7 @@ router.post('/login', async (req, res) => {
 });
 
 // logout
-router.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) throw err;
-    res.redirect('/login');
-  });
-});
+router.post('/logout', logout);
 
 
 module.exports = {router}
