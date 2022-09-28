@@ -6,22 +6,11 @@ dotenv.config({path:require('find-config')('.env')});
 
 
 const getIndexPage = async (req, res) => {
-    const dataInformasi = informasi.find();
-    const dataPenduduk = await data_penduduk.find()
-    const {laki_laki,perempuan} = dataPenduduk
-    const data = await dataPenduduk.map(data => {
-        return {
-            laki_laki: data.laki_laki,
-            perempuan: data.perempuan
-        }
-    })
     res.render("index",{
         title: "Home",
         layout: "layouts/main",
         convert : truncateString,
         date : dateOnly,
-        laki_laki: data[0].laki_laki,
-        perempuan: data[0].perempuan
         });
 }
 
