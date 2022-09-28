@@ -30,7 +30,7 @@ const userSchema = new schema({
         type: Boolean,
         required: true,
         default: false
-    }
+    },
 })
 
 module.exports = mongoose.model("User",userSchema)

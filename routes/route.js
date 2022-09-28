@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const moment = require("moment");
+const passport = require('passport')
 const {isAuth,truncateString,dateOnly} = require("../controller/middleware/index")
 const crypto = require("crypto");
 const {connectDB} = require('../config/db');
@@ -14,7 +15,8 @@ const {
         getSignupPage,
         createUser,
         logout,
-        login
+        login,
+        getDashboardPage
       } = require('../controller/adminPage')
 const dotenv = require("dotenv")
 dotenv.config({path:require('find-config')('.env')})
@@ -85,48 +87,7 @@ router.get('/login', getLoginPage);
 
 router.get('/signup', getSignupPage);
 
-router.get("/dashboard", isAuth, (req, res) => {
-    pool.getConnection((err, connection) => {
-        if (err) throw err;
-        connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`, (err, result) => {
-            if (err) throw err;
-            const data = result.map(row => {
-              return {
-                username : row.username,
-                jabatan : row.jabatan
-              }
-            })
-            connection.query(`SELECT * FROM pegawai`,(err,dataPegawai) => {
-              const Pegawai = dataPegawai.length;
-              connection.query(`SELECT * FROM tbl_penduduk`,(err,jumlahPenduduk) => {
-                const Penduduk = jumlahPenduduk[0].laki_laki + jumlahPenduduk[0].perempuan;
-                const laki = jumlahPenduduk[0].laki_laki;
-                const perempuan = jumlahPenduduk[0].perempuan;
-                connection.query(`SELECT * FROM berita`,(err,jumlahInformasi) => {
-                  const Informasi = jumlahInformasi.length;
-                  const isVerified = result[0].verifiedEmail;
-                  res.render("dashboard",{
-                      title: "Dashboard",
-                      layout: "layouts/dashboard-layout",
-                      data: result,
-                      msg : req.flash("msg"),
-                      username : data[0].username,
-                      isVerified,
-                      Pegawai,
-                      Penduduk,
-                      Informasi,
-                      jabatan : data[0].jabatan,
-                      err : req.flash("err"),
-                      laki,
-                      perempuan
-                  });
-                })
-              })
-            });
-            connection.release();
-        });
-    })
-  });
+router.get("/dashboard",isAuth, getDashboardPage);
 
 router.get('/dashboard/dataUser', isAuth, (req, res) => {
   pool.getConnection((err, connection) => {

@@ -1,6 +1,11 @@
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/user")
 const {isAuth} = require("./middleware/index")
+const jwt = require('jsonwebtoken');
+const dotenv = require("dotenv");
+const passport = require("passport");
+require("../config/passportStrategy")(passport);
+dotenv.config({path:require('find-config')('.env')})
 
 
 const getLoginPage = (req, res) => {
@@ -38,6 +43,7 @@ const createUser = async (req, res) => {
         } else {
             const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(password, salt);
+
             const data = new userModel({
                 username,
                 nama,
@@ -45,7 +51,7 @@ const createUser = async (req, res) => {
                 nip,
                 email,
                 password: hash,
-                isVerified: false
+                isVerified: false,
             })
             await data.save()
             req.flash("msg","Akun Telah Berhasil Dibuat")
@@ -54,19 +60,25 @@ const createUser = async (req, res) => {
     }
 }
 
-const login = async (req, res) => {
-    const { username, password } = req.body;
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
-    const user = await userModel.findOne({username});
-    if(!user){
-        req.flash("error","Username tidak terdaftar");
-        res.redirect("/login")
-    } else {
-        await bcrypt.compare(hash,user.password);
-        req.session.isAuth = true;
-        res.redirect("/dashboard")
-    }
+const login = async (req, res,next) => {
+    passport.authenticate("local",{
+        failureRedirect: "/login",
+        successRedirect: "/dashboard",
+        failureFlash: true
+    })(req,res,next);
+}
+
+const getDashboardPage = async (req, res) => {
+    const isVerified = req.user.isVerified;
+    const username = req.user.username;
+    res.render("dashboard",{
+        title: "Dashboard",
+        layout: "layouts/dashboard-layout",
+        msg : req.flash("msg"),
+        err : req.flash("err"),
+        isVerified,
+        username
+        });
 }
 
 const logout = (req, res) => {
@@ -76,4 +88,4 @@ const logout = (req, res) => {
     });
 }
 
-module.exports = {getLoginPage,getSignupPage,createUser,logout,login}
+module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage}

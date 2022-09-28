@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 const mailer = require("nodemailer");
 const multer = require("multer");
+const passport = require('passport')
 const dotenv = require("dotenv");
 const {router} = require("./routes/route")
 const findConfig = require('find-config');
@@ -25,10 +26,30 @@ app.set('view engine', 'ejs');
 app.use(expressLayout);
 app.use(express.static(path.join(__dirname, 'public')));
 
+// setting up session
+
+const store = new mongoDbSession({
+  uri: process.env.db_uri,
+  collection: "mySession"
+})
+
+app.use(
+    session({
+        secret: process.env.cookieParserSecret,
+        resave: true,
+        saveUninitialized: false,
+        store
+    })
+)
+
+
 // add middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(passport.authenticate("session"))
 
 // setting up multer
 const fileStorage = multer.diskStorage({
@@ -57,14 +78,6 @@ app.use(
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-// setting up session
-app.use(
-    session({
-        secret: process.env.cookieParserSecret,
-        resave: true,
-        saveUninitialized: false
-    })
-)
 
 // add flash
 app.use(cookieParser(process.env.cookieParserSecret));

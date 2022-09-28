@@ -32,12 +32,12 @@
         }
     </style>
     </head>
-    <% if (isVerified === 1 ) { %>
+    <% if (isVerified === true ) { %>
     <body class="font-arima bg-gradient-to-b from-sky-500 to-slate-700">
         <% }  else %>
     <body>
     <header>
-        <% if (isVerified === 1) { %>
+        <% if (isVerified === true) { %>
             <nav class="fixed bg-emerald-500 bg-opacity-50 backdrop-blur-lg z-50 top-0 left-0 right-0 p-3 flex items-center justify-between transition duration-500 ease-in-out lg:p-0">
             <a href="/dashboard" class="flex items-center ml-0 lg:ml-4">
                 <img src="/assets/img/logo.png" alt="logo" width="30" />
@@ -101,7 +101,7 @@
     <% } %>
         </header>
         <%- body %>
-        <% if (isVerified === 1 ) { %>
+        <% if (isVerified === true ) { %>
     <footer class="max-w-screen-2xl mx-auto w-full flex justify-center items-center flex-wrap bg-slate-900 mt-0 py-4 px-8 text-white text-center shadow-lg md:justify-between">
         <div class="mt-4 order-2 text-center md:order-1 md:mt-0">
             <p class="m-auto text-[0.8em] md:font-semibold">&copy; KKN Tematik UHO 2022 | Kelurahan Abeli</p>

@@ -1,14 +1,19 @@
 const moment = require("moment");
+const jwt = require("jsonwebtoken")
+
+const dotenv = require("dotenv")
+dotenv.config({path:require('find-config')('.env')})
 
 
 // authentication
 const isAuth = (req, res, next) => {
-    if (req.session.isAuth) {
+  if(req.isAuthenticated()){
+    res.set("Cache-Control","no-cache, private, no-store, must-revalidate, post-check=0, pre-check=0");
     next();
-    } else {
-    req.flash('error', 'Harap login terlebih dahulu');
-    res.redirect('/login');
-    }
+  } else {
+    req.flash("error","Harap Login terlebih dahulu");
+    res.redirect("/login")
+  }
 };
         
 const truncateString = (str, num) => {
@@ -26,3 +31,12 @@ const dateOnly = (date) => {
 
 
 module.exports = {isAuth,truncateString,dateOnly}
+
+
+
+//  if (req.session.isAuth) {
+//     next();
+//     } else {
+//     req.flash('error', 'Harap login terlebih dahulu');
+//     res.redirect('/login');
+//     }
