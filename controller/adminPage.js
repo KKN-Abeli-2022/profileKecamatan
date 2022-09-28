@@ -1,7 +1,8 @@
 const bcrypt = require("bcryptjs");
-const userModel = require("../models/user")
-const {isAuth} = require("./middleware/index")
-const jwt = require('jsonwebtoken');
+const userModel = require("../models/user");
+const tokenModel = require('../models/token')
+const crypto = require("crypto");
+const {transporter} = require("./middleware/index")
 const dotenv = require("dotenv");
 const passport = require("passport");
 require("../config/passportStrategy")(passport);
@@ -71,21 +72,66 @@ const login = async (req, res,next) => {
 const getDashboardPage = async (req, res) => {
     const isVerified = req.user.isVerified;
     const username = req.user.username;
+    const jabatan = req.user.jabatan
     res.render("dashboard",{
         title: "Dashboard",
         layout: "layouts/dashboard-layout",
         msg : req.flash("msg"),
         err : req.flash("err"),
         isVerified,
-        username
+        username,
+        jabatan
         });
 }
 
 const logout = (req, res) => {
-    req.session.destroy((err) => {
-    if (err) throw err;
-    res.redirect('/login');
-    });
+    req.logout(() => {
+        req.session.destroy((err) => {
+            res.redirect("/login")
+        })
+    })
 }
 
-module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage}
+const sendMail = async (req,res) => {
+    // generate token
+    const token = crypto.randomBytes(20).toString('hex');
+    // set token to database
+    const user = await userModel.findOne({username:req.user.username});
+    if(user){
+        const data = new tokenModel({
+            token,
+            email: req.user.email
+        })
+        await data.save()
+    }
+    const mailOptions = {
+        from: process.env.email,
+        to: req.user.email,
+        subject: "Verify Email",
+        html: `
+        <h1Verify Your Email</h1>
+        <p>Click this link to verify your email</p>
+        <a href="http://localhost:3000/verify-email/${token}">Verify Email</a>
+        `
+    }
+    await transporter.sendMail(mailOptions);
+    req.flash("msg","Link email verifikasi telah berhasil dikirim jika tidak ada di inbox harap cek folder spam");
+    res.redirect("/dashboard")
+}
+
+const verifyEmail = async (req,res) => {
+    const token = req.params.token;
+    const tokenSent = await tokenModel.findOne({token})
+    if(tokenSent){
+        await userModel.updateOne({username:req.user.username},{
+            $set: {
+                isVerified: true
+            }
+        })
+        await tokenModel.deleteOne({token})
+        req.flash("msg","Your Account has been verified");
+        res.redirect("/dashboard")
+    }
+}
+
+module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage,sendMail,verifyEmail}

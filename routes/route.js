@@ -16,7 +16,9 @@ const {
         createUser,
         logout,
         login,
-        getDashboardPage
+        getDashboardPage,
+        sendMail,
+        verifyEmail
       } = require('../controller/adminPage')
 const dotenv = require("dotenv")
 dotenv.config({path:require('find-config')('.env')})
@@ -291,57 +293,9 @@ router.put("/dashboard/edit-profile",(req,res) => {
 })
 
 // verification email
-router.get("/dashboard/verify-email",isAuth, async (req,res) => {
-    // generate token
-    const token = crypto.randomBytes(20).toString('hex');
-    // set token to database
-    pool.getConnection((err,connection) => {
-      if(err) throw err;
-      connection.query(`INSERT INTO token SET ?`,{
-        token,
-        email : req.session.user.email,
-        date: new Date()
-      })
-      connection.release();
-    })
-    const mailOptions = {
-      from: process.env.email,
-      to: req.session.user.email,
-      subject: "Verify Email",
-      html: `
-        <h1Verify Your Email</h1>
-        <p>Click this link to verify your email</p>
-        <a href="https://kelurahan-abeli.com/verify-email/${token}">Verify Email</a>
-        `
-    }
-    await transporter.sendMail(mailOptions);
-    req.flash("msg","Link email verifikasi telah berhasil dikirim jika tidak ada di inbox harap cek folder spam");
-    res.redirect("/dashboard")
-})
+router.get("/dashboard/verify-email",isAuth, sendMail)
 
-router.get("/verify-email/:token", async (req,res) => {
-  const token = req.params.token;
-  pool.getConnection((err,connection) => {
-    if(err) throw err;
-    connection.query(`SELECT * FROM token WHERE token = '${token}'`,(err,result) => {
-      if(err) throw err;
-      if(result.length > 0){
-        const email = result[0].email;
-        connection.query(`UPDATE pegawai SET verifiedEmail = 1 WHERE email = '${email}'`,(err,result) => {
-          if(err) throw err;
-          connection.query(`DELETE FROM token WHERE email = '${email}'`,(err,result) => {
-            if(err) throw err;
-            connection.release()
-            res.redirect("/dashboard");
-          })
-        })
-      }else{
-        connection.release()
-        res.redirect("/dashboard");
-      }
-    })
-  })
-})
+router.get("/verify-email/:token", verifyEmail)
 
 // forgot-password
 router.post("/forgot-password",(req,res) => {

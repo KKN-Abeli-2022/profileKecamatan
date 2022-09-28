@@ -6,7 +6,6 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
-const mailer = require("nodemailer");
 const multer = require("multer");
 const passport = require('passport')
 const dotenv = require("dotenv");
@@ -83,14 +82,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(cookieParser(process.env.cookieParserSecret));
 app.use(flash());
 
-// setting up mailer
-const transporter = mailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.email,
-        pass: process.env.password
-    }
-})
+
 
 
 

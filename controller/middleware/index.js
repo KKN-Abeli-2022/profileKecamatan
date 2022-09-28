@@ -1,6 +1,5 @@
 const moment = require("moment");
-const jwt = require("jsonwebtoken")
-
+const mailer = require("nodemailer");
 const dotenv = require("dotenv")
 dotenv.config({path:require('find-config')('.env')})
 
@@ -28,9 +27,17 @@ const dateOnly = (date) => {
         return moment(date).format("DD MMMM YYYY");
     }
 
+// setting up mailer
+const transporter = mailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.email,
+        pass: process.env.password
+    }
+})
 
 
-module.exports = {isAuth,truncateString,dateOnly}
+module.exports = {isAuth,truncateString,dateOnly,transporter}
 
 
 
