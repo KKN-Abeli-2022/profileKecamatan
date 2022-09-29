@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const {transporter} = require("./middleware/index")
 const dotenv = require("dotenv");
 const passport = require("passport");
+const data_penduduk = require("../models/penduduk")
 require("../config/passportStrategy")(passport);
 dotenv.config({path:require('find-config')('.env')})
 
@@ -134,4 +135,43 @@ const verifyEmail = async (req,res) => {
     }
 }
 
-module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage,sendMail,verifyEmail}
+const addDataUserPage = async (req,res) => {
+    const isVerified = req.user.isVerified;
+    const jabatan = req.user.jabatan;
+    const username = req.user.username;
+    const data = await userModel.find()
+    res.render('data-user', {
+        title: 'Data User',
+        layout: 'layouts/dashboard-layout',
+        username,
+        msg: req.flash("msg"),
+        isVerified,
+        jabatan,
+        data
+    });
+};
+
+const deleteUser = async (req,res) => {
+    const {id} = req.body;
+    await userModel.deleteOne({_id:id})
+    req.flash("msg","data telah berhasil dihapus");
+    res.redirect("/dashboard/dataUser")
+}
+
+const dataProfile = async (req,res) => {
+    const isVerified = req.user.isVerified;
+    const jabatan = req.user.jabatan;
+    const username = req.user.username;
+    const data = await data_penduduk.find()
+    res.render("data-profile",{
+        title: "Data Profile",
+        layout: "layouts/dashboard-layout",
+        username,
+        data,
+        isVerified,
+        jabatan,
+        msg : req.flash("msg")
+        })
+}
+
+module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage,sendMail,verifyEmail,addDataUserPage,deleteUser,dataProfile}

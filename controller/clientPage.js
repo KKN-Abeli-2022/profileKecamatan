@@ -14,24 +14,6 @@ const getIndexPage = async (req, res) => {
         });
 }
 
-const initialAddDataPenduduk = async (req,res) => {
-    const {laki_laki,perempuan} = req.body;
-    console.log(laki_laki,perempuan)
-    const dataPenduduk = new data_penduduk({
-        laki_laki,perempuan
-    });
-    dataPenduduk.save((err,msg)=> {
-        if(!err)
-            res.send({
-                message: "The data has been added successfully"
-            })
-        else
-            res.send({
-                message: "The data has not been added" + err
-            })
-    })
-}
-
 const getProfilePage = (req, res) => {
     res.render('profile', {
     title: 'Profile',
@@ -46,4 +28,4 @@ const getLayananPage = (req,res) => {
     })
 }
 
-module.exports = {getIndexPage,initialAddDataPenduduk,getProfilePage,getLayananPage}
+module.exports = {getIndexPage,getProfilePage,getLayananPage}

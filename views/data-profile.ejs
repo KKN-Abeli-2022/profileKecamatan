@@ -19,14 +19,16 @@
                 </tr>
             </thead>
             <tbody>
-                    <tr>
-                        <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].laki_laki %></td>
-                        <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].perempuan %></td>
-                        <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].laki_laki + data[0].perempuan %></td>
-                        <td class="border border-black p-3 bg-slate-200 text-center">
-                            <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-penduduk"><i class="fa-solid fa-pencil  "></i></button>
-                        </td>
-                    </tr>
+              <% if (data.length>0) { %>
+                <tr>
+                  <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].laki_laki %></td>
+                  <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].perempuan %></td>
+                  <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].laki_laki + data[0].perempuan %></td>
+                  <td class="border border-black p-3 bg-slate-200 text-center">
+                    <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-penduduk"><i class="fa-solid fa-pencil  "></i></button>
+                  </td>
+                </tr>
+                <% } %>
             </tbody>
         </table>
     </div>
@@ -48,27 +50,30 @@
             </tr>
         </thead>
         <tbody>
+          <% if (data.length>0) { %>
+           
             <tr>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].islam %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].kristen %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].katolik %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center"> 
-                    <%= data[0].hindu %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <%= data[0].budha %>
-                </td>
-                <td class="border border-black p-3 bg-slate-200 text-center">
-                    <button  class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-agama" ><i class="fa-solid fa-pencil "></i></button>
-                </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                <%= data[0].islam %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                <%= data[0].kristen %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                <%= data[0].katolik %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center"> 
+                <%= data[0].hindu %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                <%= data[0].budha %>
+              </td>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                <button  class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-agama" ><i class="fa-solid fa-pencil "></i></button>
+              </td>
             </tr>
-        </tbody>
+            <% } %>
+          </tbody>
     </table>
 </div>
 
@@ -94,47 +99,50 @@
           </tr>
       </thead>
       <tbody>
+        <% if (data.length>0) { %>
+         
           <tr>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].sunda %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].jawa %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].bali %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].bugis %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].makasar %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].mandar %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].tolaki %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].buton %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].muna %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].bajo %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].mornene %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <%= data[0].toraja %>
-              </td>
-              <td class="border border-black p-3 bg-slate-200 text-center">
-                  <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-etnis"><i class="fa-solid fa-pencil "></i></button>
-              </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].sunda %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].jawa %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].bali %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].bugis %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].makasar %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].mandar %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].tolaki %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].buton %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].muna %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].bajo %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].mornene %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].toraja %>
+            </td>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-etnis"><i class="fa-solid fa-pencil "></i></button>
+            </td>
           </tr>
+          <% } %>
       </tbody>
   </table>
 </div>
@@ -154,7 +162,7 @@
             class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
             placeholder="Laki-laki"
             id="laki"
-            value="<%= data[0].laki_laki %>"
+            value="<%= //data[0].laki_laki %>"
             name="laki_laki"
           />
         <label for="perempuan">
@@ -164,7 +172,7 @@
             class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
             placeholder="Perempuan"
             id="perempuan"
-            value="<%= data[0].perempuan %>"
+            value="<%= // data[0].perempuan %>"
             name="Perempuan"
           />
         <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700">Update</button>
@@ -185,7 +193,7 @@
             class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
             placeholder="Islam"
             id="islam"
-            value="<%= data[0].islam %>"
+            value="<%= // data[0].islam %>"
             name="islam"
           />
         <label for="kristen">
@@ -195,7 +203,7 @@
             class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
             placeholder="Kristen"
             id="kristen"
-            value="<%= data[0].kristen %>"
+            value="<%= //data[0].kristen %>"
             name="kristen"
           />
         <label for="katolik">
@@ -205,7 +213,7 @@
             class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
             placeholder="Katolik"
             id="katolik"
-            value="<%= data[0].katolik %>"
+            value="<%= //data[0].katolik %>"
             name="katolik"
           />
         </label>
@@ -216,7 +224,7 @@
             class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
             placeholder="Hindu"
             id="hindu"
-            value="<%= data[0].hindu%>"
+            value="<%= //data[0].hindu%>"
             name="hindu"
           />
         </label>
@@ -227,7 +235,7 @@
             class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
             placeholder="Budha"
             id="budha"
-            value="<%= data[0].budha %>"
+            value="<%= // data[0].budha %>"
             name="budha"
           />
         </label>
@@ -248,7 +256,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="sunda"
           id="sunda"
-          value="<%= data[0].sunda %>"
+          value="<%= // data[0].sunda %>"
           name="sunda"
         />
       <label for="jawa">
@@ -258,7 +266,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Jawa"
           id="jawa"
-          value="<%= data[0].jawa %>"
+          value="<%= // data[0].jawa %>"
           name="jawa"
         />
       <label for="bali">
@@ -268,7 +276,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Bali"
           id="bali"
-          value="<%= data[0].bali %>"
+          value="<%= // data[0].bali %>"
           name="bali"
         />
       </label>
@@ -279,7 +287,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Bugis"
           id="bugis"
-          value="<%= data[0].bugis %>"
+          value="<%= // data[0].bugis %>"
           name="bugis"
         />
       </label>
@@ -290,7 +298,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Makasar"
           id="makasar"
-          value="<%= data[0].makasar %>"
+          value="<%= // data[0].makasar %>"
           name="makassar"
         />
       </label>
@@ -302,7 +310,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Mandar"
           id="mandar"
-          value="<%= data[0].mandar %>"
+          value="<%= // data[0].mandar %>"
           name="mandar"
         />
       </label>
@@ -314,7 +322,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Tolaki"
           id="tolaki"
-          value="<%= data[0].tolaki %>"
+          value="<%= // data[0].tolaki %>"
           name="tolaki"
         />
       </label>
@@ -325,7 +333,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Buton"
           id="buton"
-          value="<%= data[0].buton %>"
+          value="<%=  // data[0].buton %>"
           name="buton"
         />
       </label>
@@ -336,7 +344,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Muna"
           id="muna"
-          value="<%= data[0].muna %>"
+          value="<%=// data[0].muna %>"
           name="muna"
         />
       </label>
@@ -347,7 +355,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Bajo"
           id="bajo"
-          value="<%= data[0].bajo %>"
+          value="<%= //data[0].bajo %>"
           name="bajo"
         />
       </label>
@@ -358,7 +366,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Bungku / Mornene"
           id="mornene"
-          value="<%= data[0].mornene %>"
+          value="<%= // data[0].mornene %>"
           name="mornene"
         />
       </label>
@@ -369,7 +377,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Toraja"
           id="toraja"
-          value="<%= data[0].toraja %>"
+          value="<%= // data[0].toraja %>"
           name="toraja"
         />
       </label>

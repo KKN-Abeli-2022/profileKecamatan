@@ -6,7 +6,6 @@ const crypto = require("crypto");
 const {connectDB} = require('../config/db');
 const {
         getIndexPage,
-        initialAddDataPenduduk,
         getProfilePage,
         getLayananPage
       } = require('../controller/clientPage')
@@ -18,7 +17,10 @@ const {
         login,
         getDashboardPage,
         sendMail,
-        verifyEmail
+        verifyEmail,
+        addDataUserPage,
+        deleteUser,
+        dataProfile
       } = require('../controller/adminPage')
 const dotenv = require("dotenv")
 dotenv.config({path:require('find-config')('.env')})
@@ -30,7 +32,6 @@ connectDB(process.env.db_uri)
 
 router.get('/', getIndexPage);
 
-router.post('/add-penduduk',initialAddDataPenduduk)
 
 
 router.get('/profile', getProfilePage);
@@ -91,67 +92,11 @@ router.get('/signup', getSignupPage);
 
 router.get("/dashboard",isAuth, getDashboardPage);
 
-router.get('/dashboard/dataUser', isAuth, (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`,(err,result) => {
-      const isVerified = result[0].verifiedEmail;
-      const username = result[0].username;
-      const jabatan = result[0].jabatan;
-      connection.query(`SELECT * FROM pegawai`, (err, result) => {
-        if (err) throw err;
-        res.render('data-user', {
-          title: 'Data User',
-          layout: 'layouts/dashboard-layout',
-          username,
-          data: result,
-          msg: req.flash("msg"),
-          isVerified,
-          jabatan
-        });
-    })
-      connection.release();
-    });
-  });
-});
+router.get('/dashboard/dataUser', isAuth, addDataUserPage);
 
-router.delete("/delete-user",(req,res) => {
-  const {id} = req.body;
-  pool.getConnection((err,connection) => {
-    if (err) throw err;
-    connection.query(`DELETE FROM pegawai WHERE id = '${id}'`,(err,result) => {
-      if (err) throw err;
-      req.flash("msg","Data telah berhasil dihapus");
-      connection.release();
-      res.redirect("/dashboard/dataUser")
-    })
-  })
-})
+router.delete("/delete-user",deleteUser)
 
-router.get("/dashboard/dataProfile",isAuth,(req,res) => {
-  pool.getConnection((err,connection) => {
-    if(err) throw err;
-    connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`,(err,result) => {
-      const username = result[0].username;
-      const jabatan = result[0].jabatan;
-      if(err) throw err;
-      const isVerified = result[0].verifiedEmail;
-      connection.query(`SELECT * FROM tbl_penduduk,agama,etnis`,(err,result) => {
-        if(err) throw err;
-        res.render("data-profile",{
-            title: "Data Profile",
-            layout: "layouts/dashboard-layout",
-            username,
-            data : result,
-            isVerified,
-            jabatan,
-            msg : req.flash("msg")
-        })
-      })
-      connection.release()
-    })
-  })
-})
+router.get("/dashboard/dataProfile",isAuth,dataProfile)
 router.put("/update-penduduk",(req,res) => {
   const {laki_laki,Perempuan} = req.body;
   pool.getConnection((err,connection) => {
@@ -240,32 +185,6 @@ router.post('/dashboard/informasi', (req, res, next) => {
 
 // edit profile
 router.get("/dashboard/edit-profile",isAuth,(req,res) => {
-  pool.getConnection((err,connection) => {
-    connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`,(err,rows) => {
-      const data = rows.map(row => {
-        return {
-          id : row.id,
-          nama : row.nama,
-          jabatan : row.jabatan,
-          nip : row.nip,
-          email : row.email,
-          username : row.username
-        }
-      })
-      res.render("editProfile",{
-        title : "Edit Profile",
-        layout : "layouts/login-signup",
-        id : data[0].id,
-        nama : data[0].nama,
-        jabatan : data[0].jabatan,
-        nip : data[0].nip,
-        email : data[0].email,
-        username : data[0].username,
-        msg : req.flash("msg"),
-        err : req.flash("err")
-    })
-    })
-  })
 })
 
 router.put("/dashboard/edit-profile",(req,res) => {
