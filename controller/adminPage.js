@@ -112,7 +112,7 @@ const sendMail = async (req,res) => {
         html: `
         <h1Verify Your Email</h1>
         <p>Click this link to verify your email</p>
-        <a href="http://localhost:3000/verify-email/${token}">Verify Email</a>
+        <a href="https://kelurahan-abeli.herokuapp.com/verify-email/${token}">Verify Email</a>
         `
     }
     await transporter.sendMail(mailOptions);
