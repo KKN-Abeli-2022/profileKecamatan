@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const moment = require("moment")
 const schema = mongoose.Schema;
 
 const pendudukSchema = new schema({
@@ -97,7 +98,11 @@ const pendudukSchema = new schema({
         required:true,
         default:0
     },
-
+    year: {
+        type: Number,
+        required:true,
+        default: moment().format('YYYY')
+    }
 })
 
 

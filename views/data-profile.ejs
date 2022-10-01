@@ -6,12 +6,13 @@
   
         </div>
 
-       <div class=" mt-5 px-5 ">
-
+      <div class=" mt-5 px-5 ">
+        <a href="/dashboard/add-data" class="mb-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700 sm:mt-10">Tambah Data</a>
         <table class="table-auto border border-black border-collapse w-full ">
             <caption class="text-black font-semibold lg:text-xl">Jumlah Penduduk</caption>
             <thead >
                 <tr>
+                    <th class="border border-black py-4 bg-sky-500 text-center">Tahun</th>
                     <th class="border border-black py-4 bg-sky-500 text-center">Laki-Laki</th>
                     <th class="border border-black py-4 bg-sky-500 text-center">Perempuan</th>
                     <th class="border border-black py-4 bg-sky-500 text-center">Jumlah</th>
@@ -21,6 +22,7 @@
             <tbody>
               <% if (data.length>0) { %>
                 <tr>
+                  <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].year %></td>
                   <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].laki_laki %></td>
                   <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].perempuan %></td>
                   <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].laki_laki + data[0].perempuan %></td>
@@ -39,20 +41,21 @@
         <caption class="text-black font-semibold lg:text-xl">Agama</caption>
         <thead>
             <tr>
+              <th class="border border-black py-4 bg-sky-500 text-center">Tahun</th>
                 <th class="border border-black py-4 bg-sky-500 text-center">Islam</th>
                 <th class="border border-black py-4 bg-sky-500 text-center">Kristen</th>
                 <th class="border border-black py-4 bg-sky-500 text-center">Katolik</th>
                 <th class="border border-black py-4 bg-sky-500 text-center">Hindu</th>
                 <th class="border border-black py-4 bg-sky-500 text-center">Budha</th>
                 <th class="border border-black py-4 bg-sky-500 text-center">Aksi</th>
-               
-                
             </tr>
         </thead>
         <tbody>
           <% if (data.length>0) { %>
-           
             <tr>
+              <td class="border border-black p-3 bg-slate-200 text-center">
+                <%= data[0].year %>
+              </td>
               <td class="border border-black p-3 bg-slate-200 text-center">
                 <%= data[0].islam %>
               </td>
@@ -83,6 +86,7 @@
   <table class="table-auto border border-black w-full ">
       <thead >
           <tr>
+              <th class="border border-black py-4 bg-sky-500 text-center">Tahun</th>
               <th class="border border-black py-4 bg-sky-500 text-center">Sunda</th>
               <th class="border border-black py-4 bg-sky-500 text-center">Jawa</th>
               <th class="border border-black py-4 bg-sky-500 text-center">Bali</th>
@@ -100,8 +104,11 @@
       </thead>
       <tbody>
         <% if (data.length>0) { %>
-         
+        
           <tr>
+            <td class="border border-black p-3 bg-slate-200 text-center">
+              <%= data[0].year %>
+            </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
               <%= data[0].sunda %>
             </td>
@@ -150,7 +157,7 @@
 </section>
 </main>
 
-<div id="popup" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
+<div id="popup" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn overflow-y-scroll">
     <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp">
       <div id="close-btn" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-8 h-8 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
       <h1 class="font-bold text-4xl">Update Penduduk</h1>
@@ -196,6 +203,7 @@
             value="<%= // data[0].islam %>"
             name="islam"
           />
+        </label>
         <label for="kristen">
           <div class="text-slate-800 mb-2 mt-2">Kristen</div>
           <input

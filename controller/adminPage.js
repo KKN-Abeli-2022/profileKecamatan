@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const {transporter} = require("./middleware/index")
 const dotenv = require("dotenv");
 const passport = require("passport");
+const moment = require("moment")
 const data_penduduk = require("../models/penduduk")
 require("../config/passportStrategy")(passport);
 dotenv.config({path:require('find-config')('.env')})
@@ -162,6 +163,7 @@ const dataProfile = async (req,res) => {
     const isVerified = req.user.isVerified;
     const jabatan = req.user.jabatan;
     const username = req.user.username;
+    console.log(moment().format('YYYY'))
     const data = await data_penduduk.find()
     res.render("data-profile",{
         title: "Data Profile",
@@ -174,4 +176,46 @@ const dataProfile = async (req,res) => {
         })
 }
 
-module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage,sendMail,verifyEmail,addDataUserPage,deleteUser,dataProfile}
+const addDataPage = (req,res) => {
+    res.render("addData",{
+    title: "Add Data",
+    layout: "layouts/login-signup",
+    username: req.user.username,
+    jabatan:req.user.jabatan,
+    isVerified:req.user.isVerified,
+    msg:req.flash("msg"),
+    err:req.flash("error")
+    })
+}
+
+const addDataPagePost = async (req,res) => {
+    const {laki_laki,Perempuan,islam,kristen,katolik,hindu,budha,sunda,jawa,bali,bugis,makassar,mandar,tolaki,buton,muna,bajo,mornene,toraja} = req.body;
+    // console.log(req.body)
+    const data = new data_penduduk({
+        laki_laki : laki_laki.length > 0 ? laki_laki : 0,
+        Perempuan : Perempuan.length > 0 ? Perempuan : 0,
+        islam : islam.length > 0 ? islam : 0,
+        kristen : kristen.length > 0  ? kristen : 0,
+        katolik : katolik.length > 0 ? katolik : 0,
+        hindu : hindu.length > 0  ? hindu : 0,
+        budha : budha.length > 0  ? budha : 0,
+        sunda : sunda.length > 0  ? sunda : 0,
+        jawa : jawa.length > 0  ? jawa : 0,
+        bali : bali.length > 0  ? bali : 0,
+        bugis : bugis.length > 0  ? bugis : 0,
+        makassar : makassar.length > 0  ? makassar : 0,
+        mandar : mandar.length > 0 ? mandar : 0,
+        tolaki : tolaki.length > 0 ? tolaki : 0,
+        buton : buton.length > 0 ? buton :  0,
+        muna : muna.length > 0  ? muna :  0,
+        bajo : bajo.length > 0 ? bajo : 0,
+        mornene : mornene.length > 0  ? mornene : 0,
+        toraja : toraja.length > 0 ? toraja : 0,
+        tahun: moment().format('YYYY')
+    });
+    await data.save();
+    req.flash("msg","Data berhasil ditambahkan");
+    res.redirect("/dashboard/dataProfile")
+}
+
+module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage,sendMail,verifyEmail,addDataUserPage,deleteUser,dataProfile,addDataPage,addDataPagePost}

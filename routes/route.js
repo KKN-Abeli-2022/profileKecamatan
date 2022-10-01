@@ -20,7 +20,9 @@ const {
         verifyEmail,
         addDataUserPage,
         deleteUser,
-        dataProfile
+        dataProfile,
+        addDataPage,
+        addDataPagePost
       } = require('../controller/adminPage')
 const dotenv = require("dotenv")
 dotenv.config({path:require('find-config')('.env')})
@@ -95,6 +97,10 @@ router.get("/dashboard",isAuth, getDashboardPage);
 router.get('/dashboard/dataUser', isAuth, addDataUserPage);
 
 router.delete("/delete-user",deleteUser)
+
+router.get("/dashboard/add-data",isAuth,addDataPage)
+
+router.post("/dashboard/add-data",isAuth,addDataPagePost)
 
 router.get("/dashboard/dataProfile",isAuth,dataProfile)
 router.put("/update-penduduk",(req,res) => {
