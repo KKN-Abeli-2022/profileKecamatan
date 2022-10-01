@@ -129,6 +129,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-/images/*
+/images/*.jpg
+/images/*.jpeg
+/images/*.png
+
 # Local Netlify folder
 .netlify
