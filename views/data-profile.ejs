@@ -21,15 +21,47 @@
             </thead>
             <tbody>
               <% if (data.length>0) { %>
-                <tr>
-                  <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].year %></td>
-                  <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].laki_laki %></td>
-                  <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].perempuan %></td>
-                  <td class="border border-black p-3 bg-slate-200 text-center"><%= data[0].laki_laki + data[0].perempuan %></td>
-                  <td class="border border-black p-3 bg-slate-200 text-center">
-                    <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-penduduk"><i class="fa-solid fa-pencil  "></i></button>
-                  </td>
-                </tr>
+                <% for( let i = 0; i < data.length; i++ ) { %>
+                  <tr>
+                    <td class="border border-black p-3 bg-slate-200 text-center"><%= data[i].year %></td>
+                    <td class="border border-black p-3 bg-slate-200 text-center"><%= data[i].laki_laki %></td>
+                    <td class="border border-black p-3 bg-slate-200 text-center"><%= data[i].perempuan %></td>
+                    <td class="border border-black p-3 bg-slate-200 text-center"><%= data[i].laki_laki + data[0].perempuan %></td>
+                    <td class="border border-black p-3 bg-slate-200 text-center">
+                      <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-penduduk"><i class="fa-solid fa-pencil  "></i></button>
+                    </td>
+                  </tr>
+                  <div id="popup" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn overflow-y-scroll">
+    <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp">
+      <div id="close-btn" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-8 h-8 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
+      <h1 class="font-bold text-4xl">Update Penduduk</h1>
+      <form action="/update-penduduk?_method=PUT" method="post" class="mt-3">
+        <input type="hidden" name="id" value="<%= data[i]._id%>">
+        <label for="laki">
+          <div class="text-slate-800 mb-2">Laki - laki</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Laki-laki"
+            id="laki"
+            value="<%= data[i].laki_laki %>"
+            name="laki_laki"
+          />
+        <label for="perempuan">
+          <div class="text-slate-800 mb-2 mt-2">Perempuan</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Perempuan"
+            id="perempuan"
+            value="<%= data[i].perempuan %>"
+            name="Perempuan"
+          />
+        <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700">Update</button>
+      </form>
+    </div>
+</div>
+                  <% } %>
                 <% } %>
             </tbody>
         </table>
@@ -52,29 +84,95 @@
         </thead>
         <tbody>
           <% if (data.length>0) { %>
+            <% for( let i = 0; i < data.length; i++ ) { %>
             <tr>
               <td class="border border-black p-3 bg-slate-200 text-center">
-                <%= data[0].year %>
+                <%= data[i].year %>
               </td>
               <td class="border border-black p-3 bg-slate-200 text-center">
-                <%= data[0].islam %>
+                <%= data[i].islam %>
               </td>
               <td class="border border-black p-3 bg-slate-200 text-center">
-                <%= data[0].kristen %>
+                <%= data[i].kristen %>
               </td>
               <td class="border border-black p-3 bg-slate-200 text-center">
-                <%= data[0].katolik %>
+                <%= data[i].katolik %>
               </td>
               <td class="border border-black p-3 bg-slate-200 text-center"> 
-                <%= data[0].hindu %>
+                <%= data[i].hindu %>
               </td>
               <td class="border border-black p-3 bg-slate-200 text-center">
-                <%= data[0].budha %>
+                <%= data[i].budha %>
               </td>
               <td class="border border-black p-3 bg-slate-200 text-center">
                 <button  class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-agama" ><i class="fa-solid fa-pencil "></i></button>
               </td>
             </tr>
+            <div id="popup-agama" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
+    <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp">
+      <div id="close-btnag" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-8 h-8 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
+      <h1 class="font-bold text-4xl">Update Agama</h1>
+      <form action="/update-agama?_method=PUT" method="post" class="mt-3">
+        <input type="hidden" name="id" value="<%= data[i]._id%>">
+        <label for="islam">
+          <div class="text-slate-800 mb-2">Islam</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Islam"
+            id="islam"
+            value="<%=  data[i].islam %>"
+            name="islam"
+          />
+        </label>
+        <label for="kristen">
+          <div class="text-slate-800 mb-2 mt-2">Kristen</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Kristen"
+            id="kristen"
+            value="<%= data[i].kristen %>"
+            name="kristen"
+          />
+        <label for="katolik">
+          <div class="text-slate-800 mb-2 mt-2">Katolik</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Katolik"
+            id="katolik"
+            value="<%= data[i].katolik %>"
+            name="katolik"
+          />
+        </label>
+        <label for="hindu">
+          <div class="text-slate-800 mb-2 mt-2">Hindu</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Hindu"
+            id="hindu"
+            value="<%= data[i].hindu%>"
+            name="hindu"
+          />
+        </label>
+        <label for="budha">
+          <div class="text-slate-800 mb-2 mt-2">Budha</div>
+          <input
+            type="number"
+            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
+            placeholder="Budha"
+            id="budha"
+            value="<%= data[i].budha %>"
+            name="budha"
+          />
+        </label>
+        <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700">Update</button>
+      </form>
+    </div>
+</div>
+            <% } %>
             <% } %>
           </tbody>
     </table>
@@ -104,51 +202,52 @@
       </thead>
       <tbody>
         <% if (data.length>0) { %>
-        
+          <% for( let i = 0; i < data.length; i++ ) { %>
           <tr>
             <td class="border border-black p-3 bg-slate-200 text-center">
               <%= data[0].year %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].sunda %>
+              <%= data[i].sunda %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].jawa %>
+              <%= data[i].jawa %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].bali %>
+              <%= data[i].bali %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].bugis %>
+              <%= data[i].bugis %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].makasar %>
+              <%= data[i].makasar %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].mandar %>
+              <%= data[i].mandar %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].tolaki %>
+              <%= data[i].tolaki %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].buton %>
+              <%= data[i].buton %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].muna %>
+              <%= data[i].muna %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].bajo %>
+              <%= data[i].bajo %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].mornene %>
+              <%= data[i].mornene %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
-              <%= data[0].toraja %>
+              <%= data[i].toraja %>
             </td>
             <td class="border border-black p-3 bg-slate-200 text-center">
               <button class="bg-emerald-400 px-2 py-1 rounded-lg hover:bg-emerald-500 cursor-pointer hover:text-gray-300" id="update-etnis"><i class="fa-solid fa-pencil "></i></button>
             </td>
           </tr>
+            <% } %>
           <% } %>
       </tbody>
   </table>
@@ -156,107 +255,13 @@
 </div>
 </section>
 </main>
-
-<div id="popup" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn overflow-y-scroll">
-    <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp">
-      <div id="close-btn" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-8 h-8 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
-      <h1 class="font-bold text-4xl">Update Penduduk</h1>
-      <form action="/update-penduduk?_method=PUT" method="post" class="mt-3">
-        <label for="laki">
-          <div class="text-slate-800 mb-2">Laki - laki</div>
-          <input
-            type="number"
-            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
-            placeholder="Laki-laki"
-            id="laki"
-            value="<%= //data[0].laki_laki %>"
-            name="laki_laki"
-          />
-        <label for="perempuan">
-          <div class="text-slate-800 mb-2 mt-2">Perempuan</div>
-          <input
-            type="number"
-            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
-            placeholder="Perempuan"
-            id="perempuan"
-            value="<%= // data[0].perempuan %>"
-            name="Perempuan"
-          />
-        <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700">Update</button>
-      </form>
-    </div>
-</div>
-
-
-<div id="popup-agama" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
-    <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp">
-      <div id="close-btnag" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-8 h-8 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
-      <h1 class="font-bold text-4xl">Update Agama</h1>
-      <form action="/update-agama?_method=PUT" method="post" class="mt-3">
-        <label for="islam">
-          <div class="text-slate-800 mb-2">Islam</div>
-          <input
-            type="number"
-            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
-            placeholder="Islam"
-            id="islam"
-            value="<%= // data[0].islam %>"
-            name="islam"
-          />
-        </label>
-        <label for="kristen">
-          <div class="text-slate-800 mb-2 mt-2">Kristen</div>
-          <input
-            type="number"
-            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
-            placeholder="Kristen"
-            id="kristen"
-            value="<%= //data[0].kristen %>"
-            name="kristen"
-          />
-        <label for="katolik">
-          <div class="text-slate-800 mb-2 mt-2">Katolik</div>
-          <input
-            type="number"
-            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
-            placeholder="Katolik"
-            id="katolik"
-            value="<%= //data[0].katolik %>"
-            name="katolik"
-          />
-        </label>
-        <label for="hindu">
-          <div class="text-slate-800 mb-2 mt-2">Hindu</div>
-          <input
-            type="number"
-            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
-            placeholder="Hindu"
-            id="hindu"
-            value="<%= //data[0].hindu%>"
-            name="hindu"
-          />
-        </label>
-        <label for="budha">
-          <div class="text-slate-800 mb-2 mt-2">Budha</div>
-          <input
-            type="number"
-            class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
-            placeholder="Budha"
-            id="budha"
-            value="<%= // data[0].budha %>"
-            name="budha"
-          />
-        </label>
-        <button class="mx-auto block mt-5 bg-orange-500 px-4 py-1 rounded-md text-white hover:bg-orange-600 active:bg-orange-700">Update</button>
-      </form>
-    </div>
-</div>
-
-<div id="popup-etnis" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
+  <% for( let i = 0; i < data.length; i++ ) { %>
+    <div id="popup-etnis" class=" fixed justify-center items-center bg-black/50 top-0 left-0 right-0 bottom-0 hidden animate__animated animate__fadeIn">
   <div class="fixed bg-white p-9 rounded-xl shadow-xl animate__animated animate__backInUp h-[80%]  overflow-hidden">
     <div id="close-btnet" class="absolute top-2 right-2 text-red-600 text-2xl rounded-full hover:bg-red-600 hover:text-white w-10 h-10 cursor-pointer flex justify-center items-center "><i class="fa-solid fa-xmark"></i></div>
     <h1 class="font-bold text-4xl">Update Etnis</h1>
     <form action="/update-etnis?_method=PUT" method="post" class="mt-3 overflow-y-auto h-[90%] px-5">
+      <input type="hidden" name="id" value="<%=data[i]%>">
       <label for="sunda">
         <div class="text-slate-800 mb-2">Sunda</div>
         <input
@@ -264,7 +269,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="sunda"
           id="sunda"
-          value="<%= // data[0].sunda %>"
+          value="<%= data[i].sunda %>"
           name="sunda"
         />
       <label for="jawa">
@@ -274,7 +279,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Jawa"
           id="jawa"
-          value="<%= // data[0].jawa %>"
+          value="<%= data[i].jawa %>"
           name="jawa"
         />
       <label for="bali">
@@ -284,7 +289,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Bali"
           id="bali"
-          value="<%= // data[0].bali %>"
+          value="<%= data[i].bali %>"
           name="bali"
         />
       </label>
@@ -295,7 +300,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Bugis"
           id="bugis"
-          value="<%= // data[0].bugis %>"
+          value="<%= data[i].bugis %>"
           name="bugis"
         />
       </label>
@@ -306,7 +311,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Makasar"
           id="makasar"
-          value="<%= // data[0].makasar %>"
+          value="<%= data[i].makasar %>"
           name="makassar"
         />
       </label>
@@ -318,7 +323,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Mandar"
           id="mandar"
-          value="<%= // data[0].mandar %>"
+          value="<%= data[i].mandar %>"
           name="mandar"
         />
       </label>
@@ -330,7 +335,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Tolaki"
           id="tolaki"
-          value="<%= // data[0].tolaki %>"
+          value="<%= data[i].tolaki %>"
           name="tolaki"
         />
       </label>
@@ -341,7 +346,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Buton"
           id="buton"
-          value="<%=  // data[0].buton %>"
+          value="<%= data[i].buton %>"
           name="buton"
         />
       </label>
@@ -352,7 +357,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Muna"
           id="muna"
-          value="<%=// data[0].muna %>"
+          value="<%=data[i].muna %>"
           name="muna"
         />
       </label>
@@ -363,7 +368,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Bajo"
           id="bajo"
-          value="<%= //data[0].bajo %>"
+          value="<%= data[i].bajo %>"
           name="bajo"
         />
       </label>
@@ -374,7 +379,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Bungku / Mornene"
           id="mornene"
-          value="<%= // data[0].mornene %>"
+          value="<%=  data[i].mornene %>"
           name="mornene"
         />
       </label>
@@ -385,7 +390,7 @@
           class="border border-black rounded shadow-lg py-1 px-3 focus:ring-1 focus:border-sky-600 focus:ring-sky-500 focus:outline-none w-full invalid:text-red-500 invalid:focus:border-red-500 invalid:focus:ring-red-500 peer"
           placeholder="Toraja"
           id="toraja"
-          value="<%= // data[0].toraja %>"
+          value="<%=  data[i].toraja %>"
           name="toraja"
         />
       </label>
@@ -393,7 +398,9 @@
     </form>
   </div>
 </div>
- <% if (msg.length > 0) { %>
+  <% } %>
+
+<% if (msg.length > 0) { %>
           <script>
             const Toast = Swal.mixin({
               toast: true,

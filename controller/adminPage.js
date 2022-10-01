@@ -163,7 +163,6 @@ const dataProfile = async (req,res) => {
     const isVerified = req.user.isVerified;
     const jabatan = req.user.jabatan;
     const username = req.user.username;
-    console.log(moment().format('YYYY'))
     const data = await data_penduduk.find()
     res.render("data-profile",{
         title: "Data Profile",
