@@ -193,7 +193,7 @@ const addDataPagePost = async (req,res) => {
     // console.log(req.body)
     const data = new data_penduduk({
         laki_laki : laki_laki.length > 0 ? laki_laki : 0,
-        Perempuan : Perempuan.length > 0 ? Perempuan : 0,
+        Perempuan : Perempuan.length > 0 ? perempuan : 0,
         islam : islam.length > 0 ? islam : 0,
         kristen : kristen.length > 0  ? kristen : 0,
         katolik : katolik.length > 0 ? katolik : 0,
