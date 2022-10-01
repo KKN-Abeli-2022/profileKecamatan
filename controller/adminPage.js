@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const passport = require("passport");
 const moment = require("moment")
 const data_penduduk = require("../models/penduduk")
+const informationModel = require('../models/informasi')
 require("../config/passportStrategy")(passport);
 dotenv.config({path:require('find-config')('.env')})
 
@@ -217,4 +218,122 @@ const addDataPagePost = async (req,res) => {
     res.redirect("/dashboard/dataProfile")
 }
 
-module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage,sendMail,verifyEmail,addDataUserPage,deleteUser,dataProfile,addDataPage,addDataPagePost}
+const updatePenduduk = async (req,res) => {
+    const {laki_laki,Perempuan,id} = req.body;
+    await data_penduduk.updateOne({id},{
+        $set:{
+            laki_laki,perempuan:Perempuan
+        }
+    })
+    req.flash("msg","Data telah berhasil di update")
+    res.redirect("/dashboard/dataProfile")
+}
+
+const updateAgama = async (req,res) => {
+    const {islam,kristen,katolik,hindu,budha,id} = req.body;
+
+    await data_penduduk.updateOne({id},{
+        $set: {
+            islam,kristen,katolik,hindu,budha
+        }
+    })
+    req.flash("msg","Data telah berhasil di update")
+    res.redirect("/dashboard/dataProfile")
+}
+
+const updateEtnis = async (req,res) => {
+    const {sunda,jawa,bali,bugis,makasar,mandar,tolaki,buton,muna,bajo,mornene,toraja,id} = req.body;
+
+    await data_penduduk.updateOne({id},{
+        $set : {
+            sunda,jawa,bali,bugis,makasar,mandar,tolaki,buton,muna,bajo,mornene,toraja
+        }
+    })
+
+    req.flash("msg","Data telah berhasil di update")
+    res.redirect("/dashboard/dataProfile")
+}
+
+const getInformasiDashboard = async (req,res) => {
+    const isVerified = req.user.isVerified;
+    const username = req.user.username;
+    const jabatan = req.user.jabatan;
+
+    res.render("uploadBerita",{
+        title: "Informasi",
+        layout: "layouts/dashboard-layout",
+        username,
+        msg: req.flash("msg"),
+        err: req.flash("error"),
+        isVerified,
+        jabatan
+    })
+}
+
+const postInformasi = async (req, res, next) => {
+    const { judul, isi } = req.body;
+    const tgl_update = moment().format('YYYY-MM-DD');
+    const image = req.file.path
+    const data = new informationModel({
+        judul,
+        isi,
+        gambar: image,
+        author: req.user.username,
+        tgl_update
+    })
+    await data.save();
+    req.flash("msg","Data berhasil ditambahkan");
+    res.redirect("/dashboard/informasi")
+}
+
+const postditProfile = async (req,res) => {
+    const {id,nama,jabatan,nip,username,password,confirmPassword} = req.body;
+    const hash = bcrypt.hashSync(password,10);
+    if(password === confirmPassword) {
+        if(password === '') {
+            await userModel.updateOne({id},{
+                $set: {
+                    nama,jabatan,nip,username
+                }
+            })
+    } else {
+            await userModel.updateOne({id},{
+                $set:{
+                    nama,
+                    jabatan,
+                    nip,
+                    username,
+                    password:hash
+                }
+            })
+        }
+        req.flash("msg","Your profile has been successfully updated")
+        res.redirect("/dashboard")
+    } else if (password !== confirmPassword) {
+        req.flash("err","Password dan Konfirmasi Password tidak match")
+        res.redirect("/dashboard/edit-profile")
+    }
+}
+
+const getEditProfile = (req,res) => {
+    const id = req.user.id;
+    const nama = req.user.nama;
+    const jabatan = req.user.jabatan;
+    const nip = req.user.nip;
+    const email = req.user.email;
+    const username = req.user.username;
+    res.render("editProfile",{
+        title : "Edit Profile",
+        layout : "layouts/login-signup",
+        id : id,
+        nama : nama,
+        jabatan : jabatan,
+        nip : nip,
+        email : email,
+        username : username,
+        msg : req.flash("msg"),
+        err : req.flash("err")
+    })
+}
+
+module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage,sendMail,verifyEmail,addDataUserPage,deleteUser,dataProfile,addDataPage,addDataPagePost,updatePenduduk,updateAgama,updateEtnis,getInformasiDashboard,postInformasi,getEditProfile,postditProfile}

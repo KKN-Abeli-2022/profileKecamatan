@@ -7,7 +7,9 @@ const {connectDB} = require('../config/db');
 const {
         getIndexPage,
         getProfilePage,
-        getLayananPage
+        getLayananPage,
+        getInformasiPage,
+        getDetailInformationPage
       } = require('../controller/clientPage')
 const {
         getLoginPage,
@@ -22,7 +24,14 @@ const {
         deleteUser,
         dataProfile,
         addDataPage,
-        addDataPagePost
+        addDataPagePost,
+        updatePenduduk,
+        updateAgama,
+        updateEtnis,
+        getInformasiDashboard,
+        postInformasi,
+        getEditProfile,
+        postditProfile
       } = require('../controller/adminPage')
 const dotenv = require("dotenv")
 dotenv.config({path:require('find-config')('.env')})
@@ -38,53 +47,9 @@ router.get('/', getIndexPage);
 
 router.get('/profile', getProfilePage);
 
-router.get('/informasi', (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query('SELECT * FROM berita ORDER BY id DESC', (err, rows) => {
-      if (err) throw err;
-      res.render('informasi', {
-        title: 'Informasi',
-        layout: 'layouts/main',
-        data: rows,
-        date: dateOnly,
-        convert: truncateString,
-      });
-    });
-    connection.release()
-  });
-});
+router.get('/informasi', getInformasiPage);
 
-router.get('/informasi/:id', (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    connection.query(`SELECT * FROM berita WHERE id = ${req.params.id}`, (err, rows) => {
-      const konten = rows.map((row) => {
-        return {
-          judul: row.judul,
-          isi : row.isi,
-          gambar : row.gambar,
-          penulis : row.author,
-          id : row.id,
-        };
-      });
-      connection.query(`SELECT * FROM berita`,(err,rows) => {
-        res.render('detail', {
-          title: konten[0].judul,
-          layout: 'layouts/main',
-          judul : konten[0].judul,
-          isi : konten[0].isi,
-          gambar : konten[0].gambar,
-          penulis : konten[0].penulis,
-          id : konten[0].id,
-          data : rows,
-          date : dateOnly
-        });
-      })
-    });
-    connection.release()
-  });
-});
+router.get('/informasi/:id', getDetailInformationPage);
 
 router.get("/layanan", getLayananPage)
 
@@ -103,119 +68,20 @@ router.get("/dashboard/add-data",isAuth,addDataPage)
 router.post("/dashboard/add-data",isAuth,addDataPagePost)
 
 router.get("/dashboard/dataProfile",isAuth,dataProfile)
-router.put("/update-penduduk",(req,res) => {
-  const {laki_laki,Perempuan} = req.body;
-  pool.getConnection((err,connection) => {
-    connection.query(`UPDATE tbl_penduduk SET ? WHERE id = '1'`,{
-      laki_laki,perempuan : Perempuan
-    })
-  })
-  req.flash("msg","Data telah berhasil di update")
-  res.redirect("/dashboard/dataProfile")
-})
+router.put("/update-penduduk",updatePenduduk)
 
-router.put("/update-agama",(req,res) => {
-  const {islam,kristen,katolik,hindu,budha} = req.body;
-  pool.getConnection((err,connection) => {
-    connection.query(`UPDATE agama SET ? WHERE id = '1'`,{
-      islam,kristen,katolik,hindu,budha
-    })
-  })
-  req.flash("msg","Data telah berhasil di update")
-  res.redirect("/dashboard/dataProfile")
-})
+router.put("/update-agama",updateAgama)
 
-router.put("/update-etnis",(req,res) => {
-  const {sunda,jawa,bali,bugis,makasar,mandar,tolaki,buton,muna,bajo,mornene,toraja} = req.body;
-  pool.getConnection((err,connection) => {
-    connection.query(`UPDATE etnis SET ? WHERE id = '1'`,{
-      sunda,jawa,bali,bugis,makasar,mandar,tolaki,buton,muna,bajo,mornene,toraja
-    })
-  })
-  req.flash("msg","Data telah berhasil di update")
-  res.redirect("/dashboard/dataProfile")
-})
+router.put("/update-etnis",updateEtnis)
 
-router.get("/dashboard/informasi",isAuth,(req,res) => {
-    pool.getConnection((err, connection) => {
-        if (err) throw err;
-        connection.query(`SELECT * FROM pegawai WHERE id = '${req.session.user.id}'`,(err,result) => {
-          const isVerified = result[0].verifiedEmail;
-          const username = result[0].username;
-          const jabatan = result[0].jabatan;
-          connection.query("SELECT * FROM pegawai", (err, result) => {
-              if (err) throw err;
-              res.render("uploadBerita",{
-                  title: "Informasi",
-                  layout: "layouts/dashboard-layout",
-                  username,
-                  msg: req.flash("msg"),
-                  isVerified,
-                  jabatan
-              })
-            }
-            )
-            connection.release();
-        })
-    });
-  });
+router.get("/dashboard/informasi",isAuth,getInformasiDashboard);
 
-router.post('/dashboard/informasi', (req, res, next) => {
-  const { judul, isi } = req.body;
-  const tgl_update = moment().format('YYYY-MM-DD');
-  pool.getConnection((err, connection) => {
-    if (err) throw err;
-    if (!req.file) {
-      req.flash('msg', 'Harap masukkan gambar');
-      res.redirect('/dashboard/informasi');
-    } else {
-      const image = req.file.path;
-      connection.query(
-        'INSERT INTO berita SET ?',
-        {
-          judul: judul,
-          isi: isi,
-          gambar: image,
-          tgl_update,
-          author: req.session.user.username,
-        },
-        (err, result) => {
-          if (err) throw err;
-          req.flash('msg', 'Berhasil menambahkan informasi');
-          res.redirect('/dashboard/informasi');
-        }
-      );
-    }
-  });
-});
+router.post('/dashboard/informasi', postInformasi);
 
 // edit profile
-router.get("/dashboard/edit-profile",isAuth,(req,res) => {
-})
+router.get("/dashboard/edit-profile",isAuth,getEditProfile)
 
-router.put("/dashboard/edit-profile",(req,res) => {
-  const {id,nama,jabatan,nip,username,password,confirmPassword} = req.body;
-  const hash = bcrypt.hashSync(password,10);
-  pool.getConnection((err,connection) => {
-    if(password === confirmPassword) {
-      if(password === '') {
-        connection.query(`UPDATE pegawai SET ? WHERE id = ${id}`,{
-          nama,jabatan,nip,username
-        })
-
-      } else {
-        connection.query(`UPDATE pegawai SET ? WHERE id = ${id}`,{
-          nama,jabatan,nip,username,password : hash
-        })
-      }
-      req.flash("msg","Your profile has been successfully updated")
-      res.redirect("/dashboard")
-    } else if (password !== confirmPassword) {
-      req.flash("err","Password dan Konfirmasi Password tidak match")
-      res.redirect("/dashboard/edit-profile")
-    }
-  })
-})
+router.put("/dashboard/edit-profile",postditProfile)
 
 // verification email
 router.get("/dashboard/verify-email",isAuth, sendMail)

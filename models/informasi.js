@@ -10,7 +10,6 @@ const informationSchema = new schema({
     tgl_update: {
         type: Date,
         required: true,
-        default: () => Date.now()
     },
     gambar: {
         type: String,
