@@ -191,6 +191,7 @@ const addDataPage = (req,res) => {
 const addDataPagePost = async (req,res) => {
     const {laki_laki,Perempuan,islam,kristen,katolik,hindu,budha,sunda,jawa,bali,bugis,makassar,mandar,tolaki,buton,muna,bajo,mornene,toraja} = req.body;
     // console.log(req.body)
+    const perempuan = Perempuan;
     const data = new data_penduduk({
         laki_laki : laki_laki.length > 0 ? laki_laki : 0,
         Perempuan : Perempuan.length > 0 ? perempuan : 0,
@@ -335,5 +336,75 @@ const getEditProfile = (req,res) => {
         err : req.flash("err")
     })
 }
+const postResetPassword = async (req,res) => {
+    const {email} = req.body;
+  // generate token
+    const token = crypto.randomBytes(20).toString("hex");
+    const user = await userModel.findOne({email})
+  // cek if user exist
+    if(user){
+        // set token database
+        const dataToken = new tokenModel({
+            token,
+            email,
+            date: Date.now()
+        });
+        await dataToken.save();
+        const mailOptions = {
+            from : process.env.email,
+            to : email,
+            subject : "Reset Password",
+            html : `
+                <h1> Reset Password </h1>
+                <p> Reset your password by clicking this link <a href="https://kelurahan-abeli.herokuapp.com/forgot-password/${token}">Reset Password</a></p>
+            `
+            }
+            transporter.sendMail(mailOptions)
+            req.flash("msg","Link untuk reset password telah dikirim ke email jika tidak menerima pesan di kotak masuk harap cek folder spam");
+            res.redirect("/login")
+        
+    } else {
+        req.flash("error","Email tidak terdaftar");
+        res.redirect("/login")
+    }
+}
 
-module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage,sendMail,verifyEmail,addDataUserPage,deleteUser,dataProfile,addDataPage,addDataPagePost,updatePenduduk,updateAgama,updateEtnis,getInformasiDashboard,postInformasi,getEditProfile,postditProfile}
+const getResetPasswordPage = async (req,res) => {
+    const token = req.params.token;
+    const dataToken = await tokenModel.findOne({token});
+        const dataUser = await userModel.findOne({email:dataToken.email})
+        if(dataUser){
+            res.render("forgot-password",{
+                title: "Reset Password",
+                layout: 'layouts/login-signup',
+                username: dataUser.username,
+                email : dataUser.email,
+                id : dataUser.id,
+                err : req.flash("err"),
+                msg : req.flash("msg")
+                })
+        }
+}
+
+
+const setResetPassword = async (req,res) => {
+    const {id,email,password,username,confirmPassword} = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    if(password !== confirmPassword){
+        const token = await tokenModel.findOne({email})
+        req.flash("err","Password dan Konfirmasi Password tidak sesuai");
+        res.redirect(`/forgot-password/${token.token}`)
+    } else {
+        await userModel.updateOne({id},{
+            $set: {
+                password:hash
+            }
+        })
+        await tokenModel.deleteOne({email})
+        req.flash("msg","Password telah berhasil di update")
+        res.redirect("/login")
+    }
+}
+
+module.exports = {getLoginPage,getSignupPage,createUser,logout,login,getDashboardPage,sendMail,verifyEmail,addDataUserPage,deleteUser,dataProfile,addDataPage,addDataPagePost,updatePenduduk,updateAgama,updateEtnis,getInformasiDashboard,postInformasi,getEditProfile,postditProfile, postResetPassword, getResetPasswordPage,setResetPassword}
