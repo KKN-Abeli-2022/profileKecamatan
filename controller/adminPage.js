@@ -190,7 +190,6 @@ const addDataPage = (req,res) => {
 
 const addDataPagePost = async (req,res) => {
     const {laki_laki,Perempuan,islam,kristen,katolik,hindu,budha,sunda,jawa,bali,bugis,makassar,mandar,tolaki,buton,muna,bajo,mornene,toraja} = req.body;
-    // console.log(req.body)
     const perempuan = Perempuan;
     const data = new data_penduduk({
         laki_laki : laki_laki.length > 0 ? laki_laki : 0,
