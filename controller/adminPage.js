@@ -8,6 +8,7 @@ const passport = require("passport");
 const moment = require("moment")
 const data_penduduk = require("../models/penduduk")
 const informationModel = require('../models/informasi')
+const imgbbUploader = require("imgbb-uploader");
 require("../config/passportStrategy")(passport);
 dotenv.config({path:require('find-config')('.env')})
 
@@ -273,11 +274,12 @@ const getInformasiDashboard = async (req,res) => {
 const postInformasi = async (req, res, next) => {
     const { judul, isi } = req.body;
     const tgl_update = moment().format('YYYY-MM-DD');
-    const image = req.file.path
+    const imagePath = req.file.path
+    const imgbb = await imgbbUploader(process.env.IMG_API, imagePath)
     const data = new informationModel({
         judul,
         isi,
-        gambar: image,
+        gambar: imgbb.image.url,
         author: req.user.username,
         tgl_update
     })
